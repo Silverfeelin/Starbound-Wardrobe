@@ -1,0 +1,2592 @@
+[
+  {
+    "op": "add",
+    "path": "/gui/btnWardrobe",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/muiWardrobe.png",
+      "hover": "/interface/wardrobe/muiWardrobe.png?brightness=30",
+      "caption": "^shadow;Open\nWardrobe",
+      "fontSize": 7,
+      "wrapWidth": 80,
+      "zlevel": 20,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        102,
+        103
+      ],
+      "data": "wardrobe",
+      "callback": "showInterface"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeTitle",
+    "value": {
+      "type": "image",
+      "position": [
+        130,
+        203
+      ],
+      "zlevel": 21,
+      "file": "/interface/wardrobe/title.png"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeSubtitle",
+    "value": {
+      "type": "label",
+      "position": [
+        170,
+        192
+      ],
+      "hAnchor": "mid",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "^white;^shadow;What would you like to wear?"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        3,
+        209
+      ],
+      "hAnchor": "left",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Head Slot"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatIcon",
+    "value": {
+      "type": "image",
+      "file": "/assetMissing.png",
+      "position": [
+        12,
+        200
+      ],
+      "zlevel": 23,
+      "visible": true,
+      "centered": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatName",
+    "value": {
+      "type": "label",
+      "position": [
+        23,
+        206
+      ],
+      "hAnchor": "left",
+      "fontSize": 6,
+      "wrapWidth": 76,
+      "vAnchor": "top",
+      "zlevel": 21,
+      "value": "No selection"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatRarity",
+    "value": {
+      "type": "image",
+      "file": "/interface/inventory/whiteborder.png",
+      "position": [
+        3,
+        191
+      ],
+      "zlevel": 22,
+      "visible": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeShowHats",
+    "value": {
+      "type": "button",
+      "base": "/assetMissing.png?replace;ffffff00=ffffff01?scalenearest=2?crop;0;0;97;20",
+      "hover": "/assetMissing.png?replace;ffffff00=ffffff20?scalenearest=2?crop;0;0;97;20",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        0
+      ],
+      "position": [
+        2,
+        190
+      ],
+      "data": "hat",
+      "callback": "wardrobe.showHats"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColorTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        3,
+        182
+      ],
+      "hAnchor": "left",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Color"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        3,
+        148
+      ],
+      "hAnchor": "left",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Chest Slot"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestIcon",
+    "value": {
+      "type": "image",
+      "file": "/assetMissing.png",
+      "position": [
+        12,
+        139
+      ],
+      "zlevel": 23,
+      "visible": true,
+      "centered": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestName",
+    "value": {
+      "type": "label",
+      "position": [
+        23,
+        145
+      ],
+      "hAnchor": "left",
+      "fontSize": 6,
+      "wrapWidth": 76,
+      "vAnchor": "top",
+      "zlevel": 21,
+      "value": "No selection"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestRarity",
+    "value": {
+      "type": "image",
+      "file": "/interface/inventory/whiteborder.png",
+      "position": [
+        3,
+        130
+      ],
+      "zlevel": 22,
+      "visible": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeShowChests",
+    "value": {
+      "type": "button",
+      "base": "/assetMissing.png?replace;ffffff00=ffffff01?scalenearest=2?crop;0;0;97;20",
+      "hover": "/assetMissing.png?replace;ffffff00=ffffff20?scalenearest=2?crop;0;0;97;20",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        0
+      ],
+      "position": [
+        2,
+        129
+      ],
+      "data": "chest",
+      "callback": "wardrobe.showChests"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColorTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        3,
+        121
+      ],
+      "hAnchor": "left",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Color"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        335,
+        209
+      ],
+      "hAnchor": "right",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Legs Slot"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsIcon",
+    "value": {
+      "type": "image",
+      "file": "/assetMissing.png",
+      "position": [
+        325,
+        200
+      ],
+      "zlevel": 23,
+      "visible": true,
+      "centered": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsName",
+    "value": {
+      "type": "label",
+      "position": [
+        315,
+        206
+      ],
+      "hAnchor": "right",
+      "vAnchor": "top",
+      "fontSize": 6,
+      "wrapWidth": 76,
+      "zlevel": 22,
+      "value": "No selection"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsRarity",
+    "value": {
+      "type": "image",
+      "file": "/interface/inventory/whiteborder.png",
+      "position": [
+        316,
+        191
+      ],
+      "zlevel": 22,
+      "visible": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeShowLegs",
+    "value": {
+      "type": "button",
+      "base": "/assetMissing.png?replace;ffffff00=ffffff01?scalenearest=2?crop;0;0;97;20",
+      "hover": "/assetMissing.png?replace;ffffff00=ffffff20?scalenearest=2?crop;0;0;97;20",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        0
+      ],
+      "position": [
+        238,
+        190
+      ],
+      "data": "legs",
+      "callback": "wardrobe.showLegs"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColorTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        335,
+        182
+      ],
+      "hAnchor": "right",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Color"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        335,
+        148
+      ],
+      "hAnchor": "right",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Back Slot"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackIcon",
+    "value": {
+      "type": "image",
+      "file": "/assetMissing.png",
+      "position": [
+        325,
+        139
+      ],
+      "zlevel": 23,
+      "visible": true,
+      "centered": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackName",
+    "value": {
+      "type": "label",
+      "position": [
+        315,
+        145
+      ],
+      "hAnchor": "right",
+      "vAnchor": "top",
+      "fontSize": 6,
+      "wrapWidth": 76,
+      "zlevel": 21,
+      "value": "No selection"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackRarity",
+    "value": {
+      "type": "image",
+      "file": "/interface/inventory/whiteborder.png",
+      "position": [
+        316,
+        130
+      ],
+      "zlevel": 22,
+      "visible": true
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeShowBacks",
+    "value": {
+      "type": "button",
+      "base": "/assetMissing.png?replace;ffffff00=ffffff01?scalenearest=2?crop;0;0;97;20",
+      "hover": "/assetMissing.png?replace;ffffff00=ffffff20?scalenearest=2?crop;0;0;97;20",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        0
+      ],
+      "position": [
+        238,
+        129
+      ],
+      "data": "back",
+      "callback": "wardrobe.showBacks"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColorTitle",
+    "value": {
+      "type": "label",
+      "position": [
+        335,
+        121
+      ],
+      "hAnchor": "right",
+      "vAnchor": "bottom",
+      "zlevel": 21,
+      "value": "Color"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLeftBar",
+    "value": {
+      "type": "image",
+      "file": "/interface/wardrobe/leftbar.png",
+      "position": [
+        1,
+        24
+      ],
+      "zlevel": 30,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeButtonCloseLeftBar",
+    "value": {
+      "type": "button",
+      "base": "/interface/cockpit/xup.png",
+      "hover": "/interface/cockpit/xdown.png",
+      "callback": "wardrobe.closeLeftBar",
+      "caption": "",
+      "position": [
+        94,
+        205
+      ],
+      "pressedOffset": [ 0, -1],
+      "zlevel": 32,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLeftBarTitle",
+    "value": {
+      "type": "label",
+      "visible": false,
+      "position": [
+        3,
+        206
+      ],
+      "hAnchor": "left",
+      "vAnchor": "bottom",
+      "zlevel": 36,
+      "value": "Select an item"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatScroll",
+    "value": {
+      "visible": false,
+      "type": "scrollArea",
+      "zlevel": 34,
+      "rect": [
+        1,
+        26,
+        53,
+        203
+      ],
+      "children": {
+        "list": {
+          "type": "list",
+          "position": [0, 0],
+          "callback": "wardrobe.hatSelected",
+          "schema": {
+            "selectedBG": "/assetMissing.png",
+            "unselectedBG": "/assetMissing.png",
+            "spacing": [
+              0,
+              1
+            ],
+            "memberSize": [
+              43,
+              43
+            ],
+            "listTemplate": {
+              "dummyBackArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummybackarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 32
+              },
+              "dummyBody": {
+                "type": "image",
+                "file": "/humanoid/any/dummybody.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 34
+              },
+              "dummyFrontArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummyfrontarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "dummyHead": {
+                "type": "image",
+                "file": "/humanoid/any/dummyhead.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "image": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 35
+              },
+              "imageBack": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 33
+              },
+              "imageFront": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 37
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestScroll",
+    "value": {
+      "visible": false,
+      "type": "scrollArea",
+      "zlevel": 34,
+      "rect": [
+        53,
+        26,
+        105,
+        203
+      ],
+      "children": {
+        "list": {
+          "type": "list",
+          "position": [0, 0],
+          "callback": "wardrobe.chestSelected",
+          "schema": {
+            "selectedBG": "/assetMissing.png",
+            "unselectedBG": "/assetMissing.png",
+            "spacing": [
+              0,
+              1
+            ],
+            "memberSize": [
+              43,
+              43
+            ],
+            "listTemplate": {
+              "dummyBackArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummybackarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 32
+              },
+              "dummyBody": {
+                "type": "image",
+                "file": "/humanoid/any/dummybody.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 34
+              },
+              "dummyFrontArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummyfrontarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "dummyHead": {
+                "type": "image",
+                "file": "/humanoid/any/dummyhead.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "image": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 35
+              },
+              "imageBack": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 33
+              },
+              "imageFront": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 37
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeRightBar",
+    "value": {
+      "type": "image",
+      "file": "/interface/wardrobe/rightbar.png",
+      "position": [
+        232,
+        24
+      ],
+      "zlevel": 30,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeButtonCloseRightBar",
+    "value": {
+      "type": "button",
+      "base": "/interface/cockpit/xup.png",
+      "hover": "/interface/cockpit/xdown.png",
+      "caption": "",
+      "callback": "wardrobe.closeRightBar",
+      "position": [
+        234,
+        205
+      ],
+      "pressedOffset": [ 0, -1],
+      "zlevel": 32,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeRightBarTitle",
+    "value": {
+      "type": "label",
+      "visible": false,
+      "position": [
+        335,
+        206
+      ],
+      "hAnchor": "right",
+      "vAnchor": "bottom",
+      "zlevel": 36,
+      "value": "Select an item"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsScroll",
+    "value": {
+      "visible": false,
+      "type": "scrollArea",
+      "zlevel": 34,
+      "rect": [
+        233,
+        26,
+        285,
+        203
+      ],
+      "children": {
+        "list": {
+          "type": "list",
+          "position": [0, 0],
+          "callback": "wardrobe.legsSelected",
+          "schema": {
+            "selectedBG": "/assetMissing.png",
+            "unselectedBG": "/assetMissing.png",
+            "spacing": [
+              0,
+              1
+            ],
+            "memberSize": [
+              43,
+              43
+            ],
+            "listTemplate": {
+              "dummyBackArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummybackarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 32
+              },
+              "dummyBody": {
+                "type": "image",
+                "file": "/humanoid/any/dummybody.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 34
+              },
+              "dummyFrontArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummyfrontarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "dummyHead": {
+                "type": "image",
+                "file": "/humanoid/any/dummyhead.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "image": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 35
+              },
+              "imageBack": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 33
+              },
+              "imageFront": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 37
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackScroll",
+    "value": {
+      "visible": false,
+      "type": "scrollArea",
+      "zlevel": 34,
+      "rect": [
+        285,
+        26,
+        337,
+        203
+      ],
+      "children": {
+        "list": {
+          "type": "list",
+          "position": [0, 0],
+          "callback": "wardrobe.backSelected",
+          "schema": {
+            "selectedBG": "/assetMissing.png",
+            "unselectedBG": "/assetMissing.png",
+            "spacing": [
+              0,
+              1
+            ],
+            "memberSize": [
+              43,
+              43
+            ],
+            "listTemplate": {
+              "dummyBackArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummybackarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 32
+              },
+              "dummyBody": {
+                "type": "image",
+                "file": "/humanoid/any/dummybody.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 34
+              },
+              "dummyFrontArm": {
+                "type": "image",
+                "file": "/humanoid/any/dummyfrontarm.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "dummyHead": {
+                "type": "image",
+                "file": "/humanoid/any/dummyhead.png?replace;ffffff00=00000001",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 36
+              },
+              "image": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 35
+              },
+              "imageBack": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 33
+              },
+              "imageFront": {
+                "type": "image",
+                "file": "/assetMissing.png",
+                "position": [
+                  0,
+                  0
+                ],
+                "zlevel": 37
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobePreview",
+    "value": {
+      "type": "list",
+      "callback": "null",
+      "position": [
+        104,
+        59
+      ],
+      "zlevel": 25,
+      "schema": {
+        "selectedBG": "/assetMissing.png",
+        "unselectedBG": "/assetMissing.png",
+        "spacing": [
+          0,
+          -129
+        ],
+        "memberSize": [
+          129,
+          129
+        ],
+        "listTemplate": {
+          "image": {
+            "type": "image",
+            "file": "/assetMissing.png",
+            "position": [
+              0,
+              0
+            ],
+            "maxSize": [
+              129,
+              129
+            ],
+            "minSize": [
+              129,
+              129
+            ],
+            "zlevel": 25
+          }
+        }
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_1",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        3,
+        172
+      ],
+      "visible": false,
+      "data": 1,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_2",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        15,
+        172
+      ],
+      "visible": false,
+      "data": 2,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_3",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        27,
+        172
+      ],
+      "visible": false,
+      "data": 3,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_4",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        39,
+        172
+      ],
+      "visible": false,
+      "data": 4,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_5",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        51,
+        172
+      ],
+      "visible": false,
+      "data": 5,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_6",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        63,
+        172
+      ],
+      "visible": false,
+      "data": 6,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_7",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        75,
+        172
+      ],
+      "visible": false,
+      "data": 7,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_8",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        87,
+        172
+      ],
+      "visible": false,
+      "data": 8,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_9",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        3,
+        161
+      ],
+      "visible": false,
+      "data": 9,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_10",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        15,
+        161
+      ],
+      "visible": false,
+      "data": 10,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_11",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        27,
+        161
+      ],
+      "visible": false,
+      "data": 11,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_12",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        39,
+        161
+      ],
+      "visible": false,
+      "data": 12,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_13",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        51,
+        161
+      ],
+      "visible": false,
+      "data": 13,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_14",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        63,
+        161
+      ],
+      "visible": false,
+      "data": 14,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_15",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        75,
+        161
+      ],
+      "visible": false,
+      "data": 15,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatColor_16",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        87,
+        161
+      ],
+      "visible": false,
+      "data": 16,
+      "callback": "wardrobe.selectHatColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_1",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        3,
+        111
+      ],
+      "visible": false,
+      "data": 1,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_2",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        15,
+        111
+      ],
+      "visible": false,
+      "data": 2,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_3",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        27,
+        111
+      ],
+      "visible": false,
+      "data": 3,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_4",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        39,
+        111
+      ],
+      "visible": false,
+      "data": 4,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_5",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        51,
+        111
+      ],
+      "visible": false,
+      "data": 5,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_6",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        63,
+        111
+      ],
+      "visible": false,
+      "data": 6,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_7",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        75,
+        111
+      ],
+      "visible": false,
+      "data": 7,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_8",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        87,
+        111
+      ],
+      "visible": false,
+      "data": 8,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_9",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        3,
+        100
+      ],
+      "visible": false,
+      "data": 9,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_10",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        15,
+        100
+      ],
+      "visible": false,
+      "data": 10,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_11",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        27,
+        100
+      ],
+      "visible": false,
+      "data": 11,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_12",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        39,
+        100
+      ],
+      "visible": false,
+      "data": 12,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_13",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        51,
+        100
+      ],
+      "visible": false,
+      "data": 13,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_14",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        63,
+        100
+      ],
+      "visible": false,
+      "data": 14,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_15",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        75,
+        100
+      ],
+      "visible": false,
+      "data": 15,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestColor_16",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        87,
+        100
+      ],
+      "visible": false,
+      "data": 16,
+      "callback": "wardrobe.selectChestColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_1",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        239,
+        172
+      ],
+      "visible": false,
+      "data": 1,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_2",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        251,
+        172
+      ],
+      "visible": false,
+      "data": 2,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_3",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        263,
+        172
+      ],
+      "visible": false,
+      "data": 3,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_4",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        275,
+        172
+      ],
+      "visible": false,
+      "data": 4,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_5",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        287,
+        172
+      ],
+      "visible": false,
+      "data": 5,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_6",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        299,
+        172
+      ],
+      "visible": false,
+      "data": 6,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_7",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        311,
+        172
+      ],
+      "visible": false,
+      "data": 7,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_8",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        323,
+        172
+      ],
+      "visible": false,
+      "data": 8,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_9",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        239,
+        161
+      ],
+      "visible": false,
+      "data": 9,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_10",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        251,
+        161
+      ],
+      "visible": false,
+      "data": 10,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_11",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        263,
+        161
+      ],
+      "visible": false,
+      "data": 11,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_12",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        275,
+        161
+      ],
+      "visible": false,
+      "data": 12,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_13",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        287,
+        161
+      ],
+      "visible": false,
+      "data": 13,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_14",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        299,
+        161
+      ],
+      "visible": false,
+      "data": 14,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_15",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        311,
+        161
+      ],
+      "visible": false,
+      "data": 15,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsColor_16",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        323,
+        161
+      ],
+      "visible": false,
+      "data": 16,
+      "callback": "wardrobe.selectLegsColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_1",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        239,
+        111
+      ],
+      "visible": false,
+      "data": 1,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_2",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        251,
+        111
+      ],
+      "visible": false,
+      "data": 2,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_3",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        263,
+        111
+      ],
+      "visible": false,
+      "data": 3,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_4",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        275,
+        111
+      ],
+      "visible": false,
+      "data": 4,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_5",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        287,
+        111
+      ],
+      "visible": false,
+      "data": 5,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_6",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        299,
+        111
+      ],
+      "visible": false,
+      "data": 6,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_7",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        311,
+        111
+      ],
+      "visible": false,
+      "data": 7,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_8",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        323,
+        111
+      ],
+      "visible": false,
+      "data": 8,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_9",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        239,
+        100
+      ],
+      "visible": false,
+      "data": 9,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_10",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        251,
+        100
+      ],
+      "visible": false,
+      "data": 10,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_11",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        263,
+        100
+      ],
+      "visible": false,
+      "data": 11,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_12",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        275,
+        100
+      ],
+      "visible": false,
+      "data": 12,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_13",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        287,
+        100
+      ],
+      "visible": false,
+      "data": 13,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_14",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        299,
+        100
+      ],
+      "visible": false,
+      "data": 14,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_15",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        311,
+        100
+      ],
+      "visible": false,
+      "data": 15,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackColor_16",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/color.png",
+      "hover": "/interface/wardrobe/color.png",
+      "caption": "",
+      "zlevel": 24,
+      "hAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        323,
+        100
+      ],
+      "visible": false,
+      "data": 16,
+      "callback": "wardrobe.selectBackColor"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeSpawn",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/button.png",
+      "hover": "/interface/wardrobe/button.png?brightness=30",
+      "caption": "^shadow;Create Outfit",
+      "wrapWidth": 80,
+      "zlevel": 20,
+      "hAnchor": "mid",
+      "vAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        130,
+        34
+      ],
+      "visible": true,
+      "callback": "wardrobe.spawn"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeStorage",
+    "value": {
+      "type": "label",
+      "position": [
+        0,
+        0
+      ],
+      "zlevel": -1,
+      "visible": false,
+      "value": "",
+      "data": {}
+    }
+  },
+  {
+    "op": "add",
+    "path": "/packages/-",
+    "value": {
+      "activator": "btnWardrobe",
+      "show": ["wardrobePreview", "wardrobeTitle", "wardrobeSubtitle", "wardrobeSpawn",
+        "wardrobeHatName", "wardrobeChestName", "wardrobeLegsName", "wardrobeBackName",
+        "wardrobeHatIcon", "wardrobeChestIcon", "wardrobeLegsIcon", "wardrobeBackIcon",
+        "wardrobeHatTitle", "wardrobeHatRarity", "wardrobeHatColorTitle", "wardrobeShowHats",
+        "wardrobeChestTitle", "wardrobeChestRarity", "wardrobeChestColorTitle", "wardrobeShowChests",
+        "wardrobeLegsTitle", "wardrobeLegsRarity", "wardrobeLegsColorTitle", "wardrobeShowLegs",
+        "wardrobeBackTitle", "wardrobeBackRarity", "wardrobeBackColorTitle", "wardrobeShowBacks"
+      ],
+      "hide": [],
+      "settingControls": [],
+      "update": {
+        "bgb": "/interface/wardrobe/body.png",
+        "bgh": "/interface/wardrobe/header.png",
+        "bgf": "/interface/wardrobe/footer.png"
+      },
+      "name": "wardrobe",
+      "script": "/scripts/wardrobe.lua"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.showHats"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.showChests"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.showLegs"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.showBacks"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.closeLeftBar"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.closeRightBar"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.hatSelected"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.chestSelected"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.legsSelected"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.backSelected"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.spawn"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.selectHatColor"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.selectChestColor"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.selectLegsColor"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.selectBackColor"
+  }
+]
