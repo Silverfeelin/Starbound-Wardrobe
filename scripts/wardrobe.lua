@@ -59,6 +59,14 @@ function wardrobe.init()
   wardrobe.preview.custom = {}
   wardrobe.preview.default = {}
 
+  wardrobe.resetWidgets()
+end
+
+--[[
+  Resets all widgets. Should be used when re-initializing the interface.
+  Also alters relevent data, eg. reverting selection back to equipped items.
+]]
+function wardrobe.resetWidgets()
   widget.setText("wardrobeHatName", "No selection")
   widget.setText("wardrobeChestName", "No selection")
   widget.setText("wardrobeLegsName", "No selection")
@@ -73,20 +81,10 @@ function wardrobe.init()
   widget.setImage("wardrobeBackIcon", "/assetMissing.png")
 
   wardrobe.loadPreview()
-
-  local data = wardrobe.getInterfaceData()
-  if not data.initialized then
-    wardrobe.showItems("wardrobeHatScroll.list", "head")
-    wardrobe.showItems("wardrobeChestScroll.list", "chest")
-    wardrobe.showItems("wardrobeLegsScroll.list", "legs")
-    wardrobe.showItems("wardrobeBackScroll.list", "back")
-    data.initialized = true
-    wardrobe.setInterfaceData(data)
-  end
-end
-
-function wardrobe.resetWidgets()
-
+  wardrobe.showItems("wardrobeHatScroll.list", "head")
+  wardrobe.showItems("wardrobeChestScroll.list", "chest")
+  wardrobe.showItems("wardrobeLegsScroll.list", "legs")
+  wardrobe.showItems("wardrobeBackScroll.list", "back")
 end
 
 --[[
