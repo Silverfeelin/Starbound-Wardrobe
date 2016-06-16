@@ -487,7 +487,7 @@ function wardrobe.showItems(w, category)
 
   local equipped = player.equippedItem(category)
 
-  local items = root.assetJson("/wearableDump.json")
+  local items = root.assetJson("/wardrobe/wearableDump.json")
   if not items or not items[category] then sb.logError("Wardrobe: Could not load items for category %s", category) return end
   items = items[category]
   local itemCount = #items
