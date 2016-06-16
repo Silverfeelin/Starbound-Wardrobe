@@ -44,7 +44,8 @@ namespace WardrobeItemFetcher
         enum WriteMethod
         {
             Overwrite,
-            Merge
+            Merge,
+            Patch
         }
         /// <summary>
         /// Startup method. Scans the given directory and all subdirectories for item files.
@@ -53,46 +54,79 @@ namespace WardrobeItemFetcher
         /// <param name="args">Unpacked asset path and output file path.</param>
         static void Main(string[] args)
         {
-            if (args.Length != 2 || !Directory.Exists(args[0]))
-            {
-                Console.WriteLine("Improper usage. Expected: <asset_path> <output_file>\nAsset path: Absolute path to unpacked assets. Do not end the path with a \\. \nOutput file: Absolute path to file to write results to\nPress any key to exit...");
-                Console.ReadKey();
-                return;
-            }
-            else if (!Directory.Exists(args[0] + @"\items"))
-            {
-                Console.WriteLine("Subdirectory '\\items' not found. Invalid directory given.\nPress any key to exit...");
-                Console.ReadKey();
-                return;
-            }
-
             WriteMethod writeMethod = WriteMethod.Overwrite;
+            
+            Console.WriteLine("= Wardrobe Item Fetcher");
 
-            if (File.Exists(args[1]))
+            if (args.Length != 2 && args.Length != 3)
+                WaitAndClose("Improper usage. Expected:" +
+                    "\nWardrobeItemFetcher.exe <asset_path> <output_file> [patch]" +
+                    "\n<asset_path>: Absolute path to unpacked assets." +
+                    "\n<output_file>: Absolute path to file to write results to." + 
+                    "\n[patch]: Optional 'true'. Creates a patch rather than plain JSON. Merge not supported.");
+
+            basePath= args[0];
+            string outputFile = args[1];
+
+            if (basePath.LastIndexOf("\\") == basePath.Length - 1)
+                basePath = basePath.Substring(0, basePath.Length - 1);
+
+            itemPath = basePath + @"\items".Replace(@"\\", @"\");
+
+            if (!Directory.Exists(basePath))
+                WaitAndClose("Asset directory '" + basePath + "' not found. Invalid directory given.");
+
+            if (!Directory.Exists(itemPath))
+                WaitAndClose("Subdirectory '" + basePath + @"\items" + "' not found. Invalid directory given.");
+            
+            if (args.Length == 3)
             {
-                Console.WriteLine("Output file already exists!\n1. Overwrite file\n2. Merge content (prioritizes new items)\n3. Cancel");
-
-                ConsoleKeyInfo cki = Console.ReadKey(true);
-                switch (cki.Key)
-                {
-                    default:
-                        Console.WriteLine("Cancelling task.\nPress any key to exit...");
-                        Console.ReadKey();
-                        return;
-                    case ConsoleKey.D1:
-                    case ConsoleKey.NumPad1:
-                        Console.WriteLine("File will be overwritten.");
-                        break;
-                    case ConsoleKey.D2:
-                    case ConsoleKey.NumPad2:
-                        Console.WriteLine("Content will be merged.");
-                        writeMethod = WriteMethod.Merge;
-                        break;
-                }
+                if (args[2] == "true")
+                    writeMethod = WriteMethod.Patch;
             }
 
-            basePath = args[0];
-            itemPath = basePath + @"\items".Replace(@"\\", @"\");
+            if (File.Exists(outputFile))
+            {
+                if (writeMethod == WriteMethod.Patch)
+                {
+                    Console.WriteLine("Output file '" + outputFile + "' already exists!\n1. Overwrite file\n2. Cancel");
+
+                    ConsoleKeyInfo cki = Console.ReadKey(true);
+                    switch (cki.Key)
+                    {
+                        default:
+                            WaitAndClose("Cancelling task.");
+                            break;
+                        case ConsoleKey.D1:
+                        case ConsoleKey.NumPad1:
+                            Console.WriteLine("Output file will be overwritten.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Output file '" + outputFile + "' already exists!\n1. Overwrite file\n2. Merge content (prioritizes new items)\n3. Cancel");
+
+                    ConsoleKeyInfo cki = Console.ReadKey(true);
+                    switch (cki.Key)
+                    {
+                        default:
+                            WaitAndClose("Cancelling task.");
+                            break;
+                        case ConsoleKey.D1:
+                        case ConsoleKey.NumPad1:
+                            Console.WriteLine("Output file will be overwritten.");
+                            writeMethod = WriteMethod.Overwrite;
+                            break;
+                        case ConsoleKey.D2:
+                        case ConsoleKey.NumPad2:
+                            Console.WriteLine("Content will be merged.");
+                            writeMethod = WriteMethod.Merge;
+                            break;
+                    }
+                }
+                
+            }
 
             DirectoryInfo rootDirectory = new DirectoryInfo(itemPath);
 
@@ -112,8 +146,36 @@ namespace WardrobeItemFetcher
             Console.WriteLine("- Legs: " + result["legs"].Count() + " items.");
             Console.WriteLine("- Back: " + result["back"].Count() + " items.");
 
+            JArray patchObject = null;
             switch (writeMethod)
             {
+                case WriteMethod.Patch:
+                    patchObject = new JArray();
+                    foreach (var item in result["head"])
+                    {
+                        JObject it = JObject.Parse("{'op':'add','path':'/head/-','value':{}}");
+                        it["value"] = item;
+                        patchObject.Add(it);
+                    }
+                    foreach (var item in result["chest"])
+                    {
+                        JObject it = JObject.Parse("{'op':'add','path':'/chest/-','value':{}}");
+                        it["value"] = item;
+                        patchObject.Add(it);
+                    }
+                    foreach (var item in result["legs"])
+                    {
+                        JObject it = JObject.Parse("{'op':'add','path':'/legs/-','value':{}}");
+                        it["value"] = item;
+                        patchObject.Add(it);
+                    }
+                    foreach (var item in result["back"])
+                    {
+                        JObject it = JObject.Parse("{'op':'add','path':'/back/-','value':{}}");
+                        it["value"] = item;
+                        patchObject.Add(it);
+                    }
+                    break;
                 case WriteMethod.Merge:
                     JObject original = JObject.Parse(File.ReadAllText(args[1]));
                     result.Merge(original, new JsonMergeSettings() { MergeArrayHandling = MergeArrayHandling.Union });
@@ -122,7 +184,10 @@ namespace WardrobeItemFetcher
                     break;
             }
 
-            File.WriteAllText(args[1], result.ToString(Formatting.None));
+            if (patchObject == null)
+                File.WriteAllText(outputFile, result.ToString(Formatting.Indented));
+            else
+                File.WriteAllText(outputFile, patchObject.ToString(Formatting.Indented));
 
             Console.WriteLine("Done fetching items!\nPress any key to exit...");
             Console.ReadKey();
@@ -193,6 +258,14 @@ namespace WardrobeItemFetcher
             }
 
             ((JArray)result[category]).Add(newItem);
+        }
+
+        static void WaitAndClose(string message)
+        {
+            Console.WriteLine(message);
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+            Environment.Exit(0);
         }
     }
 }
