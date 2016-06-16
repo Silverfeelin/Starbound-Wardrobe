@@ -41,6 +41,11 @@ namespace WardrobeItemFetcher
         static string basePath;
         static string itemPath;
 
+        enum WriteMethod
+        {
+            Overwrite,
+            Merge
+        }
         /// <summary>
         /// Startup method. Scans the given directory and all subdirectories for item files.
         /// Adds all information necessary for the Wardrobe mod and writes it to the given output file.
@@ -50,7 +55,7 @@ namespace WardrobeItemFetcher
         {
             if (args.Length != 2 || !Directory.Exists(args[0]))
             {
-                Console.WriteLine("Improper usage. Expected: <asset_path> <output_file>\nAsset path: Absolute path to unpacked assets. Do not end the path with a \\. \nOutput file: Absolute path to file to write results to, overwriting existing data.\nPress any key to exit...");
+                Console.WriteLine("Improper usage. Expected: <asset_path> <output_file>\nAsset path: Absolute path to unpacked assets. Do not end the path with a \\. \nOutput file: Absolute path to file to write results to\nPress any key to exit...");
                 Console.ReadKey();
                 return;
             }
@@ -59,6 +64,31 @@ namespace WardrobeItemFetcher
                 Console.WriteLine("Subdirectory '\\items' not found. Invalid directory given.\nPress any key to exit...");
                 Console.ReadKey();
                 return;
+            }
+
+            WriteMethod writeMethod = WriteMethod.Overwrite;
+
+            if (File.Exists(args[1]))
+            {
+                Console.WriteLine("Output file already exists!\n1. Overwrite file\n2. Merge content (prioritizes new items)\n3. Cancel");
+
+                ConsoleKeyInfo cki = Console.ReadKey(true);
+                switch (cki.Key)
+                {
+                    default:
+                        Console.WriteLine("Cancelling task.\nPress any key to exit...");
+                        Console.ReadKey();
+                        return;
+                    case ConsoleKey.D1:
+                    case ConsoleKey.NumPad1:
+                        Console.WriteLine("File will be overwritten.");
+                        break;
+                    case ConsoleKey.D2:
+                    case ConsoleKey.NumPad2:
+                        Console.WriteLine("Content will be merged.");
+                        writeMethod = WriteMethod.Merge;
+                        break;
+                }
             }
 
             basePath = args[0];
@@ -76,7 +106,26 @@ namespace WardrobeItemFetcher
 
             ScanDirectory(rootDirectory, true, fc);
 
+            Console.WriteLine("Results:");
+            Console.WriteLine("- Head: " + result["head"].Count() + " items.");
+            Console.WriteLine("- Chest: " + result["chest"].Count() + " items.");
+            Console.WriteLine("- Legs: " + result["legs"].Count() + " items.");
+            Console.WriteLine("- Back: " + result["back"].Count() + " items.");
+
+            switch (writeMethod)
+            {
+                case WriteMethod.Merge:
+                    JObject original = JObject.Parse(File.ReadAllText(args[1]));
+                    result.Merge(original, new JsonMergeSettings() { MergeArrayHandling = MergeArrayHandling.Union });
+                    break;
+                default:
+                    break;
+            }
+
             File.WriteAllText(args[1], result.ToString(Formatting.None));
+
+            Console.WriteLine("Done fetching items!\nPress any key to exit...");
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -87,6 +136,8 @@ namespace WardrobeItemFetcher
         /// <param name="callback">Callback for each found file.</param>
         static void ScanDirectory(DirectoryInfo dir, bool recursive, FileCallback callback)
         {
+            Console.WriteLine("Scanning '" + dir.FullName + "'");
+
             FileInfo[] files = dir.GetFiles("*.*");
             files = files.Where(f => extensions.Contains(f.Extension.Replace(".", ""))).ToArray();
 
