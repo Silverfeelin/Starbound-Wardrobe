@@ -41,7 +41,6 @@ The functionality of the interface is shown in the below images.
 ## Potential issues
 * Items are fetched from an item dump bundled with the mod. Game updates that remove items may cause issues (but shouldn't), and items added in game updates will not appear in the Wardrobe until the mod is updated.
 * Item selection and color options are not shown on the screen at the same time. Solution would be to make the item selection *even* smaller, which in turn makes selecting items rather annoying.
-* Something you most likely won't notice, but color options are applied through `directives` rather than the `colorIndex` parameter of the item. This is due to the seemingly ambiguous numbers used by the game.
 
 ## Contributing
 I love suggestions! If you can think of anything to improve this mod feel free to leave a suggestion on the discussion thread over at PlayStarbound (link pending).  

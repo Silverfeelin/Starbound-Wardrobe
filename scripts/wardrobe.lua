@@ -269,19 +269,19 @@ end
 function wardrobe.spawn()
   if wardrobe.selection["head"] then
     local item = wardrobe.selection["head"]
-    player.giveItem({name=item.name,parameters={directives=wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[item.selectedColor])}})
+    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
   end
   if wardrobe.selection["chest"] then
     local item = wardrobe.selection["chest"]
-    player.giveItem({name=item.name,parameters={directives=wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[item.selectedColor])}})
+    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
   end
   if wardrobe.selection["legs"] then
     local item = wardrobe.selection["legs"]
-    player.giveItem({name=item.name,parameters={directives=wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[item.selectedColor])}})
+    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
   end
   if wardrobe.selection["back"] then
     local item = wardrobe.selection["back"]
-    player.giveItem({name=item.name,parameters={directives=wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[item.selectedColor])}})
+    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
   end
 end
 
