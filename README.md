@@ -36,6 +36,7 @@ The functionality of the interface is shown in the below images.
 
 ## Planned
 * Storage: a set amount of slots you can use to store and load outfits in.
+* Item fetcher documentation: Documentation on how to use the C# console application. This tool allows you to automatically scan a directory and all subdirectories for items, and stores the output in a file. Supports overwriting and merging.
 
 ## Potential issues
 * Items are fetched from an item dump bundled with the mod. Game updates that remove items may cause issues (but shouldn't), and items added in game updates will not appear in the Wardrobe until the mod is updated.
