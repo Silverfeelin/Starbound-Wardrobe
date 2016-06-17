@@ -127,9 +127,7 @@ namespace WardrobeItemFetcher
                 }
                 
             }
-
-            DirectoryInfo rootDirectory = new DirectoryInfo(itemPath);
-
+            
             result = new JObject();
             result["head"] = new JArray();
             result["chest"] = new JArray();
@@ -138,7 +136,7 @@ namespace WardrobeItemFetcher
 
             FileCallback fc = new FileCallback(AddItem);
 
-            ScanDirectory(rootDirectory, true, fc);
+            ScanDirectories(itemPath, extensions, fc);
 
             Console.WriteLine("Results:");
             Console.WriteLine("- Head: " + result["head"].Count() + " items.");
@@ -194,12 +192,29 @@ namespace WardrobeItemFetcher
         }
 
         /// <summary>
-        /// Scans the directory and optionally all subdirectories, running the callback for each found file matching an extension in <see cref="extensions"/>.
+        /// Scans the directory and all subdirectories, running the callback for each found file.
+        /// </summary>
+        /// <param name="basePath">Base directory to scan for matching files.</param>
+        /// <param name="extensions">Array of extension names to match. Do not include dots.</param>
+        /// <param name="callback">Callback for each found file.</param>
+        static void ScanDirectories(string basePath, string[] extensions, FileCallback callback)
+        {
+            foreach (var file in Directory.EnumerateFiles(basePath, "*", SearchOption.AllDirectories))
+            {
+                FileInfo fi = new FileInfo(file);
+                if (extensions.Contains(fi.Extension.Replace(".", "").ToLower()))
+                    callback(fi);
+            }
+        }
+
+        /// <summary>
+        /// Scans the directory and optionally all subdirectories, running the callback for each found file.
         /// </summary>
         /// <param name="dir">Directory to scan for matching files.</param>
+        /// <param name="extensions">Array of extension names to match. Do not include dots.</param>
         /// <param name="recursive">Value indicating whether to check directories recursively or not.</param>
         /// <param name="callback">Callback for each found file.</param>
-        static void ScanDirectory(DirectoryInfo dir, bool recursive, FileCallback callback)
+        static void ScanDirectory(DirectoryInfo dir, string[] extensions, bool recursive, FileCallback callback)
         {
             Console.WriteLine("Scanning '" + dir.FullName + "'");
 
@@ -216,7 +231,7 @@ namespace WardrobeItemFetcher
                 DirectoryInfo[] directories = dir.GetDirectories();
                 foreach (var item in directories)
                 {
-                    ScanDirectory(item, true, callback);
+                    ScanDirectory(item, extensions, true, callback);
                 }
             }
         }

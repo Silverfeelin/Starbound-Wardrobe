@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <StartArguments>"D:\Steam\steamapps\common\Starbound - Unstable\mods\felins_costumes" "D:\Steam\steamapps\common\Starbound - Unstable\mods\Starbound-WardrobePatch\wearableDump.json.patch" true</StartArguments>
+    <StartArguments>
+    </StartArguments>
   </PropertyGroup>
 </Project>
