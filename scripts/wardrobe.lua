@@ -8,10 +8,11 @@ wardrobe.widgets = {
 }
 
 wardrobe.rarities = {
-  common = "/interface/inventory/grayborder.png",
-  uncommon = "/interface/inventory/greenborder.png",
-  rare = "/interface/inventory/blueborder.png",
-  legendary = "/interface/inventory/purpleborder.png",
+  common = "/interface/inventory/itembordercommon.png",
+  uncommon = "/interface/inventory/itemborderuncommon.png",
+  rare = "/interface/inventory/itemborderrare.png",
+  legendary = "/interface/inventory/itemborderlegendary.png",
+  essential = "/interface/inventory/itemborderessential.png"
 }
 
 --[[
@@ -425,7 +426,6 @@ function wardrobe.showItem(item, colorIndex)
   if not colorIndex or colorIndex > #item.colorOptions then colorIndex = 1 end
   local name = item.shortdescription or item.name or "Name missing"
   local dir = wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex])
-  sb.logInfo("%s", dir)
   if item.category == "head" then
     local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
     widget.setImage(w .. ".image", wardrobe.getDefaultImageForItem(item) .. dir)
