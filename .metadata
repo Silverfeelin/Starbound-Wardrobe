@@ -1,0 +1,6 @@
+{
+  "name" : "Wardrobe",
+  "requires" : [
+    "Manipulated UI"
+  ]
+}
