@@ -1979,6 +1979,92 @@
       ]
     },
     {
+      "name": "doghathead",
+      "shortdescription": "Dog Hat",
+      "category": "head",
+      "path": "/items/armors/backerhats/doghat/",
+      "icon": "headicon.png",
+      "fileName": "doghat.head",
+      "maleFrames": "head.png",
+      "femaleFrames": "head.png",
+      "mask": "mask.png",
+      "rarity": "legendary",
+      "colorOptions": [
+        {
+          "ffca8a": "cca374",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
       "name": "dreadfulskullhead",
       "shortdescription": "Dreadful Skull",
       "category": "head",
@@ -3874,7 +3960,7 @@
       "name": "bioluminhead",
       "shortdescription": "Glow Mask",
       "category": "head",
-      "path": "/items/armors/biome/bioluminescence/biolumin/",
+      "path": "/items/armors/biome/Bioluminescence/biolumin/",
       "icon": "icons.png:head",
       "fileName": "biolumin.head",
       "maleFrames": "head.png",
@@ -3960,7 +4046,7 @@
       "name": "frostcrownhead",
       "shortdescription": "Frost Crown",
       "category": "head",
-      "path": "/items/armors/biome/bioluminescence/frostcrown/",
+      "path": "/items/armors/biome/Bioluminescence/frostcrown/",
       "icon": "icons.png:head",
       "fileName": "frostcrown.head",
       "maleFrames": "head.png",
@@ -4046,7 +4132,7 @@
       "name": "lighthelmhead",
       "shortdescription": "Fluorescent Helmet",
       "category": "head",
-      "path": "/items/armors/biome/bioluminescence/lighthelm/",
+      "path": "/items/armors/biome/Bioluminescence/lighthelm/",
       "icon": "icons.png:head",
       "fileName": "lighthelm.head",
       "maleFrames": "head.png",
@@ -4130,7 +4216,7 @@
     },
     {
       "name": "apexskullhead",
-      "shortdescription": "Apex Skull",
+      "shortdescription": "Apex Skull Mask",
       "category": "head",
       "path": "/items/armors/biome/bone/skullapex/",
       "icon": "icons.png:head",
@@ -4216,7 +4302,7 @@
     },
     {
       "name": "avianskullhead",
-      "shortdescription": "Avian Skull",
+      "shortdescription": "Avian Skull Mask",
       "category": "head",
       "path": "/items/armors/biome/bone/skullavian/",
       "icon": "icons.png:head",
@@ -4302,7 +4388,7 @@
     },
     {
       "name": "floranskullhead",
-      "shortdescription": "Floran Skull",
+      "shortdescription": "Floran Skull Mask",
       "category": "head",
       "path": "/items/armors/biome/bone/skullfloran/",
       "icon": "icons.png:head",
@@ -4388,7 +4474,7 @@
     },
     {
       "name": "glitchskullhead",
-      "shortdescription": "Glitch Skull",
+      "shortdescription": "Glitch Skull Mask",
       "category": "head",
       "path": "/items/armors/biome/bone/skullglitch/",
       "icon": "icons.png:head",
@@ -4474,7 +4560,7 @@
     },
     {
       "name": "humanskullhead",
-      "shortdescription": "Human Skull",
+      "shortdescription": "Human Skull Mask",
       "category": "head",
       "path": "/items/armors/biome/bone/skullhuman/",
       "icon": "icons.png:head",
@@ -4560,7 +4646,7 @@
     },
     {
       "name": "hylotlskullhead",
-      "shortdescription": "Hylotl Skull",
+      "shortdescription": "Hylotl Skull Mask",
       "category": "head",
       "path": "/items/armors/biome/bone/skullhylotl/",
       "icon": "icons.png:head",
@@ -10343,178 +10429,6 @@
           "e0975c": "b6b6b6",
           "a85636": "7b7b7b",
           "6f2919": "373737"
-        },
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "ffd495",
-          "e0975c": "ea9931",
-          "a85636": "af4e00",
-          "6f2919": "6e2900"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
-        },
-        {
-          "ffca8a": "b2e89d",
-          "e0975c": "51bd3b",
-          "a85636": "247824",
-          "6f2919": "144216"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "d29ce7",
-          "e0975c": "a451c4",
-          "a85636": "6a2284",
-          "6f2919": "320c40"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ccae7c",
-          "e0975c": "a47844",
-          "a85636": "754c23",
-          "6f2919": "472b13"
-        }
-      ]
-    },
-    {
-      "name": "colourfulhead",
-      "shortdescription": "Replace",
-      "category": "head",
-      "path": "/items/armors/decorative/costumes/colourful/",
-      "icon": "icons.png:head",
-      "fileName": "colourful.head",
-      "maleFrames": "head.png",
-      "femaleFrames": "head.png",
-      "mask": "mask.png",
-      "rarity": "common",
-      "colorOptions": [
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
-        },
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "ffd495",
-          "e0975c": "ea9931",
-          "a85636": "af4e00",
-          "6f2919": "6e2900"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
-        },
-        {
-          "ffca8a": "b2e89d",
-          "e0975c": "51bd3b",
-          "a85636": "247824",
-          "6f2919": "144216"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "d29ce7",
-          "e0975c": "a451c4",
-          "a85636": "6a2284",
-          "6f2919": "320c40"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ccae7c",
-          "e0975c": "a47844",
-          "a85636": "754c23",
-          "6f2919": "472b13"
-        }
-      ]
-    },
-    {
-      "name": "colourful2head",
-      "shortdescription": "Replace",
-      "category": "head",
-      "path": "/items/armors/decorative/costumes/colourful2/",
-      "icon": "icons.png:head",
-      "fileName": "colourful2.head",
-      "maleFrames": "head.png",
-      "femaleFrames": "head.png",
-      "mask": "mask.png",
-      "rarity": "common",
-      "colorOptions": [
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
         },
         {
           "ffca8a": "f4988c",
@@ -29182,7 +29096,7 @@
       "name": "bioluminchest",
       "shortdescription": "Glow Suit",
       "category": "chest",
-      "path": "/items/armors/biome/bioluminescence/biolumin/",
+      "path": "/items/armors/biome/Bioluminescence/biolumin/",
       "icon": "icons.png:chest",
       "fileName": "biolumin.chest",
       "maleFrames": {
@@ -33157,100 +33071,6 @@
           "e0975c": "b6b6b6",
           "a85636": "7b7b7b",
           "6f2919": "373737"
-        },
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "ffd495",
-          "e0975c": "ea9931",
-          "a85636": "af4e00",
-          "6f2919": "6e2900"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
-        },
-        {
-          "ffca8a": "b2e89d",
-          "e0975c": "51bd3b",
-          "a85636": "247824",
-          "6f2919": "144216"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "d29ce7",
-          "e0975c": "a451c4",
-          "a85636": "6a2284",
-          "6f2919": "320c40"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ccae7c",
-          "e0975c": "a47844",
-          "a85636": "754c23",
-          "6f2919": "472b13"
-        }
-      ]
-    },
-    {
-      "name": "colourfulchest",
-      "shortdescription": "Replace",
-      "category": "chest",
-      "path": "/items/armors/decorative/costumes/colourful/",
-      "icon": "icons.png:chest",
-      "fileName": "colourful.chest",
-      "maleFrames": {
-        "body": "chestm.png",
-        "backSleeve": "bsleeve.png",
-        "frontSleeve": "fsleeve.png"
-      },
-      "femaleFrames": {
-        "body": "chestm.png",
-        "backSleeve": "bsleeve.png",
-        "frontSleeve": "fsleeve.png"
-      },
-      "mask": null,
-      "rarity": "common",
-      "colorOptions": [
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
         },
         {
           "ffca8a": "f4988c",
@@ -47918,7 +47738,7 @@
       "name": "bioluminlegs",
       "shortdescription": "Glow Trousers",
       "category": "legs",
-      "path": "/items/armors/biome/bioluminescence/biolumin/",
+      "path": "/items/armors/biome/Bioluminescence/biolumin/",
       "icon": "icons.png:pants",
       "fileName": "biolumin.legs",
       "maleFrames": "pants.png",
@@ -51205,92 +51025,6 @@
           "e0975c": "b6b6b6",
           "a85636": "7b7b7b",
           "6f2919": "373737"
-        },
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "ffd495",
-          "e0975c": "ea9931",
-          "a85636": "af4e00",
-          "6f2919": "6e2900"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
-        },
-        {
-          "ffca8a": "b2e89d",
-          "e0975c": "51bd3b",
-          "a85636": "247824",
-          "6f2919": "144216"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "d29ce7",
-          "e0975c": "a451c4",
-          "a85636": "6a2284",
-          "6f2919": "320c40"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ccae7c",
-          "e0975c": "a47844",
-          "a85636": "754c23",
-          "6f2919": "472b13"
-        }
-      ]
-    },
-    {
-      "name": "colourfullegs",
-      "shortdescription": "Replace",
-      "category": "legs",
-      "path": "/items/armors/decorative/costumes/colourful/",
-      "icon": "icons.png:pants",
-      "fileName": "colourful.legs",
-      "maleFrames": "pants.png",
-      "femaleFrames": "pants.png",
-      "mask": null,
-      "rarity": "common",
-      "colorOptions": [
-        {
-          "ffca8a": "f4988c",
-          "e0975c": "d93a3a",
-          "a85636": "932625",
-          "6f2919": "601119"
-        },
-        {
-          "ffca8a": "96cbe7",
-          "e0975c": "5588d4",
-          "a85636": "344495",
-          "6f2919": "1a1c51"
-        },
-        {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
-          "ffca8a": "ffffa7",
-          "e0975c": "e2c344",
-          "a85636": "a46e06",
-          "6f2919": "642f00"
         },
         {
           "ffca8a": "f4988c",
@@ -61864,9 +61598,9 @@
       "name": "batterypackAAback",
       "shortdescription": "AA Battery Pack",
       "category": "back",
-      "path": "/items/armors/backitems/batterypackaa/",
+      "path": "/items/armors/backitems/batterypackAA/",
       "icon": "batterypackAAbackicon.png",
-      "fileName": "batterypackaa.back",
+      "fileName": "batterypackAA.back",
       "maleFrames": "back.png",
       "femaleFrames": "back.png",
       "mask": null,

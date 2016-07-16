@@ -72,14 +72,14 @@ function wardrobe.resetWidgets()
   widget.setText("wardrobeChestName", "No selection")
   widget.setText("wardrobeLegsName", "No selection")
   widget.setText("wardrobeBackName", "No selection")
-  widget.setImage("wardrobeHatRarity", wardrobe.rarities["common"])
-  widget.setImage("wardrobeChestRarity", wardrobe.rarities["common"])
-  widget.setImage("wardrobeLegsRarity", wardrobe.rarities["common"])
-  widget.setImage("wardrobeBackRarity", wardrobe.rarities["common"])
-  widget.setImage("wardrobeHatIcon", "/assetMissing.png")
-  widget.setImage("wardrobeChestIcon", "/assetMissing.png")
-  widget.setImage("wardrobeLegsIcon", "/assetMissing.png")
-  widget.setImage("wardrobeBackIcon", "/assetMissing.png")
+  wardrobe.setWidgetImage("wardrobeHatRarity", wardrobe.rarities["common"])
+  wardrobe.setWidgetImage("wardrobeChestRarity", wardrobe.rarities["common"])
+  wardrobe.setWidgetImage("wardrobeLegsRarity", wardrobe.rarities["common"])
+  wardrobe.setWidgetImage("wardrobeBackRarity", wardrobe.rarities["common"])
+  wardrobe.setWidgetImage("wardrobeHatIcon", "/assetMissing.png")
+  wardrobe.setWidgetImage("wardrobeChestIcon", "/assetMissing.png")
+  wardrobe.setWidgetImage("wardrobeLegsIcon", "/assetMissing.png")
+  wardrobe.setWidgetImage("wardrobeBackIcon", "/assetMissing.png")
 
   wardrobe.loadPreview()
   wardrobe.showItems("wardrobeHatScroll.list", "head")
@@ -388,7 +388,7 @@ function wardrobe.loadPreview()
     -- Add default layer
     local li = widget.addListItem(preview)
     if layers[i] then
-      widget.setImage(preview .. "." .. li .. ".image", layers[i])
+      wardrobe.setWidgetImage(preview .. "." .. li .. ".image", layers[i])
     end
     table.insert(wardrobe.preview.default, li)
 
@@ -428,49 +428,49 @@ function wardrobe.showItem(item, colorIndex)
   local dir = wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex])
   if item.category == "head" then
     local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
-    widget.setImage(w .. ".image", wardrobe.getDefaultImageForItem(item) .. dir)
+    wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item) .. dir)
     if item.mask then
       local mask = "?addmask=" .. wardrobe.fixImagePath(item.path, item.mask)
       w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
-      widget.setImage(w .. ".image", wardrobe.layers[4] .. mask)
+      wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
       if wardrobe.layers[6] then
         w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[6]
-        widget.setImage(w .. ".image", wardrobe.layers[6])
+        wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[6])
       end
       if wardrobe.layers[7] then
         w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[7]
-        widget.setImage(w .. ".image", wardrobe.layers[7])
+        wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[7])
       end
     end
 
-    widget.setImage("wardrobeHatIcon", wardrobe.getIconForItem(item) .. dir)
-    widget.setImage("wardrobeHatRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
+    wardrobe.setWidgetImage("wardrobeHatIcon", wardrobe.getIconForItem(item) .. dir)
+    wardrobe.setWidgetImage("wardrobeHatRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
     widget.setText("wardrobeHatName", name)
   elseif item.category == "chest" then
     local images = wardrobe.getDefaultImageForItem(item, true)
     local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
-    widget.setImage(w .. ".image", images[1] .. dir)
+    wardrobe.setWidgetImage(w .. ".image", images[1] .. dir)
     w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
-    widget.setImage(w .. ".image", images[2] .. dir)
+    wardrobe.setWidgetImage(w .. ".image", images[2] .. dir)
     w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
-    widget.setImage(w .. ".image", images[3] .. dir)
+    wardrobe.setWidgetImage(w .. ".image", images[3] .. dir)
 
-    widget.setImage("wardrobeChestIcon", wardrobe.getIconForItem(item) .. dir)
-    widget.setImage("wardrobeChestRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
+    wardrobe.setWidgetImage("wardrobeChestIcon", wardrobe.getIconForItem(item) .. dir)
+    wardrobe.setWidgetImage("wardrobeChestRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
     widget.setText("wardrobeChestName", name)
   elseif item.category == "legs" then
     local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
-    widget.setImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
+    wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
 
-    widget.setImage("wardrobeLegsIcon", wardrobe.getIconForItem(item) .. dir)
-    widget.setImage("wardrobeLegsRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
+    wardrobe.setWidgetImage("wardrobeLegsIcon", wardrobe.getIconForItem(item) .. dir)
+    wardrobe.setWidgetImage("wardrobeLegsRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
     widget.setText("wardrobeLegsName", name)
   elseif item.category == "back" then
     local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
-    widget.setImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
+    wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
 
-    widget.setImage("wardrobeBackIcon", wardrobe.getIconForItem(item) .. dir)
-    widget.setImage("wardrobeBackRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
+    wardrobe.setWidgetImage("wardrobeBackIcon", wardrobe.getIconForItem(item) .. dir)
+    wardrobe.setWidgetImage("wardrobeBackRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
     widget.setText("wardrobeBackName", name)
   end
 end
@@ -510,15 +510,15 @@ function wardrobe.addItem(w, item)
   local dir = wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if item.category == "head" then
-    widget.setImage(w .. ".imageFront", images .. dir)
+    wardrobe.setWidgetImage(w .. ".imageFront", images .. dir)
   elseif item.category == "chest" then
-    widget.setImage(w .. ".imageBack", images[1] .. dir)
-    widget.setImage(w .. ".image", images[2] .. dir)
-    widget.setImage(w .. ".imageFront", images[3] .. dir)
+    wardrobe.setWidgetImage(w .. ".imageBack", images[1] .. dir)
+    wardrobe.setWidgetImage(w .. ".image", images[2] .. dir)
+    wardrobe.setWidgetImage(w .. ".imageFront", images[3] .. dir)
   elseif item.category == "legs" then
-    widget.setImage(w .. ".image", images .. dir)
+    wardrobe.setWidgetImage(w .. ".image", images .. dir)
   elseif item.category == "back" then
-    widget.setImage(w .. ".imageBack", images .. dir)
+    wardrobe.setWidgetImage(w .. ".imageBack", images .. dir)
   end
 end
 
@@ -649,6 +649,11 @@ end
 ]]
 function wardrobe.setInterfaceData(data)
   widget.setData(wardrobe.widgets.storage, data)
+end
+
+function wardrobe.setWidgetImage(w, p)
+  if not pcall(root.imageSize, p) then p = "/assetMissing.png" end
+  widget.setImage(w, p)
 end
 
 --------------------------
