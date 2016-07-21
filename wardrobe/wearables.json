@@ -15736,7 +15736,7 @@
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
-      "rarity": "rare",
+      "rarity": "uncommon",
       "colorOptions": [
         {
           "ffca8a": "f4988c",
