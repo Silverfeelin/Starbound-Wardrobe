@@ -319,11 +319,7 @@ function wardrobe.filter(category, wid)
   local text = widget.getText(wid)
   wardrobe.searchTick = wardrobe.searchDelay
   wardrobe.searching = true
-  if text == "" then
-    wardrobe.searchCategories[category] = nil
-  else
-    wardrobe.searchCategories[category] = text
-  end
+  wardrobe.searchCategories[category] = text
 end
 
 ----------------------------
