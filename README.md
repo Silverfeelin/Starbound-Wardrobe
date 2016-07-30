@@ -36,7 +36,6 @@ The functionality of the interface is shown in the below images.
 
 ## Planned
 * Storage: a set amount of slots you can use to store and load outfits in.
-* Searching: a search bar for each item type.
 
 ## Potential issues
 * Items are fetched from an item dump bundled with the mod. Game updates that remove items may cause issues (but shouldn't), and items added in game updates will not appear in the Wardrobe until the mod is updated.
