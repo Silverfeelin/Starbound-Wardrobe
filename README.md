@@ -1,5 +1,4 @@
 # Starbound Wardrobe
-**Currently built for nightly only!**  
 Starbound Wardrobe is a mod that uses [Manipulated UI][mui] to add a wardrobe interface to the matter manipulator upgrade panel, for easy access. It focusses on making it easy for users to dress up their character by selecting items, and immediately showing a preview of what these items look like on their character.
 
 ## Table of Contents
