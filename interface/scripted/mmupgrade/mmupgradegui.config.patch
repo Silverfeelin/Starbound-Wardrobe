@@ -493,6 +493,134 @@
   },
   {
     "op": "add",
+    "path": "/gui/wardrobeHatSearchImage",
+    "value": {
+      "type": "image",
+      "file": "/interface/wardrobe/search.png",
+      "position": [
+        2,
+        26
+      ],
+      "zlevel": 35,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeHatSearchText",
+    "value": {
+      "type": "textbox",
+      "position": [
+        6,
+        26
+      ],
+      "textAlign": "left",
+      "hint": "Search",
+      "zlevel": 36,
+      "visible": false,
+      "callback": "wardrobe.filterHat",
+      "maxWidth": 41,
+      "regex": "[a-zA-Z0-9 '-?!.]{0,28}"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestSearchImage",
+    "value": {
+      "type": "image",
+      "file": "/interface/wardrobe/search.png",
+      "position": [
+        54,
+        26
+      ],
+      "zlevel": 35,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeChestSearchText",
+    "value": {
+      "type": "textbox",
+      "position": [
+        58,
+        26
+      ],
+      "textAlign": "left",
+      "hint": "Search",
+      "zlevel": 36,
+      "visible": false,
+      "callback": "wardrobe.filterChest",
+      "maxWidth": 41,
+      "regex": "[a-zA-Z0-9 '-?!.]{0,28}"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsSearchImage",
+    "value": {
+      "type": "image",
+      "file": "/interface/wardrobe/search.png",
+      "position": [
+        234,
+        26
+      ],
+      "zlevel": 35,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeLegsSearchText",
+    "value": {
+      "type": "textbox",
+      "position": [
+        238,
+        26
+      ],
+      "textAlign": "left",
+      "hint": "Search",
+      "zlevel": 36,
+      "visible": false,
+      "callback": "wardrobe.filterLegs",
+      "maxWidth": 41,
+      "regex": "[a-zA-Z0-9 '-?!.]{0,28}"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackSearchImage",
+    "value": {
+      "type": "image",
+      "file": "/interface/wardrobe/search.png",
+      "position": [
+        286,
+        26
+      ],
+      "zlevel": 35,
+      "visible": false
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeBackSearchText",
+    "value": {
+      "type": "textbox",
+      "position": [
+        290,
+        26
+      ],
+      "textAlign": "left",
+      "hint": "Search",
+      "zlevel": 36,
+      "visible": false,
+      "callback": "wardrobe.filterBack",
+      "maxWidth": 41,
+      "regex": "[a-zA-Z0-9 '-?!.]{0,28}"
+    }
+  },
+  {
+    "op": "add",
     "path": "/gui/wardrobeHatScroll",
     "value": {
       "visible": false,
@@ -500,7 +628,7 @@
       "zlevel": 34,
       "rect": [
         1,
-        26,
+        37,
         53,
         203
       ],
@@ -599,7 +727,7 @@
       "zlevel": 34,
       "rect": [
         53,
-        26,
+        37,
         105,
         203
       ],
@@ -746,7 +874,7 @@
       "zlevel": 34,
       "rect": [
         233,
-        26,
+        37,
         285,
         203
       ],
@@ -845,7 +973,7 @@
       "zlevel": 34,
       "rect": [
         285,
-        26,
+        37,
         337,
         203
       ],
@@ -2588,5 +2716,25 @@
     "op": "add",
     "path": "/scriptWidgetCallbacks/-",
     "value": "wardrobe.selectBackColor"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.filterHat"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.filterChest"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.filterLegs"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.filterBack"
   }
 ]

@@ -60,6 +60,10 @@ function wardrobe.init()
   wardrobe.preview.custom = {}
   wardrobe.preview.default = {}
 
+  wardrobe.searching = false
+  wardrobe.searchCategories = {}
+  wardrobe.searchDelay, wardrobe.searchTick = 10, 10
+
   wardrobe.resetWidgets()
 end
 
@@ -82,18 +86,27 @@ function wardrobe.resetWidgets()
   wardrobe.setWidgetImage("wardrobeBackIcon", "/assetMissing.png")
 
   wardrobe.loadPreview()
-  wardrobe.showItems("wardrobeHatScroll.list", "head")
-  wardrobe.showItems("wardrobeChestScroll.list", "chest")
-  wardrobe.showItems("wardrobeLegsScroll.list", "legs")
-  wardrobe.showItems("wardrobeBackScroll.list", "back")
+  wardrobe.showItems("wardrobeHatScroll.list", "head", true)
+  wardrobe.showItems("wardrobeChestScroll.list", "chest", true)
+  wardrobe.showItems("wardrobeLegsScroll.list", "legs", true)
+  wardrobe.showItems("wardrobeBackScroll.list", "back", true)
 end
+
 
 --[[
   Update function, called every game tick by MUI while the interface is opened.
   @param dt - Delay between this and the previous update tick.
 ]]
 function wardrobe.update(dt)
-
+  if wardrobe.searching then
+    wardrobe.searchTick = wardrobe.searchTick - 1
+    if wardrobe.searchTick <= 0 then
+      for k,v in pairs(wardrobe.searchCategories) do
+        wardrobe.showItems("wardrobe" .. k .. "Scroll.list", k:lower(), false, v)
+      end
+      wardrobe.searching = false
+    end
+  end
 end
 
 --[[
@@ -286,6 +299,33 @@ function wardrobe.spawn()
   end
 end
 
+function wardrobe.filterHat(w)
+  wardrobe.filter("Hat", w)
+end
+
+function wardrobe.filterChest(w)
+  wardrobe.filter("Chest", w)
+end
+
+function wardrobe.filterLegs(w)
+  wardrobe.filter("Legs", w)
+end
+
+function wardrobe.filterBack(w)
+  wardrobe.filter("Back", w)
+end
+
+function wardrobe.filter(category, wid)
+  local text = widget.getText(wid)
+  wardrobe.searchTick = wardrobe.searchDelay
+  wardrobe.searching = true
+  if text == "" then
+    wardrobe.searchCategories[category] = nil
+  else
+    wardrobe.searchCategories[category] = text
+  end
+end
+
 ----------------------------
 --[[ Wardrobe Functions ]]--
 ----------------------------
@@ -301,6 +341,10 @@ function wardrobe.showLeftBar(bool)
   widget.setVisible("wardrobeLeftBar", bool)
   widget.setVisible("wardrobeButtonCloseLeftBar", bool)
   widget.setVisible("wardrobeLeftBarTitle", bool)
+  widget.setVisible("wardrobeHatSearchImage", bool)
+  widget.setVisible("wardrobeHatSearchText", bool)
+  widget.setVisible("wardrobeChestSearchImage", bool)
+  widget.setVisible("wardrobeChestSearchText", bool)
 end
 
 --[[
@@ -314,6 +358,10 @@ function wardrobe.showRightBar(bool)
   widget.setVisible("wardrobeRightBar", bool)
   widget.setVisible("wardrobeButtonCloseRightBar", bool)
   widget.setVisible("wardrobeRightBarTitle", bool)
+  widget.setVisible("wardrobeLegsSearchImage", bool)
+  widget.setVisible("wardrobeLegsSearchText", bool)
+  widget.setVisible("wardrobeBackSearchImage", bool)
+  widget.setVisible("wardrobeBackSearchText", bool)
 end
 
 --[[
@@ -482,14 +530,26 @@ end
   @param w - Full widget reference (eg. list.scroll rather than list or scroll).
   @param category - Category used to filter items.
 ]]
-function wardrobe.showItems(w, category)
+function wardrobe.showItems(w, category, selectEquipped, filter)
   widget.clearListItems(w)
 
-  local equipped = player.equippedItem(category)
+  category = category:lower()
+  if category == "hat" then category = "head"
+  elseif category == "top" or category == "shirt" then category = "chest"
+  elseif category == "skirt" or category == "leg" then category = "legs"
+  elseif category == "cape" or category == "enviroprotectionpack" then category = "back" end
+
+  local equipped
+  if selectEquipped then
+    equipped = player.equippedItem(category)
+  end
 
   local items = root.assetJson("/wardrobe/wearables.json")
   if not items or not items[category] then sb.logError("Wardrobe: Could not load items for category %s", category) return end
   items = items[category]
+
+  items = wardrobe.filterList(items, filter)
+
   local itemCount = #items
   -- Add items in pairs of two
   for i=1,itemCount do
@@ -497,6 +557,23 @@ function wardrobe.showItems(w, category)
     if equipped and item.name == equipped.name then wardrobe.itemSelected(item) end
     wardrobe.addItem(w .. "." .. widget.addListItem(w), item)
   end
+end
+
+function wardrobe.filterList(items, filter)
+  if type(filter) ~= "string" then return items end
+  if filter == "" then return items end
+
+  filter = filter:lower()
+
+  local results = {}
+  for _,v in pairs(items) do
+    sb.logInfo("%s", v)
+    if v.shortdescription:lower():find(filter) or v.name:lower():find(filter) then
+      table.insert(results, v)
+    end
+  end
+
+  return results
 end
 
 --[[
