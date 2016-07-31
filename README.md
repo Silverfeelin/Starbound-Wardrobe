@@ -40,6 +40,9 @@ The functionality of the interface is shown in the below images.
 ## Potential issues
 * Items are fetched from an item dump bundled with the mod. Game updates that remove items may cause issues (but shouldn't), and items added in game updates will not appear in the Wardrobe until the mod is updated.
 * Item selection and color options are not shown on the screen at the same time. Solution would be to make the item selection *even* smaller, which in turn makes selecting items rather annoying.
+* Mixing Steam Workshop and GitHub releases may cause load order issues.
+ * If you install Manipulated UI in the Workshop and the Wardrobe here, it will cause a fatal exception. Hopefully Chucklefish will fix this, but the solution is to install the Wardrobe through the Workshop *or* download and install Manipulated UI from GitHub.
+ * Installing Manipulated UI from GitHub **and** the Steam Workshop doesn't seem to hurt.
 
 ## Adding items
 There's a lot of custom clothing out there, and no easy way for us to fetch all items in-game automatically! This repository comes with a project that allows Windows users to easily generate a JSON patch for items found in an asset folder. This allows us to create a patch file that will add these items to the Wardrobe.
