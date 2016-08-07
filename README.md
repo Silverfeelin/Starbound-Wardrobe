@@ -15,7 +15,7 @@ Starbound Wardrobe is a mod that uses [Manipulated UI][mui] to add a wardrobe in
 * [Download](https://github.com/Silverfeelin/Starbound-Wardrobe/releases) the release for the current version of Starbound.
 * Unpack the archive.
 * Place the `Wardrobe.pak` file in your mods folder (eg. `D:\Steam\steamapps\common\Starbound\mods\`).
-* Optionally, place the `ManipulatedUI.pak` in the same mods folder if you don't have this mod yet.
+* Optionally, place the `ManipulatedUI.pak` in the same mods folder. This step is necessary if you don't have this mod yet (or your version is outdated).
   * If this version is older than the current version of [Manipulated UI][muiRelease], it is recommended to download and use that release instead.
 
 ## Usage
