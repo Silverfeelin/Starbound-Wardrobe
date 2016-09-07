@@ -433,33 +433,13 @@ function wardrobe.selectItem(item, category)
 end
 
 --[[
-  Shows the given item on the preview character, optionally using the
-  color option found at the given index.
-  @param item - Item to display on the preview character. Category and layers
-    are determined by the configuration of the item.
-  @param [colorIndex=1] - Index of the color option to apply to the item.
-]]
-function wardrobe.showItem(item, colorIndex)
-
-  if item.category == "head" then
-  elseif item.category == "chest" then
-
-  elseif item.category == "legs" then
-
-  elseif item.category == "back" then
-    local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
-    wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
-
-    wardrobe.setWidgetImage("wardrobeBackIcon", wardrobe.getIconForItem(item) .. dir)
-    wardrobe.setWidgetImage("wardrobeBackRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
-    widget.setText("wardrobeBackName", name)
-  end
-end
-
---[[
   Returns a table containing parameters useful for showing the given item.
   Uses default values such as 'No selection' and "/assetMissing.png" if no item is passed.
-  .. Returns name, colorIndex, icon, dir, rarity NOT Image (because chest inconsistency)
+  The actual image is not returned, as the default value for this varies between item categories (table with three images for chest, unlike the other categories).
+  @param item - Item to retrieve parameters for. A nil value will return parameters indicating that no item was selected.
+  @param [colorIndex=1] - Preferred color index. Defaults to 1 if no value is given or the value falls outside of the available color options.
+  @return - Table containing the most befitting:
+    'name' (string), 'colorIndex' (number), 'icon' (path), 'dir' (string), 'rarity' (string).
 ]]
 function wardrobe.getParametersForShowing(item, colorIndex)
   if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
@@ -472,6 +452,12 @@ function wardrobe.getParametersForShowing(item, colorIndex)
   return { name = name, colorIndex = colorIndex, icon = icon, dir = dir, rarity = rarity }
 end
 
+--[[
+  Shows the given head item on the preview character, optionally using the color option found at the given index.
+  @param item - Item to display on the preview character. Category and layers
+    are determined by the configuration of the item. A nil value will remove the head item.
+  @param [colorIndex=1] - Index of the color option to apply to the item.
+]]
 function wardrobe.showHead(item, colorIndex)
   local params = wardrobe.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item) or "/assetMissing.png"
@@ -498,6 +484,12 @@ function wardrobe.showHead(item, colorIndex)
   widget.setText("wardrobeHeadName", params.name)
 end
 
+--[[
+  Shows the given chest item on the preview character, optionally using the color option found at the given index.
+  @param item - Item to display on the preview character. Category and layers
+    are determined by the configuration of the item. A nil value will remove the chest item.
+  @param [colorIndex=1] - Index of the color option to apply to the item.
+]]
 function wardrobe.showChest(item, colorIndex)
   if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
   local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
@@ -519,20 +511,40 @@ function wardrobe.showChest(item, colorIndex)
   widget.setText("wardrobeChestName", name)
 end
 
+--[[
+  Shows the given legs item on the preview character, optionally using the color option found at the given index.
+  @param item - Item to display on the preview character. Category and layers
+    are determined by the configuration of the item. A nil value will remove the legs item.
+  @param [colorIndex=1] - Index of the color option to apply to the item.
+]]
 function wardrobe.showLegs(item, colorIndex)
-  -- TODO
-  --[[
-  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
-  wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
+  local params = wardrobe.getParametersForShowing(item, colorIndex)
+  local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
-  wardrobe.setWidgetImage("wardrobeLegsIcon", wardrobe.getIconForItem(item) .. dir)
-  wardrobe.setWidgetImage("wardrobeLegsRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
-  widget.setText("wardrobeLegsName", name)
-  ]]
+  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
+  wardrobe.setWidgetImage(w .. ".image", image .. params.dir)
+
+  wardrobe.setWidgetImage("wardrobeLegsIcon", params.icon .. params.dir)
+  wardrobe.setWidgetImage("wardrobeLegsRarity", params.rarity)
+  widget.setText("wardrobeLegsName", params.name)
 end
 
+--[[
+  Shows the given back item on the preview character, optionally using the color option found at the given index.
+  @param item - Item to display on the preview character. Category and layers
+    are determined by the configuration of the item. A nil value will remove the back item.
+  @param [colorIndex=1] - Index of the color option to apply to the item.
+]]
 function wardrobe.showBack(item, colorIndex)
+  local params = wardrobe.getParametersForShowing(item, colorIndex)
+  local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
+  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
+  wardrobe.setWidgetImage(w .. ".image", image .. params.dir)
+
+  wardrobe.setWidgetImage("wardrobeBackIcon", params.icon .. params.dir)
+  wardrobe.setWidgetImage("wardrobeBackRarity", params.rarity)
+  widget.setText("wardrobeBackName", params.name)
 end
 
 wardrobe.showItemForCategory = {
@@ -541,6 +553,7 @@ wardrobe.showItemForCategory = {
   legs = wardrobe.showLegs,
   back = wardrobe.showBack
 }
+
 --[[
   Populates the leftList and rightList of the given scroll area with items
   matching the given category. Clears existing entries in both lists before
@@ -589,7 +602,6 @@ function wardrobe.filterList(items, filter)
 
   local results = {}
   for _,v in pairs(items) do
-    sb.logInfo("%s", v)
     if v.shortdescription:lower():find(filter) or v.name:lower():find(filter) then
       table.insert(results, v)
     end
