@@ -72,26 +72,25 @@ end
   Also alters relevent data, eg. reverting selection back to equipped items.
 ]]
 function wardrobe.resetWidgets()
-  widget.setText("wardrobeHatName", "No selection")
+  widget.setText("wardrobeHeadName", "No selection")
   widget.setText("wardrobeChestName", "No selection")
   widget.setText("wardrobeLegsName", "No selection")
   widget.setText("wardrobeBackName", "No selection")
-  wardrobe.setWidgetImage("wardrobeHatRarity", wardrobe.rarities["common"])
+  wardrobe.setWidgetImage("wardrobeHeadRarity", wardrobe.rarities["common"])
   wardrobe.setWidgetImage("wardrobeChestRarity", wardrobe.rarities["common"])
   wardrobe.setWidgetImage("wardrobeLegsRarity", wardrobe.rarities["common"])
   wardrobe.setWidgetImage("wardrobeBackRarity", wardrobe.rarities["common"])
-  wardrobe.setWidgetImage("wardrobeHatIcon", "/assetMissing.png")
+  wardrobe.setWidgetImage("wardrobeHeadIcon", "/assetMissing.png")
   wardrobe.setWidgetImage("wardrobeChestIcon", "/assetMissing.png")
   wardrobe.setWidgetImage("wardrobeLegsIcon", "/assetMissing.png")
   wardrobe.setWidgetImage("wardrobeBackIcon", "/assetMissing.png")
 
   wardrobe.loadPreview()
-  wardrobe.showItems("wardrobeHatScroll.list", "head", true)
+  wardrobe.showItems("wardrobeHeadScroll.list", "head", true)
   wardrobe.showItems("wardrobeChestScroll.list", "chest", true)
   wardrobe.showItems("wardrobeLegsScroll.list", "legs", true)
   wardrobe.showItems("wardrobeBackScroll.list", "back", true)
 end
-
 
 --[[
   Update function, called every game tick by MUI while the interface is opened.
@@ -117,7 +116,7 @@ function wardrobe.uninit()
   wardrobe.closeLeftBar()
   wardrobe.closeRightBar()
   for i=1,16 do
-    widget.setVisible("wardrobeHatColor_" .. i, false)
+    widget.setVisible("wardrobeHeadColor_" .. i, false)
     widget.setVisible("wardrobeChestColor_" .. i, false)
     widget.setVisible("wardrobeLegsColor_" .. i, false)
     widget.setVisible("wardrobeBackColor_" .. i, false)
@@ -149,31 +148,39 @@ end
 --------------------------
 
 --[[
-  Widget callback function. Shows the left bar and available hats.
+  Shows or hides the left item selection bar.
+  @param bool - Value indicating whether to show (true) or hide (false) the
+    selection bar.
 ]]
-function wardrobe.showHats()
-  wardrobe.showLeftBar(true)
+function wardrobe.showLeftBar(bool)
+  if type(bool) ~= "boolean" then bool = true end
+  widget.setVisible("wardrobeHeadScroll", bool)
+  widget.setVisible("wardrobeChestScroll", bool)
+  widget.setVisible("wardrobeLeftBar", bool)
+  widget.setVisible("wardrobeButtonCloseLeftBar", bool)
+  widget.setVisible("wardrobeLeftBarTitle", bool)
+  widget.setVisible("wardrobeHeadSearchImage", bool)
+  widget.setVisible("wardrobeHeadSearchText", bool)
+  widget.setVisible("wardrobeChestSearchImage", bool)
+  widget.setVisible("wardrobeChestSearchText", bool)
 end
 
 --[[
-  Widget callback function. Shows the left bar and available chest pieces.
+  Shows or hides the right item selection bar.
+  @param [bool=true] - Value indicating whether to show (true) or hide (false) the
+    selection bar.
 ]]
-function wardrobe.showChests()
-  wardrobe.showLeftBar(true)
-end
-
---[[
-  Widget callback function. Shows the right bar and available bottoms.
-]]
-function wardrobe.showLegs()
-  wardrobe.showRightBar(true)
-end
-
---[[
-  Widget callback function. Shows the right bar and available back items.
-]]
-function wardrobe.showBacks()
-  wardrobe.showRightBar(true)
+function wardrobe.showRightBar(bool)
+  if type(bool) ~= "boolean" then bool = true end
+  widget.setVisible("wardrobeLegsScroll", bool)
+  widget.setVisible("wardrobeBackScroll", bool)
+  widget.setVisible("wardrobeRightBar", bool)
+  widget.setVisible("wardrobeButtonCloseRightBar", bool)
+  widget.setVisible("wardrobeRightBarTitle", bool)
+  widget.setVisible("wardrobeLegsSearchImage", bool)
+  widget.setVisible("wardrobeLegsSearchText", bool)
+  widget.setVisible("wardrobeBackSearchImage", bool)
+  widget.setVisible("wardrobeBackSearchText", bool)
 end
 
 --[[
@@ -191,13 +198,13 @@ function wardrobe.closeRightBar()
 end
 
 --[[
-  Widget callback function. Called when a hat is selected from the list.
+  Widget callback function. Called when a head is selected from the list.
   Shows the selected item on the preview character.
 ]]
-function wardrobe.hatSelected()
-  local sel = widget.getListSelected("wardrobeHatScroll.list")
+function wardrobe.headSelected()
+  local sel = widget.getListSelected("wardrobeHeadScroll.list")
   if sel then
-    wardrobe.itemSelected(widget.getData("wardrobeHatScroll.list." .. sel))
+    wardrobe.selectItem(widget.getData("wardrobeHeadScroll.list." .. sel), "head")
   end
 end
 
@@ -208,7 +215,7 @@ Shows the selected item on the preview character.
 function wardrobe.chestSelected()
   local sel = widget.getListSelected("wardrobeChestScroll.list")
   if sel then
-    wardrobe.itemSelected(widget.getData("wardrobeChestScroll.list." .. sel))
+    wardrobe.selectItem(widget.getData("wardrobeChestScroll.list." .. sel), "chest")
   end
 end
 
@@ -219,7 +226,7 @@ Shows the selected item on the preview character.
 function wardrobe.legsSelected()
   local sel = widget.getListSelected("wardrobeLegsScroll.list")
   if sel then
-    wardrobe.itemSelected(widget.getData("wardrobeLegsScroll.list." .. sel))
+    wardrobe.selectItem(widget.getData("wardrobeLegsScroll.list." .. sel), "legs")
   end
 end
 
@@ -230,17 +237,17 @@ Shows the selected item on the preview character.
 function wardrobe.backSelected()
   local sel = widget.getListSelected("wardrobeBackScroll.list")
   if sel then
-    wardrobe.itemSelected(widget.getData("wardrobeBackScroll.list." .. sel))
+    wardrobe.selectItem(widget.getData("wardrobeBackScroll.list." .. sel), "back")
   end
 end
 
 --[[
   Widget callback function. Applies the selected color option to the selected
-  hat.
+  head.
   @param d - Widget data, contains selected color option index.
 ]]
-function wardrobe.selectHatColor(_,d)
-  wardrobe.showItem(wardrobe.selection["head"], d)
+function wardrobe.selectHeadColor(_,d)
+  wardrobe.showHead(wardrobe.selection["head"], d)
   wardrobe.selection["head"].selectedColor = d
 end
 
@@ -250,7 +257,7 @@ end
   @param d - Widget data, contains selected color option index.
 ]]
 function wardrobe.selectChestColor(_,d)
-  wardrobe.showItem(wardrobe.selection["chest"], d)
+  wardrobe.showChest(wardrobe.selection["chest"], d)
   wardrobe.selection["chest"].selectedColor = d
 end
 
@@ -260,7 +267,7 @@ end
   @param d - Widget data, contains selected color option index.
 ]]
 function wardrobe.selectLegsColor(_,d)
-  wardrobe.showItem(wardrobe.selection["legs"], d)
+  wardrobe.showLegs(wardrobe.selection["legs"], d)
   wardrobe.selection["legs"].selectedColor = d
 end
 
@@ -270,7 +277,7 @@ end
   @param d - Widget data, contains selected color option index.
 ]]
 function wardrobe.selectBackColor(_,d)
-  wardrobe.showItem(wardrobe.selection["back"], d)
+  wardrobe.showBack(wardrobe.selection["back"], d)
   wardrobe.selection["back"].selectedColor = d
 end
 
@@ -299,8 +306,8 @@ function wardrobe.spawn()
   end
 end
 
-function wardrobe.filterHat(w)
-  wardrobe.filter("Hat", w)
+function wardrobe.filterHead(w)
+  wardrobe.filter("Head", w)
 end
 
 function wardrobe.filterChest(w)
@@ -327,61 +334,27 @@ end
 ----------------------------
 
 --[[
-  Shows or hides the left item selection bar.
-  @param bool - Value indicating whether to show (true) or hide (false) the
-    selection bar.
-]]
-function wardrobe.showLeftBar(bool)
-  widget.setVisible("wardrobeHatScroll", bool)
-  widget.setVisible("wardrobeChestScroll", bool)
-  widget.setVisible("wardrobeLeftBar", bool)
-  widget.setVisible("wardrobeButtonCloseLeftBar", bool)
-  widget.setVisible("wardrobeLeftBarTitle", bool)
-  widget.setVisible("wardrobeHatSearchImage", bool)
-  widget.setVisible("wardrobeHatSearchText", bool)
-  widget.setVisible("wardrobeChestSearchImage", bool)
-  widget.setVisible("wardrobeChestSearchText", bool)
-end
-
---[[
-  Shows or hides the right item selection bar.
-  @param bool - Value indicating whether to show (true) or hide (false) the
-    selection bar.
-]]
-function wardrobe.showRightBar(bool)
-  widget.setVisible("wardrobeLegsScroll", bool)
-  widget.setVisible("wardrobeBackScroll", bool)
-  widget.setVisible("wardrobeRightBar", bool)
-  widget.setVisible("wardrobeButtonCloseRightBar", bool)
-  widget.setVisible("wardrobeRightBarTitle", bool)
-  widget.setVisible("wardrobeLegsSearchImage", bool)
-  widget.setVisible("wardrobeLegsSearchText", bool)
-  widget.setVisible("wardrobeBackSearchImage", bool)
-  widget.setVisible("wardrobeBackSearchText", bool)
-end
-
---[[
   Loads the preview by adding layers to the preview widget.
 
   Custom layer order, fetched with wardrobe.preview.custom[n]:
   [1] backarm [2] [3] head emote hair body [4] [5] fluff beaks [6] frontarm [7]
   Regular use: [1] = Background, [2] = BackSleeve, [3] = BackItem, [4] = Pants,
-  [5] = Shirt, [6] = Hat, [7] = FrontSleeve
+  [5] = Shirt, [6] = Head, [7] = FrontSleeve
 
   Some data you're free to skip over:
-  Human: backarm backsleeve backitem head emote hair body pants shirt hat frontarm frontsleeve
-  Avian: backarm backsleeve backitem head emote hair body pants shirt fluff beaks hat frontarm frontsleeve
-  Hylotl: backarm backsleeve backitem head emote hair body pants shirt hat frontarm frontsleeve
-  Glitch: backarm backsleeve backitem head emote hair body pants shirt hat frontarm frontsleeve
-  Novakid: backarm backsleeve backitem head emote hair body pants shirt brand hat frontarm frontsleeve
-  Apex: backarm backsleeve backitem head emote hair body pants shirt beard hat frontarm frontsleeve
+  Human: backarm backsleeve backitem head emote hair body pants shirt head frontarm frontsleeve
+  Avian: backarm backsleeve backitem head emote hair body pants shirt fluff beaks head frontarm frontsleeve
+  Hylotl: backarm backsleeve backitem head emote hair body pants shirt head frontarm frontsleeve
+  Glitch: backarm backsleeve backitem head emote hair body pants shirt head frontarm frontsleeve
+  Novakid: backarm backsleeve backitem head emote hair body pants shirt brand head frontarm frontsleeve
+  Apex: backarm backsleeve backitem head emote hair body pants shirt beard head frontarm frontsleeve
   # == 6 => backarm head emote hair body <empty> <empty> frontarm
   # == 7 => backarm head emote hair body brand <empty> frontarm
   # == 7 => backarm head emote hair body beard <empty> frontarm
   # == 8 => backarm head emote hair body fluff beaks frontarm
 
   Layers 4, 6 and 7 need their ?addmask removed (if existent). Likewise, these
-  layers need a mask added when a hat is selected with a valid mask.
+  layers need a mask added when a head is selected with a valid mask.
 ]]
 function wardrobe.loadPreview()
   sb.logInfo("Wardrobe: Loading preview.")
@@ -449,13 +422,14 @@ end
   selected color option and displays the item.
   @param - The item selected, as stored in the item dump.
 ]]
-function wardrobe.itemSelected(item)
+function wardrobe.selectItem(item, category)
+  category = category or item.category
+  wardrobe.selection[category] = item
   if item then
-    wardrobe.selection[item.category] = item
-    wardrobe.selection[item.category].selectedColor = 1
-    wardrobe.showItem(item)
-    wardrobe.showColors(item)
+    wardrobe.selection[category].selectedColor = 1
   end
+  wardrobe.showItemForCategory[category](item)
+  wardrobe.showColors(item, category)
 end
 
 --[[
@@ -466,49 +440,12 @@ end
   @param [colorIndex=1] - Index of the color option to apply to the item.
 ]]
 function wardrobe.showItem(item, colorIndex)
-  if not item then return end
-  if not colorIndex or colorIndex > #item.colorOptions then colorIndex = 1 end
-  local name = item.shortdescription or item.name or "Name missing"
-  local dir = wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex])
+
   if item.category == "head" then
-    local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
-    wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item) .. dir)
-    if item.mask then
-      local mask = "?addmask=" .. wardrobe.fixImagePath(item.path, item.mask)
-      w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
-      wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
-      if wardrobe.layers[6] then
-        w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[6]
-        wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[6])
-      end
-      if wardrobe.layers[7] then
-        w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[7]
-        wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[7])
-      end
-    end
-
-    wardrobe.setWidgetImage("wardrobeHatIcon", wardrobe.getIconForItem(item) .. dir)
-    wardrobe.setWidgetImage("wardrobeHatRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
-    widget.setText("wardrobeHatName", name)
   elseif item.category == "chest" then
-    local images = wardrobe.getDefaultImageForItem(item, true)
-    local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
-    wardrobe.setWidgetImage(w .. ".image", images[1] .. dir)
-    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
-    wardrobe.setWidgetImage(w .. ".image", images[2] .. dir)
-    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
-    wardrobe.setWidgetImage(w .. ".image", images[3] .. dir)
 
-    wardrobe.setWidgetImage("wardrobeChestIcon", wardrobe.getIconForItem(item) .. dir)
-    wardrobe.setWidgetImage("wardrobeChestRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
-    widget.setText("wardrobeChestName", name)
   elseif item.category == "legs" then
-    local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
-    wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
 
-    wardrobe.setWidgetImage("wardrobeLegsIcon", wardrobe.getIconForItem(item) .. dir)
-    wardrobe.setWidgetImage("wardrobeLegsRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
-    widget.setText("wardrobeLegsName", name)
   elseif item.category == "back" then
     local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
     wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
@@ -520,6 +457,91 @@ function wardrobe.showItem(item, colorIndex)
 end
 
 --[[
+  Returns a table containing parameters useful for showing the given item.
+  Uses default values such as 'No selection' and "/assetMissing.png" if no item is passed.
+  .. Returns name, colorIndex, icon, dir, rarity NOT Image (because chest inconsistency)
+]]
+function wardrobe.getParametersForShowing(item, colorIndex)
+  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
+  local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
+  local dir = item and wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex])
+  local icon = "/assetMissing.png"
+  if dir then icon = wardrobe.getIconForItem(item) .. dir
+  else dir = "" end
+  local rarity = item and item.rarity and wardrobe.rarities[item.rarity] or wardrobe.rarities["common"]
+  return { name = name, colorIndex = colorIndex, icon = icon, dir = dir, rarity = rarity }
+end
+
+function wardrobe.showHead(item, colorIndex)
+  local params = wardrobe.getParametersForShowing(item, colorIndex)
+  local image = item and wardrobe.getDefaultImageForItem(item) or "/assetMissing.png"
+
+  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
+  wardrobe.setWidgetImage(w .. ".image", image .. params.dir)
+
+  if item and item.mask then
+    local mask = "?addmask=" .. wardrobe.fixImagePath(item.path, item.mask)
+    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
+    wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
+    if wardrobe.layers[6] then
+      w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[6]
+      wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[6])
+    end
+    if wardrobe.layers[7] then
+      w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[7]
+      wardrobe.setWidgetImage(w .. ".image", wardrobe.layers[7])
+    end
+  end
+
+  wardrobe.setWidgetImage("wardrobeHeadIcon", params.icon)
+  wardrobe.setWidgetImage("wardrobeHeadRarity", params.rarity)
+  widget.setText("wardrobeHeadName", params.name)
+end
+
+function wardrobe.showChest(item, colorIndex)
+  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
+  local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
+  local dir = item and wardrobe.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex])
+  local icon = "/assetMissing.png"
+  if dir then icon = wardrobe.getIconForItem(item) .. dir
+  else dir = "" end
+  local images = item and wardrobe.getDefaultImageForItem(item, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
+
+  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
+  wardrobe.setWidgetImage(w .. ".image", images[1] .. dir)
+  w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
+  wardrobe.setWidgetImage(w .. ".image", images[2] .. dir)
+  w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
+  wardrobe.setWidgetImage(w .. ".image", images[3] .. dir)
+
+  wardrobe.setWidgetImage("wardrobeChestIcon", icon)
+  wardrobe.setWidgetImage("wardrobeChestRarity", item and item.rarity and wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
+  widget.setText("wardrobeChestName", name)
+end
+
+function wardrobe.showLegs(item, colorIndex)
+  -- TODO
+  --[[
+  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
+  wardrobe.setWidgetImage(w .. ".image", wardrobe.getDefaultImageForItem(item, true) .. dir)
+
+  wardrobe.setWidgetImage("wardrobeLegsIcon", wardrobe.getIconForItem(item) .. dir)
+  wardrobe.setWidgetImage("wardrobeLegsRarity", wardrobe.rarities[item.rarity] or wardrobe.rarities["common"])
+  widget.setText("wardrobeLegsName", name)
+  ]]
+end
+
+function wardrobe.showBack(item, colorIndex)
+
+end
+
+wardrobe.showItemForCategory = {
+  head = wardrobe.showHead,
+  chest = wardrobe.showChest,
+  legs = wardrobe.showLegs,
+  back = wardrobe.showBack
+}
+--[[
   Populates the leftList and rightList of the given scroll area with items
   matching the given category. Clears existing entries in both lists before
   adding matches.
@@ -529,8 +551,12 @@ end
 function wardrobe.showItems(w, category, selectEquipped, filter)
   widget.clearListItems(w)
 
+  -- Add blank item to clear selection.
+  local clear = widget.addListItem(w)
+  wardrobe.setWidgetImage(w .. "." .. clear .. ".imageFront", "/assetMissing.png?replace;ffffff00=ffffffff?crop;0;0;43;43?blendmult=/interface/wardrobe/x.png;-13;-13?replace;ffffffff=00000000")
+
   category = category:lower()
-  if category == "hat" then category = "head"
+  if category == "head" then category = "head"
   elseif category == "top" or category == "shirt" then category = "chest"
   elseif category == "skirt" or category == "leg" then category = "legs"
   elseif category == "cape" or category == "enviroprotectionpack" then category = "back" end
@@ -550,7 +576,7 @@ function wardrobe.showItems(w, category, selectEquipped, filter)
   -- Add items in pairs of two
   for i=1,itemCount do
     local item = items[i]
-    if equipped and item.name == equipped.name then wardrobe.itemSelected(item) end
+    if equipped and item.name == equipped.name then wardrobe.selectItem(item, category) end
     wardrobe.addItem(w .. "." .. widget.addListItem(w), item)
   end
 end
@@ -600,15 +626,18 @@ end
   by checking the available color options for the given item.
   @param item - Item to show color options for.
 ]]
-function wardrobe.showColors(item)
+function wardrobe.showColors(item, category)
   local w
-  if item.category == "head" then
-    w = "wardrobeHatColor_"
-  elseif item.category == "chest" then
+  category = category or item.category
+  if not item then item = { colorOptions = {} } end
+
+  if category == "head" then
+    w = "wardrobeHeadColor_"
+  elseif category == "chest" then
     w = "wardrobeChestColor_"
-  elseif item.category == "legs" then
+  elseif category == "legs" then
     w = "wardrobeLegsColor_"
-  elseif item.category == "back" then
+  elseif category == "back" then
     w = "wardrobeBackColor_"
   end
   if w then

@@ -53,7 +53,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatTitle",
+    "path": "/gui/wardrobeHeadTitle",
     "value": {
       "type": "label",
       "position": [
@@ -68,7 +68,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatIcon",
+    "path": "/gui/wardrobeHeadIcon",
     "value": {
       "type": "image",
       "file": "/assetMissing.png",
@@ -83,7 +83,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatName",
+    "path": "/gui/wardrobeHeadName",
     "value": {
       "type": "label",
       "position": [
@@ -100,7 +100,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatRarity",
+    "path": "/gui/wardrobeHeadRarity",
     "value": {
       "type": "image",
       "file": "/interface/inventory/itembordercommon.png",
@@ -114,7 +114,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeShowHats",
+    "path": "/gui/wardrobeShowHead",
     "value": {
       "type": "button",
       "base": "/assetMissing.png?replace;ffffff00=ffffff01?scalenearest=2?crop;0;0;97;20",
@@ -130,13 +130,13 @@
         2,
         190
       ],
-      "data": "hat",
-      "callback": "wardrobe.showHats"
+      "data": "head",
+      "callback": "wardrobe.showLeftBar"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColorTitle",
+    "path": "/gui/wardrobeHeadColorTitle",
     "value": {
       "type": "label",
       "position": [
@@ -212,7 +212,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeShowChests",
+    "path": "/gui/wardrobeShowChest",
     "value": {
       "type": "button",
       "base": "/assetMissing.png?replace;ffffff00=ffffff01?scalenearest=2?crop;0;0;97;20",
@@ -229,7 +229,7 @@
         129
       ],
       "data": "chest",
-      "callback": "wardrobe.showChests"
+      "callback": "wardrobe.showLeftBar"
     }
   },
   {
@@ -327,7 +327,7 @@
         190
       ],
       "data": "legs",
-      "callback": "wardrobe.showLegs"
+      "callback": "wardrobe.showRightBar"
     }
   },
   {
@@ -408,7 +408,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeShowBacks",
+    "path": "/gui/wardrobeShowBack",
     "value": {
       "type": "button",
       "base": "/assetMissing.png?replace;ffffff00=ffffff01?scalenearest=2?crop;0;0;97;20",
@@ -425,7 +425,7 @@
         129
       ],
       "data": "back",
-      "callback": "wardrobe.showBacks"
+      "callback": "wardrobe.showRightBar"
     }
   },
   {
@@ -493,7 +493,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatSearchImage",
+    "path": "/gui/wardrobeHeadSearchImage",
     "value": {
       "type": "image",
       "file": "/interface/wardrobe/search.png",
@@ -507,7 +507,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatSearchText",
+    "path": "/gui/wardrobeHeadSearchText",
     "value": {
       "type": "textbox",
       "position": [
@@ -518,7 +518,7 @@
       "hint": "Search",
       "zlevel": 36,
       "visible": false,
-      "callback": "wardrobe.filterHat",
+      "callback": "wardrobe.filterHead",
       "maxWidth": 41,
       "regex": "[a-zA-Z0-9 '-?!.]{0,28}"
     }
@@ -621,7 +621,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatScroll",
+    "path": "/gui/wardrobeHeadScroll",
     "value": {
       "visible": false,
       "type": "scrollArea",
@@ -636,7 +636,7 @@
         "list": {
           "type": "list",
           "position": [0, 0],
-          "callback": "wardrobe.hatSelected",
+          "callback": "wardrobe.headSelected",
           "schema": {
             "selectedBG": "/assetMissing.png",
             "unselectedBG": "/assetMissing.png",
@@ -1109,7 +1109,7 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_1",
+    "path": "/gui/wardrobeHeadColor_1",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1127,12 +1127,12 @@
       ],
       "visible": false,
       "data": 1,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_2",
+    "path": "/gui/wardrobeHeadColor_2",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1150,12 +1150,12 @@
       ],
       "visible": false,
       "data": 2,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_3",
+    "path": "/gui/wardrobeHeadColor_3",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1173,12 +1173,12 @@
       ],
       "visible": false,
       "data": 3,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_4",
+    "path": "/gui/wardrobeHeadColor_4",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1196,12 +1196,12 @@
       ],
       "visible": false,
       "data": 4,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_5",
+    "path": "/gui/wardrobeHeadColor_5",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1219,12 +1219,12 @@
       ],
       "visible": false,
       "data": 5,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_6",
+    "path": "/gui/wardrobeHeadColor_6",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1242,12 +1242,12 @@
       ],
       "visible": false,
       "data": 6,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_7",
+    "path": "/gui/wardrobeHeadColor_7",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1265,12 +1265,12 @@
       ],
       "visible": false,
       "data": 7,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_8",
+    "path": "/gui/wardrobeHeadColor_8",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1288,12 +1288,12 @@
       ],
       "visible": false,
       "data": 8,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_9",
+    "path": "/gui/wardrobeHeadColor_9",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1311,12 +1311,12 @@
       ],
       "visible": false,
       "data": 9,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_10",
+    "path": "/gui/wardrobeHeadColor_10",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1334,12 +1334,12 @@
       ],
       "visible": false,
       "data": 10,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_11",
+    "path": "/gui/wardrobeHeadColor_11",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1357,12 +1357,12 @@
       ],
       "visible": false,
       "data": 11,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_12",
+    "path": "/gui/wardrobeHeadColor_12",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1380,12 +1380,12 @@
       ],
       "visible": false,
       "data": 12,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_13",
+    "path": "/gui/wardrobeHeadColor_13",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1403,12 +1403,12 @@
       ],
       "visible": false,
       "data": 13,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_14",
+    "path": "/gui/wardrobeHeadColor_14",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1426,12 +1426,12 @@
       ],
       "visible": false,
       "data": 14,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_15",
+    "path": "/gui/wardrobeHeadColor_15",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1449,12 +1449,12 @@
       ],
       "visible": false,
       "data": 15,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeHatColor_16",
+    "path": "/gui/wardrobeHeadColor_16",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/color.png",
@@ -1472,7 +1472,7 @@
       ],
       "visible": false,
       "data": 16,
-      "callback": "wardrobe.selectHatColor"
+      "callback": "wardrobe.selectHeadColor"
     }
   },
   {
@@ -2624,12 +2624,12 @@
     "value": {
       "activator": "btnWardrobe",
       "show": ["wardrobePreview", "wardrobeTitle", "wardrobeSubtitle", "wardrobeSpawn",
-        "wardrobeHatName", "wardrobeChestName", "wardrobeLegsName", "wardrobeBackName",
-        "wardrobeHatIcon", "wardrobeChestIcon", "wardrobeLegsIcon", "wardrobeBackIcon",
-        "wardrobeHatTitle", "wardrobeHatRarity", "wardrobeHatColorTitle", "wardrobeShowHats",
-        "wardrobeChestTitle", "wardrobeChestRarity", "wardrobeChestColorTitle", "wardrobeShowChests",
+        "wardrobeHeadName", "wardrobeChestName", "wardrobeLegsName", "wardrobeBackName",
+        "wardrobeHeadIcon", "wardrobeChestIcon", "wardrobeLegsIcon", "wardrobeBackIcon",
+        "wardrobeHeadTitle", "wardrobeHeadRarity", "wardrobeHeadColorTitle", "wardrobeShowHead",
+        "wardrobeChestTitle", "wardrobeChestRarity", "wardrobeChestColorTitle", "wardrobeShowChest",
         "wardrobeLegsTitle", "wardrobeLegsRarity", "wardrobeLegsColorTitle", "wardrobeShowLegs",
-        "wardrobeBackTitle", "wardrobeBackRarity", "wardrobeBackColorTitle", "wardrobeShowBacks"
+        "wardrobeBackTitle", "wardrobeBackRarity", "wardrobeBackColorTitle", "wardrobeShowBack"
       ],
       "hide": [],
       "settingControls": [],
@@ -2645,22 +2645,12 @@
   {
     "op": "add",
     "path": "/scriptWidgetCallbacks/-",
-    "value": "wardrobe.showHats"
+    "value": "wardrobe.showLeftBar"
   },
   {
     "op": "add",
     "path": "/scriptWidgetCallbacks/-",
-    "value": "wardrobe.showChests"
-  },
-  {
-    "op": "add",
-    "path": "/scriptWidgetCallbacks/-",
-    "value": "wardrobe.showLegs"
-  },
-  {
-    "op": "add",
-    "path": "/scriptWidgetCallbacks/-",
-    "value": "wardrobe.showBacks"
+    "value": "wardrobe.showRightBar"
   },
   {
     "op": "add",
@@ -2675,7 +2665,7 @@
   {
     "op": "add",
     "path": "/scriptWidgetCallbacks/-",
-    "value": "wardrobe.hatSelected"
+    "value": "wardrobe.headSelected"
   },
   {
     "op": "add",
@@ -2700,7 +2690,7 @@
   {
     "op": "add",
     "path": "/scriptWidgetCallbacks/-",
-    "value": "wardrobe.selectHatColor"
+    "value": "wardrobe.selectHeadColor"
   },
   {
     "op": "add",
@@ -2720,7 +2710,7 @@
   {
     "op": "add",
     "path": "/scriptWidgetCallbacks/-",
-    "value": "wardrobe.filterHat"
+    "value": "wardrobe.filterHead"
   },
   {
     "op": "add",
