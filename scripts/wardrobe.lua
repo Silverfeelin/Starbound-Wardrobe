@@ -306,32 +306,59 @@ function wardrobe.spawn()
   end
 end
 
+--[[
+  Widget callback function.
+  Sets the head category to be filtered when the user stops typing.
+  @param w - Widget name, used to fetch the value to filter by.
+]]
 function wardrobe.filterHead(w)
   wardrobe.filter("Head", w)
 end
 
+--[[
+  Widget callback function.
+  Sets the chest category to be filtered when the user stops typing.
+  @param w - Widget name, used to fetch the value to filter by.
+]]
 function wardrobe.filterChest(w)
   wardrobe.filter("Chest", w)
 end
 
+--[[
+  Widget callback function.
+  Sets the legs category to be filtered when the user stops typing.
+  @param w - Widget name, used to fetch the value to filter by.
+]]
 function wardrobe.filterLegs(w)
   wardrobe.filter("Legs", w)
 end
 
+--[[
+  Widget callback function.
+  Sets the back category to be filtered when the user stops typing.
+  @param w - Widget name, used to fetch the value to filter by.
+]]
 function wardrobe.filterBack(w)
   wardrobe.filter("Back", w)
 end
 
+----------------------------
+--[[ Wardrobe Functions ]]--
+----------------------------
+
+--[[
+  Sets the list for the given category to be filtered when the user stops typing
+  for a set duration. This check can be found in the update function.
+  Resets the search delay.
+  @param category - Item category to filter.
+  @param wid - Widget name, used to retrieve the value to filter by.
+]]
 function wardrobe.filter(category, wid)
   local text = widget.getText(wid)
   wardrobe.searchTick = wardrobe.searchDelay
   wardrobe.searching = true
   wardrobe.searchCategories[category] = text
 end
-
-----------------------------
---[[ Wardrobe Functions ]]--
-----------------------------
 
 --[[
   Loads the preview by adding layers to the preview widget.
@@ -547,6 +574,10 @@ function wardrobe.showBack(item, colorIndex)
   widget.setText("wardrobeBackName", params.name)
 end
 
+--[[
+  Reference collection for all show<Category> functions.
+  Accessing is done through wardrobe.showItemForCategory[category](item, colorIndex).
+]]
 wardrobe.showItemForCategory = {
   head = wardrobe.showHead,
   chest = wardrobe.showChest,
@@ -594,6 +625,14 @@ function wardrobe.showItems(w, category, selectEquipped, filter)
   end
 end
 
+--[[
+  Filters the given item collection on the given filter, and returns a new table
+  containing references to the items matching the filter.
+  @param items - List of items to filter.
+  @param filter - String to filter items by. The item names and short descriptions
+  are compared to the filter. The filter is case-insensitive.
+  @return - Table containing items matching the given filter.
+]]
 function wardrobe.filterList(items, filter)
   if type(filter) ~= "string" then return items end
   if filter == "" then return items end
