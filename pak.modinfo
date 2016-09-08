@@ -1,7 +1,0 @@
-{
-  "name" : "Wardrobe",
-  "path" : ".",
-  "requires" : [
-    "Manipulated UI"
-  ]
-}
