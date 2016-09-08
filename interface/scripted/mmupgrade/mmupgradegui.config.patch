@@ -1074,6 +1074,7 @@
         59
       ],
       "zlevel": 25,
+      "scissoring": false,
       "schema": {
         "selectedBG": "/assetMissing.png",
         "unselectedBG": "/assetMissing.png",
@@ -1089,9 +1090,10 @@
           "image": {
             "type": "image",
             "file": "/assetMissing.png",
+            "scissoring": false,
             "position": [
               0,
-              0
+              129
             ],
             "maxSize": [
               129,
