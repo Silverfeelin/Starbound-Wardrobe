@@ -2581,12 +2581,12 @@
   },
   {
     "op": "add",
-    "path": "/gui/wardrobeSpawn",
+    "path": "/gui/wardrobeEquip",
     "value": {
       "type": "button",
       "base": "/interface/wardrobe/button.png",
       "hover": "/interface/wardrobe/button.png?brightness=30",
-      "caption": "^shadow;Create Outfit",
+      "caption": "^shadow;Equip Outfit",
       "wrapWidth": 80,
       "zlevel": 20,
       "hAnchor": "mid",
@@ -2596,7 +2596,31 @@
         -1
       ],
       "position": [
-        130,
+        91,
+        34
+      ],
+      "visible": true,
+      "callback": "wardrobe.equip"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/gui/wardrobeSpawn",
+    "value": {
+      "type": "button",
+      "base": "/interface/wardrobe/button.png",
+      "hover": "/interface/wardrobe/button.png?brightness=30",
+      "caption": "^shadow;Spawn Outfit",
+      "wrapWidth": 80,
+      "zlevel": 20,
+      "hAnchor": "mid",
+      "vAnchor": "mid",
+      "pressedOffset": [
+        0,
+        -1
+      ],
+      "position": [
+        170,
         34
       ],
       "visible": true,
@@ -2623,7 +2647,8 @@
     "path": "/packages/-",
     "value": {
       "activator": "btnWardrobe",
-      "show": ["wardrobePreview", "wardrobeTitle", "wardrobeSubtitle", "wardrobeSpawn",
+      "show": ["wardrobePreview", "wardrobeTitle", "wardrobeSubtitle",
+        "wardrobeSpawn", "wardrobeEquip",
         "wardrobeHeadName", "wardrobeChestName", "wardrobeLegsName", "wardrobeBackName",
         "wardrobeHeadIcon", "wardrobeChestIcon", "wardrobeLegsIcon", "wardrobeBackIcon",
         "wardrobeHeadTitle", "wardrobeHeadRarity", "wardrobeHeadColorTitle", "wardrobeShowHead",
@@ -2686,6 +2711,11 @@
     "op": "add",
     "path": "/scriptWidgetCallbacks/-",
     "value": "wardrobe.spawn"
+  },
+  {
+    "op": "add",
+    "path": "/scriptWidgetCallbacks/-",
+    "value": "wardrobe.equip"
   },
   {
     "op": "add",

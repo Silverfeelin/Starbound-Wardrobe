@@ -49,6 +49,8 @@ function wardrobe.init()
   mui.setTitle("Wardrobe", "It's time to dress up!")
   mui.setIcon("/interface/wardrobe/icon.png")
 
+  wardrobe.setConfigParameters()
+
   wardrobe.selection = {}
   wardrobe.preview.custom = {}
   wardrobe.preview.default = {}
@@ -287,27 +289,28 @@ wardrobe.selectColorForCategory = {
 
 --[[
   Widget callback function. Gives the player all selected items in the given
-  color option. Color options are applied through directives rather than the
-  'colorIndex' parameter. I have no clue how to determine this value as it does
-  not match the index.
+  color options.
 ]]
 function wardrobe.spawn()
-  if wardrobe.selection["head"] then
-    local item = wardrobe.selection["head"]
-    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
-  end
-  if wardrobe.selection["chest"] then
-    local item = wardrobe.selection["chest"]
-    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
-  end
-  if wardrobe.selection["legs"] then
-    local item = wardrobe.selection["legs"]
-    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
-  end
-  if wardrobe.selection["back"] then
-    local item = wardrobe.selection["back"]
-    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
-  end
+  local suffix = wardrobe.getConfigParameter("useArmorSlot") and "" or "Cosmetic"
+
+  wardrobe_util.giveItem(wardrobe.selection["head"], "head" .. suffix, false)
+  wardrobe_util.giveItem(wardrobe.selection["chest"], "chest" .. suffix, false)
+  wardrobe_util.giveItem(wardrobe.selection["legs"], "legs" .. suffix, false)
+  wardrobe_util.giveItem(wardrobe.selection["back"], "back" .. suffix, false)
+end
+
+--[[
+  Widget callback function. Equips all selected items using the given
+  color options.
+]]
+function wardrobe.equip()
+  local suffix = wardrobe.getConfigParameter("useArmorSlot") and "" or "Cosmetic"
+
+  wardrobe_util.giveItem(wardrobe.selection["head"], "head" .. suffix, true)
+  wardrobe_util.giveItem(wardrobe.selection["chest"], "chest" .. suffix, true)
+  wardrobe_util.giveItem(wardrobe.selection["legs"], "legs" .. suffix, true)
+  wardrobe_util.giveItem(wardrobe.selection["back"], "back" .. suffix, true)
 end
 
 --[[
@@ -477,19 +480,12 @@ function wardrobe.showHead(item, colorIndex)
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
   wardrobe_util.setWidgetImage(w .. ".image", image .. params.dir)
 
+  local mask = ""
   if item and item.mask then
-    local mask = "?addmask=" .. wardrobe_util.fixImagePath(item.path, item.mask)
-    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
-    wardrobe_util.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
-    if wardrobe.layers[6] then
-      w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[6]
-      wardrobe_util.setWidgetImage(w .. ".image", wardrobe.layers[6])
-    end
-    if wardrobe.layers[7] then
-      w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[7]
-      wardrobe_util.setWidgetImage(w .. ".image", wardrobe.layers[7])
-    end
+    mask = "?addmask=" .. wardrobe_util.fixImagePath(item.path, item.mask)
   end
+  w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
+  wardrobe_util.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
 
   wardrobe_util.setWidgetImage("wardrobeHeadIcon", params.icon)
   wardrobe_util.setWidgetImage("wardrobeHeadRarity", params.rarity)
@@ -592,7 +588,9 @@ function wardrobe.showItems(w, category, selectEquipped, filter)
 
   local equipped
   if selectEquipped then
-    equipped = player.equippedItem(category)
+    local c = category
+    if not wardrobe.getConfigParameter("useArmorSlot") then c = c .. "Cosmetic" end
+    equipped = player.equippedItem(c)
   end
 
   local items = root.assetJson("/wardrobe/wearables.json")
@@ -728,4 +726,24 @@ end
 ]]
 function wardrobe.setInterfaceData(data)
   widget.setData(wardrobe.widgets.storage, data)
+end
+
+function wardrobe.setConfigParameters()
+  local cfg = root.getConfigurationPath("wardrobeInterface")
+  if not cfg then
+    root.setConfigurationPath("wardrobeInterface", {})
+    cfg = {}
+  end
+  if type(cfg.useArmorSlot) ~= "boolean" then root.setConfigurationPath("wardrobeInterface.useArmorSlot", false) end
+  return root.getConfigurationPath("wardrobeInterface")
+end
+
+function wardrobe.getConfigParameters()
+  return root.getConfigurationPath("wardrobeInterface")
+end
+
+function wardrobe.getConfigParameter(path)
+  if type(path) == "string" and path ~= "" then
+    return root.getConfigurationPath("wardrobeInterface." .. path)
+  end
 end

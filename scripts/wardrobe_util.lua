@@ -113,6 +113,40 @@ function wardrobe_util.colorOptionToDirectives(colorOption)
   return dir
 end
 
+wardrobe_util.placeholders = {
+  head = { name = "cupidshead", count = 1 },
+  chest = { name = "cupidschest", count = 1 },
+  legs = { name = "cupidslegs", count = 1 },
+  back = { name = "cupidsback", count = 1 }
+}
+wardrobe_util.placeholders.headCosmetic = wardrobe_util.placeholders.head
+wardrobe_util.placeholders.chestCosmetic = wardrobe_util.placeholders.chest
+wardrobe_util.placeholders.legsCosmetic = wardrobe_util.placeholders.legs
+wardrobe_util.placeholders.backCosmetic = wardrobe_util.placeholders.back
+
+function wardrobe_util.giveItem(item, category, equip)
+  local oppositeCategory = category:find("Cosmetic") and category:gsub("Cosmetic", "") or (category .. "Cosmetic")
+  local equipped = player.equippedItem(category)
+  local oppositeEquipped = player.equippedItem(oppositeCategory)
+
+  if equip then
+    -- Equip the item, add the previous to the inventory.
+    if equipped then
+      if not oppositeEquipped then player.setEquippedItem(oppositeCategory, wardrobe_util.placeholders[category]) end
+      player.giveItem(equipped)
+      if not oppositeEquipped then player.setEquippedItem(oppositeCategory, nil) end
+    end
+    player.setEquippedItem(category, item and {name=item.name,parameters={colorIndex=(item.selectedColor - 1)}} or nil)
+  elseif item then
+    -- Add the item to the inventory; do not equip it.
+    if not equipped then player.setEquippedItem(category, wardrobe_util.placeholders[category]) end
+    if not oppositeEquipped then  player.setEquippedItem(oppositeCategory, wardrobe_util.placeholders[category]) end
+    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
+    if not equipped then player.setEquippedItem(category, nil) end
+    if not oppositeEquipped then player.setEquippedItem(oppositeCategory, nil) end
+  end
+end
+
 -- Define the player table if it isn't already.
 player = player or {}
 
