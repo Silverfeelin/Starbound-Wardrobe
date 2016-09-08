@@ -275,6 +275,17 @@ function wardrobe.selectBackColor(_,d)
 end
 
 --[[
+  Reference collection for all select<Category>Color functions.
+  Accessing is done through wardrobe.selectColorForCategory[category](_, colorIndex).
+]]
+wardrobe.selectColorForCategory = {
+  head = wardrobe.selectHeadColor,
+  chest = wardrobe.selectChestColor,
+  legs = wardrobe.selectLegsColor,
+  back = wardrobe.selectBackColor
+}
+
+--[[
   Widget callback function. Gives the player all selected items in the given
   color option. Color options are applied through directives rather than the
   'colorIndex' parameter. I have no clue how to determine this value as it does
@@ -440,7 +451,8 @@ end
 --[[
   Sets the selection for the category of the item to this item, resets the
   selected color option and displays the item.
-  @param - The item selected, as stored in the item dump.
+  @param item - The item to select, as stored in the item dump.
+  @param [category=item.category] - The category of the item.
 ]]
 function wardrobe.selectItem(item, category)
   category = category or item.category
@@ -448,7 +460,7 @@ function wardrobe.selectItem(item, category)
   if item then
     wardrobe.selection[category].selectedColor = 1
   end
-  wardrobe.showItemForCategory[category](item)
+  wardrobe.showItemForCategory[category](item, colorIndex)
   wardrobe.showColors(item, category)
 end
 
@@ -590,10 +602,19 @@ function wardrobe.showItems(w, category, selectEquipped, filter)
   items = wardrobe_util.filterList(items, filter)
 
   local itemCount = #items
-  -- Add items in pairs of two
+  -- Add items
   for i=1,itemCount do
     local item = items[i]
-    if equipped and item.name == equipped.name then wardrobe.selectItem(item, category) end
+    if equipped and item.name == equipped.name then
+      local index = equipped.parameters.colorIndex or 1
+      local cfg = root.itemConfig(item.name).config
+      local colors = cfg.colorOptions and #cfg.colorOptions or 12
+      index = index - 1
+      -- This should automatically select the color options of the equipped item.
+      index = (index % colors) + 2
+      wardrobe.selectItem(item, category)
+      wardrobe.selectColorForCategory[category](_, index)
+    end
     wardrobe.addItem(w .. "." .. widget.addListItem(w), item)
   end
 end
