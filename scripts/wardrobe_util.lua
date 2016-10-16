@@ -47,7 +47,7 @@ end
 function wardrobe_util.getParametersForShowing(item, colorIndex)
   if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
   local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
-  local dir = item and wardrobe_util.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex])
+  local dir = item and wardrobe_util.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex] or nil)
   local icon = "/assetMissing.png"
   if dir then icon = wardrobe_util.getIconForItem(item) .. dir
   else dir = "" end

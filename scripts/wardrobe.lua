@@ -660,6 +660,7 @@ function wardrobe.showColors(item, category)
     w = "wardrobeBackColor_"
   end
   if w then
+    if not item.colorOptions then item.colorOptions = {} end
     for i=1,#item.colorOptions do
       widget.setVisible(w .. i, true)
       local img = "/interface/wardrobe/color.png" .. wardrobe_util.colorOptionToDirectives(item.colorOptions and item.colorOptions[i])
@@ -688,7 +689,7 @@ function wardrobe.getDefaultImageForItem(item, useCharacterFrames)
   local armFrame = useCharacterFrames and wardrobe.idleFrames.arm or "idle.1"
 
   if item.category == "head" then
-    local image = wardrobe_util.fixImagePath(item.path, item.maleFrames) .. ":normal"
+    local image = wardrobe_util.fixImagePath(item.path, player.gender() == "male" and item.maleFrames or item.femaleFrames) .. ":normal"
     return image
   elseif item.category == "chest" then
     local image = wardrobe_util.fixImagePath(item.path, player.gender() == "male" and item.maleFrames.body or item.femaleFrames.body) .. ":" .. bodyFrame
