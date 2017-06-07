@@ -6549,70 +6549,40 @@
       "rarity": "rare",
       "colorOptions": [
         {
-          "ffca8a": "fffdb0",
-          "e0975c": "cbc234",
-          "a85636": "926e19",
-          "6f2919": "563f0f"
+          "06ff00": "06ff00"
         },
         {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "0b0b0b"
+          "06ff00": "151515"
         },
         {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
+          "06ff00": "808080"
         },
         {
-          "ffca8a": "fa5f53",
-          "e0975c": "bc1d1d",
-          "a85636": "76141b",
-          "6f2919": "460c12"
+          "06ff00": "e6e6e6"
         },
         {
-          "ffca8a": "ffb05a",
-          "e0975c": "c36a22",
-          "a85636": "833d12",
-          "6f2919": "512209"
+          "06ff00": "ff0000"
         },
         {
-          "ffca8a": "fae153",
-          "e0975c": "b1981c",
-          "a85636": "7d6214",
-          "6f2919": "47340a"
+          "06ff00": "ff9100"
         },
         {
-          "ffca8a": "8ed563",
-          "e0975c": "498737",
-          "a85636": "1e4b19",
-          "6f2919": "0b200a"
+          "06ff00": "ffd400"
         },
         {
-          "ffca8a": "47c8f8",
-          "e0975c": "1b79b5",
-          "a85636": "10386d",
-          "6f2919": "091d3f"
+          "06ff00": "06ff00"
         },
         {
-          "ffca8a": "be69f4",
-          "e0975c": "8532bf",
-          "a85636": "4e187c",
-          "6f2919": "290c46"
+          "06ff00": "0080ff"
         },
         {
-          "ffca8a": "fc72f8",
-          "e0975c": "a239a3",
-          "a85636": "681f6f",
-          "6f2919": "35103b"
+          "06ff00": "b700ff"
         },
         {
-          "ffca8a": "bb8b4d",
-          "e0975c": "75522d",
-          "a85636": "463319",
-          "6f2919": "1c140a"
+          "06ff00": "ff00ae"
+        },
+        {
+          "06ff00": "995200"
         }
       ]
     },
@@ -6699,86 +6669,6 @@
           "e0975c": "a47844",
           "a85636": "754c23",
           "6f2919": "472b13"
-        }
-      ]
-    },
-    {
-      "name": "darkguardhead",
-      "shortdescription": "Dark Guard Mask",
-      "category": "head",
-      "path": "/items/armors/biome/midnight/darkguard/",
-      "icon": "icons.png:head",
-      "fileName": "darkguard.head",
-      "maleFrames": "head.png",
-      "femaleFrames": "head.png",
-      "mask": "mask.png",
-      "rarity": "rare",
-      "colorOptions": [
-        {
-          "ffca8a": "fffdb0",
-          "e0975c": "cbc234",
-          "a85636": "926e19",
-          "6f2919": "563f0f"
-        },
-        {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "0b0b0b"
-        },
-        {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
-        },
-        {
-          "ffca8a": "fa5f53",
-          "e0975c": "bc1d1d",
-          "a85636": "76141b",
-          "6f2919": "460c12"
-        },
-        {
-          "ffca8a": "ffb05a",
-          "e0975c": "c36a22",
-          "a85636": "833d12",
-          "6f2919": "512209"
-        },
-        {
-          "ffca8a": "fae153",
-          "e0975c": "b1981c",
-          "a85636": "7d6214",
-          "6f2919": "47340a"
-        },
-        {
-          "ffca8a": "8ed563",
-          "e0975c": "498737",
-          "a85636": "1e4b19",
-          "6f2919": "0b200a"
-        },
-        {
-          "ffca8a": "47c8f8",
-          "e0975c": "1b79b5",
-          "a85636": "10386d",
-          "6f2919": "091d3f"
-        },
-        {
-          "ffca8a": "be69f4",
-          "e0975c": "8532bf",
-          "a85636": "4e187c",
-          "6f2919": "290c46"
-        },
-        {
-          "ffca8a": "fc72f8",
-          "e0975c": "a239a3",
-          "a85636": "681f6f",
-          "6f2919": "35103b"
-        },
-        {
-          "ffca8a": "bb8b4d",
-          "e0975c": "75522d",
-          "a85636": "463319",
-          "6f2919": "1c140a"
         }
       ]
     },
@@ -10826,7 +10716,7 @@
     },
     {
       "name": "hotholidayhead",
-      "shortdescription": "Mrs. Claus's Hat",
+      "shortdescription": "Holiday Hat",
       "category": "head",
       "path": "/items/armors/decorative/costumes/hotholiday/",
       "icon": "icons.png:head",
@@ -10834,7 +10724,7 @@
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
-      "rarity": "common",
+      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "f4988c",
@@ -11084,7 +10974,7 @@
     },
     {
       "name": "mrclaushead",
-      "shortdescription": "Mr. Claus's Hat",
+      "shortdescription": "Holiday Beard Hat",
       "category": "head",
       "path": "/items/armors/decorative/costumes/mrclaus/",
       "icon": "icons.png:head",
@@ -11092,7 +10982,7 @@
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
-      "rarity": "common",
+      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "f4988c",
@@ -11529,6 +11419,92 @@
           "e0975c": "51bd3b",
           "a85636": "247824",
           "6f2919": "144216"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "premierhead",
+      "shortdescription": "Premier Helmet",
+      "category": "head",
+      "path": "/items/armors/decorative/costumes/premier/",
+      "icon": "icons.png:head",
+      "fileName": "premier.head",
+      "maleFrames": "head.png",
+      "femaleFrames": "head.png",
+      "mask": "mask.png",
+      "rarity": "legendary",
+      "colorOptions": [
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
         },
         {
           "ffca8a": "838383",
@@ -15727,6 +15703,92 @@
       ]
     },
     {
+      "name": "industrialcrewhead",
+      "shortdescription": "Industrial Crew Helmet",
+      "category": "head",
+      "path": "/items/armors/decorative/hats/industrialcrew/",
+      "icon": "icons.png:head",
+      "fileName": "industrialcrew.head",
+      "maleFrames": "head.png",
+      "femaleFrames": "head.png",
+      "mask": "mask.png",
+      "rarity": "legendary",
+      "colorOptions": [
+        {
+          "ffca8a": "8da6b0",
+          "e0975c": "657988",
+          "a85636": "434d5e",
+          "6f2919": "313247"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
       "name": "insidioushead",
       "shortdescription": "Insidious Mask",
       "category": "head",
@@ -16248,7 +16310,7 @@
       "category": "head",
       "path": "/items/armors/decorative/hats/ladyhat/",
       "icon": "icons.png:head",
-      "fileName": "head.head",
+      "fileName": "ladyhathead.head",
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
@@ -16424,7 +16486,7 @@
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
-      "rarity": "common",
+      "rarity": "rare",
       "colorOptions": [
         {
           "ffca8a": "909c4f",
@@ -16517,6 +16579,92 @@
           "e0975c": "5f6c37",
           "a85636": "414d28",
           "6f2919": "1b2211"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "mechpilothead",
+      "shortdescription": "Mech Pilot Helmet",
+      "category": "head",
+      "path": "/items/armors/decorative/hats/mechpilot/",
+      "icon": "icons.png:head",
+      "fileName": "mechpilot.head",
+      "maleFrames": "head.png",
+      "femaleFrames": "head.png",
+      "mask": "mask.png",
+      "rarity": "legendary",
+      "colorOptions": [
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
         },
         {
           "ffca8a": "838383",
@@ -18327,6 +18475,92 @@
       ]
     },
     {
+      "name": "spacebirdhead",
+      "shortdescription": "Spacebird Helmet",
+      "category": "head",
+      "path": "/items/armors/decorative/hats/spacebird/",
+      "icon": "icons.png:head",
+      "fileName": "spacebird.head",
+      "maleFrames": "head.png",
+      "femaleFrames": "head.png",
+      "mask": "mask.png",
+      "rarity": "legendary",
+      "colorOptions": [
+        {
+          "ffca8a": "8da6b0",
+          "e0975c": "657988",
+          "a85636": "434d5e",
+          "6f2919": "313247"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
       "name": "strawberryhead",
       "shortdescription": "Strawberry Mask",
       "category": "head",
@@ -18848,7 +19082,7 @@
       "category": "head",
       "path": "/items/armors/decorative/hats/tophat/",
       "icon": "icons.png:head",
-      "fileName": "head.head",
+      "fileName": "tophathead.head",
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
@@ -18934,7 +19168,7 @@
       "category": "head",
       "path": "/items/armors/decorative/hats/toptophat/",
       "icon": "icons.png:head",
-      "fileName": "head.head",
+      "fileName": "toptophathead.head",
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
@@ -24270,7 +24504,7 @@
       "maleFrames": "head.png",
       "femaleFrames": "head.png",
       "mask": "mask.png",
-      "rarity": "legendary",
+      "rarity": "rare",
       "colorOptions": [
         {
           "ffca8a": "d29ce7",
@@ -30247,64 +30481,70 @@
           "6f2919": "601119"
         },
         {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "0b0b0b"
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
         },
         {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
         },
         {
-          "ffca8a": "ba3f36",
-          "e0975c": "7a2622",
-          "a85636": "411114",
-          "6f2919": "25090c"
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
         },
         {
-          "ffca8a": "d77b24",
-          "e0975c": "794317",
-          "a85636": "3a1f0f",
-          "6f2919": "1d1009"
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
         },
         {
-          "ffca8a": "eedb53",
-          "e0975c": "928132",
-          "a85636": "42381a",
-          "6f2919": "262010"
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
         },
         {
-          "ffca8a": "6c9e4a",
-          "e0975c": "395b2b",
-          "a85636": "1b2e16",
-          "6f2919": "0b140a"
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
         },
         {
-          "ffca8a": "4681c0",
-          "e0975c": "284672",
-          "a85636": "161b3b",
-          "6f2919": "0c0e22"
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
         },
         {
-          "ffca8a": "7d4794",
-          "e0975c": "4d245d",
-          "a85636": "221328",
-          "6f2919": "0f0912"
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
         },
         {
-          "ffca8a": "d46bd7",
-          "e0975c": "7c377b",
-          "a85636": "30172e",
-          "6f2919": "170b16"
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
         },
         {
-          "ffca8a": "a36948",
-          "e0975c": "683a23",
-          "a85636": "2d1a12",
-          "6f2919": "170d09"
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
         }
       ]
     },
@@ -30329,70 +30569,40 @@
       "rarity": "rare",
       "colorOptions": [
         {
-          "ffca8a": "fffdb0",
-          "e0975c": "cbc234",
-          "a85636": "926e19",
-          "6f2919": "563f0f"
+          "06ff00": "06ff00"
         },
         {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "0b0b0b"
+          "06ff00": "151515"
         },
         {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
+          "06ff00": "808080"
         },
         {
-          "ffca8a": "fa5f53",
-          "e0975c": "bc1d1d",
-          "a85636": "76141b",
-          "6f2919": "460c12"
+          "06ff00": "e6e6e6"
         },
         {
-          "ffca8a": "ffb05a",
-          "e0975c": "c36a22",
-          "a85636": "833d12",
-          "6f2919": "512209"
+          "06ff00": "ff0000"
         },
         {
-          "ffca8a": "fae153",
-          "e0975c": "b1981c",
-          "a85636": "7d6214",
-          "6f2919": "47340a"
+          "06ff00": "ff9100"
         },
         {
-          "ffca8a": "8ed563",
-          "e0975c": "498737",
-          "a85636": "1e4b19",
-          "6f2919": "0b200a"
+          "06ff00": "ffd400"
         },
         {
-          "ffca8a": "47c8f8",
-          "e0975c": "1b79b5",
-          "a85636": "10386d",
-          "6f2919": "091d3f"
+          "06ff00": "06ff00"
         },
         {
-          "ffca8a": "be69f4",
-          "e0975c": "8532bf",
-          "a85636": "4e187c",
-          "6f2919": "290c46"
+          "06ff00": "0080ff"
         },
         {
-          "ffca8a": "fc72f8",
-          "e0975c": "a239a3",
-          "a85636": "681f6f",
-          "6f2919": "35103b"
+          "06ff00": "b700ff"
         },
         {
-          "ffca8a": "bb8b4d",
-          "e0975c": "75522d",
-          "a85636": "463319",
-          "6f2919": "1c140a"
+          "06ff00": "ff00ae"
+        },
+        {
+          "06ff00": "995200"
         }
       ]
     },
@@ -33688,7 +33898,7 @@
     },
     {
       "name": "hotholidaychest",
-      "shortdescription": "Mrs. Claus's Coat",
+      "shortdescription": "Holiday Top",
       "category": "chest",
       "path": "/items/armors/decorative/costumes/hotholiday/",
       "icon": "icons.png:chest",
@@ -33704,7 +33914,7 @@
         "frontSleeve": "fsleeve.png"
       },
       "mask": null,
-      "rarity": "common",
+      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "f4988c",
@@ -34158,7 +34368,7 @@
     },
     {
       "name": "mrclauschest",
-      "shortdescription": "Mr. Claus's Coat",
+      "shortdescription": "Holiday Coat",
       "category": "chest",
       "path": "/items/armors/decorative/costumes/mrclaus/",
       "icon": "icons.png:chest",
@@ -34174,7 +34384,7 @@
         "frontSleeve": "fsleeve.png"
       },
       "mask": null,
-      "rarity": "common",
+      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "f4988c",
@@ -34745,6 +34955,100 @@
           "e0975c": "51bd3b",
           "a85636": "247824",
           "6f2919": "144216"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "premierchest",
+      "shortdescription": "Premier Chestpiece",
+      "category": "chest",
+      "path": "/items/armors/decorative/costumes/premier/",
+      "icon": "icons.png:chest",
+      "fileName": "premier.chest",
+      "maleFrames": {
+        "body": "chest.png",
+        "backSleeve": "bsleeve.png",
+        "frontSleeve": "fsleeve.png"
+      },
+      "femaleFrames": {
+        "body": "chest.png",
+        "backSleeve": "bsleeve.png",
+        "frontSleeve": "fsleeve.png"
+      },
+      "mask": null,
+      "rarity": "legendary",
+      "colorOptions": [
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
         },
         {
           "ffca8a": "838383",
@@ -42732,7 +43036,7 @@
         "frontSleeve": "fsleeve.png"
       },
       "mask": null,
-      "rarity": "legendary",
+      "rarity": "rare",
       "colorOptions": [
         {
           "ffca8a": "d29ce7",
@@ -42910,12 +43214,12 @@
       "icon": "icons.png:chest",
       "fileName": "caretaker.chest",
       "maleFrames": {
-        "body": "chestm.png",
+        "body": "chest.png",
         "backSleeve": "bsleeve.png",
         "frontSleeve": "fsleeve.png"
       },
       "femaleFrames": {
-        "body": "chestf.png",
+        "body": "chest.png",
         "backSleeve": "bsleeve.png",
         "frontSleeve": "fsleeve.png"
       },
@@ -48785,64 +49089,70 @@
           "6f2919": "0b0b0b"
         },
         {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "0b0b0b"
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
         },
         {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
         },
         {
-          "ffca8a": "ba3f36",
-          "e0975c": "7a2622",
-          "a85636": "411114",
-          "6f2919": "25090c"
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
         },
         {
-          "ffca8a": "d77b24",
-          "e0975c": "794317",
-          "a85636": "3a1f0f",
-          "6f2919": "1d1009"
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
         },
         {
-          "ffca8a": "eedb53",
-          "e0975c": "928132",
-          "a85636": "42381a",
-          "6f2919": "262010"
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
         },
         {
-          "ffca8a": "6c9e4a",
-          "e0975c": "395b2b",
-          "a85636": "1b2e16",
-          "6f2919": "0b140a"
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
         },
         {
-          "ffca8a": "4681c0",
-          "e0975c": "284672",
-          "a85636": "161b3b",
-          "6f2919": "0c0e22"
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
         },
         {
-          "ffca8a": "7d4794",
-          "e0975c": "4d245d",
-          "a85636": "221328",
-          "6f2919": "0f0912"
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
         },
         {
-          "ffca8a": "d46bd7",
-          "e0975c": "7c377b",
-          "a85636": "30172e",
-          "6f2919": "170b16"
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
         },
         {
-          "ffca8a": "a36948",
-          "e0975c": "683a23",
-          "a85636": "2d1a12",
-          "6f2919": "170d09"
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
         }
       ]
     },
@@ -48859,70 +49169,40 @@
       "rarity": "rare",
       "colorOptions": [
         {
-          "ffca8a": "fffdb0",
-          "e0975c": "cbc234",
-          "a85636": "926e19",
-          "6f2919": "563f0f"
+          "06ff00": "06ff00"
         },
         {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "0b0b0b"
+          "06ff00": "151515"
         },
         {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
+          "06ff00": "808080"
         },
         {
-          "ffca8a": "fa5f53",
-          "e0975c": "bc1d1d",
-          "a85636": "76141b",
-          "6f2919": "460c12"
+          "06ff00": "e6e6e6"
         },
         {
-          "ffca8a": "ffb05a",
-          "e0975c": "c36a22",
-          "a85636": "833d12",
-          "6f2919": "512209"
+          "06ff00": "ff0000"
         },
         {
-          "ffca8a": "fae153",
-          "e0975c": "b1981c",
-          "a85636": "7d6214",
-          "6f2919": "47340a"
+          "06ff00": "ff9100"
         },
         {
-          "ffca8a": "8ed563",
-          "e0975c": "498737",
-          "a85636": "1e4b19",
-          "6f2919": "0b200a"
+          "06ff00": "ffd400"
         },
         {
-          "ffca8a": "47c8f8",
-          "e0975c": "1b79b5",
-          "a85636": "10386d",
-          "6f2919": "091d3f"
+          "06ff00": "06ff00"
         },
         {
-          "ffca8a": "be69f4",
-          "e0975c": "8532bf",
-          "a85636": "4e187c",
-          "6f2919": "290c46"
+          "06ff00": "0080ff"
         },
         {
-          "ffca8a": "fc72f8",
-          "e0975c": "a239a3",
-          "a85636": "681f6f",
-          "6f2919": "35103b"
+          "06ff00": "b700ff"
         },
         {
-          "ffca8a": "bb8b4d",
-          "e0975c": "75522d",
-          "a85636": "463319",
-          "6f2919": "1c140a"
+          "06ff00": "ff00ae"
+        },
+        {
+          "06ff00": "995200"
         }
       ]
     },
@@ -51508,15 +51788,15 @@
     },
     {
       "name": "hotholidaypants",
-      "shortdescription": "Mrs. Claus's Skirt",
+      "shortdescription": "Holiday Skirt",
       "category": "legs",
       "path": "/items/armors/decorative/costumes/hotholiday/",
       "icon": "icons.png:pants",
       "fileName": "hotholiday.legs",
-      "maleFrames": "pantsm.png",
+      "maleFrames": "pantsf.png",
       "femaleFrames": "pantsf.png",
       "mask": null,
-      "rarity": "common",
+      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "f4988c",
@@ -51852,7 +52132,7 @@
     },
     {
       "name": "mrclauspants",
-      "shortdescription": "Mr. Claus's Trousers",
+      "shortdescription": "Holiday Trousers",
       "category": "legs",
       "path": "/items/armors/decorative/costumes/mrclaus/",
       "icon": "icons.png:pants",
@@ -51860,7 +52140,7 @@
       "maleFrames": "pants.png",
       "femaleFrames": "pants.png",
       "mask": null,
-      "rarity": "common",
+      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "f4988c",
@@ -52297,6 +52577,92 @@
           "e0975c": "51bd3b",
           "a85636": "247824",
           "6f2919": "144216"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "premierpants",
+      "shortdescription": "Premier Greaves",
+      "category": "legs",
+      "path": "/items/armors/decorative/costumes/premier/",
+      "icon": "icons.png:pants",
+      "fileName": "premier.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "legendary",
+      "colorOptions": [
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
         },
         {
           "ffca8a": "838383",
@@ -59514,7 +59880,7 @@
       "maleFrames": "pants.png",
       "femaleFrames": "pants.png",
       "mask": null,
-      "rarity": "legendary",
+      "rarity": "rare",
       "colorOptions": [
         {
           "ffca8a": "d29ce7",
@@ -61265,6 +61631,608 @@
           "e0975c": "9bba3d",
           "a85636": "48832f",
           "6f2919": "1b4c2a"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "penguinbandana",
+      "shortdescription": "Penguin Bandana",
+      "category": "legs",
+      "path": "/items/armors/penguin/penguinbandana/",
+      "icon": "icons.png",
+      "fileName": "penguinbandana.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "rare",
+      "colorOptions": [
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "penguinberet",
+      "shortdescription": "Penguin Beret",
+      "category": "legs",
+      "path": "/items/armors/penguin/penguinberet/",
+      "icon": "icons.png",
+      "fileName": "penguinberet.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "rare",
+      "colorOptions": [
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "penguincowboy",
+      "shortdescription": "Penguin Cowboy Hat",
+      "category": "legs",
+      "path": "/items/armors/penguin/penguincowboy/",
+      "icon": "icons.png",
+      "fileName": "penguincowboy.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "rare",
+      "colorOptions": [
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "penguinglasses",
+      "shortdescription": "Penguin Glasses",
+      "category": "legs",
+      "path": "/items/armors/penguin/penguinglasses/",
+      "icon": "icons.png",
+      "fileName": "penguinglasses.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "rare",
+      "colorOptions": [
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "penguinhelmet",
+      "shortdescription": "Penguin Helmet",
+      "category": "legs",
+      "path": "/items/armors/penguin/penguinhelmet/",
+      "icon": "icons.png",
+      "fileName": "penguinhelmet.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "rare",
+      "colorOptions": [
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "penguinscanner",
+      "shortdescription": "Penguin Scanner",
+      "category": "legs",
+      "path": "/items/armors/penguin/penguinscanner/",
+      "icon": "icons.png",
+      "fileName": "penguinscanner.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "rare",
+      "colorOptions": [
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
+        },
+        {
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
+        },
+        {
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
+        },
+        {
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
+        },
+        {
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
+        },
+        {
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
+        },
+        {
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
+        },
+        {
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
+        },
+        {
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
+        },
+        {
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
+        }
+      ]
+    },
+    {
+      "name": "penguinvikinghat",
+      "shortdescription": "Penguin Viking Hat",
+      "category": "legs",
+      "path": "/items/armors/penguin/penguinvikinghat/",
+      "icon": "icons.png",
+      "fileName": "penguinvikinghat.legs",
+      "maleFrames": "pants.png",
+      "femaleFrames": "pants.png",
+      "mask": null,
+      "rarity": "rare",
+      "colorOptions": [
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
         },
         {
           "ffca8a": "838383",
@@ -63161,64 +64129,70 @@
           "6f2919": "0f100b"
         },
         {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "0b0b0b"
+          "ffca8a": "838383",
+          "e0975c": "555555",
+          "a85636": "383838",
+          "6f2919": "151515"
         },
         {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
+          "ffca8a": "b5b5b5",
+          "e0975c": "808080",
+          "a85636": "555555",
+          "6f2919": "303030"
         },
         {
-          "ffca8a": "ba3f36",
-          "e0975c": "7a2622",
-          "a85636": "411114",
-          "6f2919": "25090c"
+          "ffca8a": "e6e6e6",
+          "e0975c": "b6b6b6",
+          "a85636": "7b7b7b",
+          "6f2919": "373737"
         },
         {
-          "ffca8a": "d77b24",
-          "e0975c": "794317",
-          "a85636": "3a1f0f",
-          "6f2919": "1d1009"
+          "ffca8a": "f4988c",
+          "e0975c": "d93a3a",
+          "a85636": "932625",
+          "6f2919": "601119"
         },
         {
-          "ffca8a": "eedb53",
-          "e0975c": "928132",
-          "a85636": "42381a",
-          "6f2919": "262010"
+          "ffca8a": "ffd495",
+          "e0975c": "ea9931",
+          "a85636": "af4e00",
+          "6f2919": "6e2900"
         },
         {
-          "ffca8a": "6c9e4a",
-          "e0975c": "395b2b",
-          "a85636": "1b2e16",
-          "6f2919": "0b140a"
+          "ffca8a": "ffffa7",
+          "e0975c": "e2c344",
+          "a85636": "a46e06",
+          "6f2919": "642f00"
         },
         {
-          "ffca8a": "4681c0",
-          "e0975c": "284672",
-          "a85636": "161b3b",
-          "6f2919": "0c0e22"
+          "ffca8a": "b2e89d",
+          "e0975c": "51bd3b",
+          "a85636": "247824",
+          "6f2919": "144216"
         },
         {
-          "ffca8a": "7d4794",
-          "e0975c": "4d245d",
-          "a85636": "221328",
-          "6f2919": "0f0912"
+          "ffca8a": "96cbe7",
+          "e0975c": "5588d4",
+          "a85636": "344495",
+          "6f2919": "1a1c51"
         },
         {
-          "ffca8a": "d46bd7",
-          "e0975c": "7c377b",
-          "a85636": "30172e",
-          "6f2919": "170b16"
+          "ffca8a": "d29ce7",
+          "e0975c": "a451c4",
+          "a85636": "6a2284",
+          "6f2919": "320c40"
         },
         {
-          "ffca8a": "a36948",
-          "e0975c": "683a23",
-          "a85636": "2d1a12",
-          "6f2919": "170d09"
+          "ffca8a": "eab3db",
+          "e0975c": "d35eae",
+          "a85636": "97276d",
+          "6f2919": "59163f"
+        },
+        {
+          "ffca8a": "ccae7c",
+          "e0975c": "a47844",
+          "a85636": "754c23",
+          "6f2919": "472b13"
         }
       ]
     },
@@ -66271,12 +67245,6 @@
           "6f2919": "1a1c51"
         },
         {
-          "ffca8a": "eab3db",
-          "e0975c": "d35eae",
-          "a85636": "97276d",
-          "6f2919": "59163f"
-        },
-        {
           "ffca8a": "838383",
           "e0975c": "555555",
           "a85636": "383838",
@@ -66604,7 +67572,7 @@
     },
     {
       "name": "mrclausback",
-      "shortdescription": "Mr. Claus's Sack",
+      "shortdescription": "Holiday Sack",
       "category": "back",
       "path": "/items/armors/decorative/costumes/mrclaus/",
       "icon": "icons.png:back",
@@ -66612,7 +67580,7 @@
       "maleFrames": "back.png",
       "femaleFrames": "back.png",
       "mask": null,
-      "rarity": "common",
+      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "ccae7c",
@@ -67043,92 +68011,6 @@
       "femaleFrames": "back.png",
       "mask": null,
       "rarity": "rare",
-      "colorOptions": [
-        {
-          "ffca8a": "fffdb0",
-          "e0975c": "cbc234",
-          "a85636": "926e19",
-          "6f2919": "563f0f"
-        },
-        {
-          "ffca8a": "e8a483",
-          "e0975c": "b16964",
-          "a85636": "693e3e",
-          "6f2919": "2c1b1c"
-        },
-        {
-          "ffca8a": "727272",
-          "e0975c": "414141",
-          "a85636": "1c1c1c",
-          "6f2919": "060606"
-        },
-        {
-          "ffca8a": "e9e9e9",
-          "e0975c": "727272",
-          "a85636": "333333",
-          "6f2919": "161616"
-        },
-        {
-          "ffca8a": "e6a49e",
-          "e0975c": "ac3b37",
-          "a85636": "521010",
-          "6f2919": "200407"
-        },
-        {
-          "ffca8a": "f3cea2",
-          "e0975c": "cf7d2c",
-          "a85636": "773611",
-          "6f2919": "221004"
-        },
-        {
-          "ffca8a": "f8f6da",
-          "e0975c": "d3be46",
-          "a85636": "745d16",
-          "6f2919": "1e1705"
-        },
-        {
-          "ffca8a": "bbe69d",
-          "e0975c": "5ba73c",
-          "a85636": "1d4e0f",
-          "6f2919": "051403"
-        },
-        {
-          "ffca8a": "99bee5",
-          "e0975c": "3e65b7",
-          "a85636": "151f5f",
-          "6f2919": "040619"
-        },
-        {
-          "ffca8a": "d29be8",
-          "e0975c": "933eb4",
-          "a85636": "47145b",
-          "6f2919": "0e0314"
-        },
-        {
-          "ffca8a": "edb8ee",
-          "e0975c": "c94ac7",
-          "a85636": "6f1768",
-          "6f2919": "1e051c"
-        },
-        {
-          "ffca8a": "ebd3c4",
-          "e0975c": "be8569",
-          "a85636": "763f28",
-          "6f2919": "1c0c06"
-        }
-      ]
-    },
-    {
-      "name": "caretakerback",
-      "shortdescription": "Caretaker Tentacles",
-      "category": "back",
-      "path": "/items/armors/other/caretaker/",
-      "icon": "icons.png:back",
-      "fileName": "caretaker.back",
-      "maleFrames": "back.png",
-      "femaleFrames": "back.png",
-      "mask": null,
-      "rarity": "legendary",
       "colorOptions": [
         {
           "ffca8a": "fffdb0",

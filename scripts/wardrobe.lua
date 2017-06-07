@@ -730,21 +730,22 @@ function wardrobe.setInterfaceData(data)
 end
 
 function wardrobe.setConfigParameters()
-  local cfg = root.getConfigurationPath("wardrobeInterface")
+  local cfg = status.statusProperty("wardrobeInterface")
   if not cfg then
-    root.setConfigurationPath("wardrobeInterface", {})
     cfg = {}
   end
-  if type(cfg.useArmorSlot) ~= "boolean" then root.setConfigurationPath("wardrobeInterface.useArmorSlot", false) end
-  return root.getConfigurationPath("wardrobeInterface")
+  if type(cfg.useArmorSlot) ~= "boolean" then
+    cfg.useArmorSlot = false
+    status.setStatusProperty("wardrobeInterface", cfg)
+  end
+  return cfg
 end
 
 function wardrobe.getConfigParameters()
-  return root.getConfigurationPath("wardrobeInterface")
+  return status.statusProperty("wardrobeInterface")
 end
 
 function wardrobe.getConfigParameter(path)
-  if type(path) == "string" and path ~= "" then
-    return root.getConfigurationPath("wardrobeInterface." .. path)
-  end
+  local cfg = status.statusProperty("wardrobeInterface") or {}
+  return path == nil and cfg or cfg[path]
 end
