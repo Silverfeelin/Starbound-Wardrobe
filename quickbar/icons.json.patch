@@ -1,0 +1,11 @@
+[
+  {
+    "op": "add",
+    "path": "/normal/-",
+    "value": {
+      "label": "Wardrobe",
+      "pane": "/interface/wardrobe/wardrobe.config",
+      "icon": "/interface/wardrobe/fittingRoom.png"
+    }
+  }
+]

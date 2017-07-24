@@ -34,7 +34,7 @@ wardrobe.idleFrames = {
 }
 
 ------------------------------
---[[ Engine/MUI Callbacks ]]--
+--[[ Engine Callbacks ]]--
 ------------------------------
 
 --[[
@@ -42,13 +42,7 @@ wardrobe.idleFrames = {
   This function is called every time the interface is opened from the MUI Main
   Menu.
 ]]
-function wardrobe.init()
-
-  --logENV()
-
-  mui.setTitle("Wardrobe", "It's time to dress up!")
-  mui.setIcon("/interface/wardrobe/icon.png")
-
+function init()
   wardrobe.setConfigParameters()
 
   wardrobe.selection = {}
@@ -91,7 +85,7 @@ end
   Update function, called every game tick by MUI while the interface is opened.
   @param dt - Delay between this and the previous update tick.
 ]]
-function wardrobe.update(dt)
+function update(dt)
   if wardrobe.searching then
     wardrobe.searchTick = wardrobe.searchTick - 1
     if wardrobe.searchTick <= 0 then
@@ -107,7 +101,7 @@ end
   Uninitializes the Wardrobe. Called by MUI when the interface is closed.
   May not be called properly when the MMU interface is closed directly.
 ]]
-function wardrobe.uninit()
+function uninit()
   wardrobe.closeLeftBar()
   wardrobe.closeRightBar()
   for i=1,16 do
@@ -116,26 +110,6 @@ function wardrobe.uninit()
     widget.setVisible("wardrobeLegsColor_" .. i, false)
     widget.setVisible("wardrobeBackColor_" .. i, false)
   end
-end
-
------------------------
---[[ MUI Callbacks ]]--
------------------------
-
---[[
-  MUI Callback function. Called when the settings menu is opened.
-  (Currently) not in use.
-]]
-function wardrobe.settingsOpened()
-
-end
-
---[[
-  MUI Callback function. Called when the settings menu is closed.
-  (Currently) not in use.
-]]
-function wardrobe.settingsClosed()
-
 end
 
 --------------------------

@@ -2,16 +2,16 @@
   "name" : "Wardrobe",
   "friendlyName" : "Wardrobe Interface",
   "priority" : 0,
-  "version" : "1.3.0",
+  "version" : "1.3.2",
   "author" : "Silverfeelin",
   "description" : "Allows you to dress up your character and spawn the selected clothes.
 
 For usage instructions, see: ^#61b3de;https://github.com/Silverfeelin/Starbound-Wardrobe^reset;
 
-Requires: ^orange;Manipulated UI^reset;
+Requires: ^orange;Quickbar Mini^reset; or ^orange;StardustLib^reset;.
 ^#61b3de;https://github.com/Silverfeelin/Starbound-ManipulatedUI/releases^reset;",
-  "requires" : [
-    "Manipulated UI"
-  ],
-  "includes" : []
+  "includes" : [
+    "StardustLib",
+    "QuikbarMini"
+  ]
 }
