@@ -72,5 +72,5 @@ You'll want to name and place the patch file at the following location:
 I love suggestions! If you can think of anything to improve this mod feel free to leave a suggestion on the discussion thread over at PlayStarbound (link pending).  
 If you're really dedicated, you can also create a pull request and directly contribute to the mod!
 
-[qbm]:(https://github.com/Silverfeelin/Starbound-Quickbar-Mini)
-[qbmRelease]:(https://github.com/Silverfeelin/Starbound-Quickbar-Mini/releases)
+[qbm]:https://github.com/Silverfeelin/Starbound-Quickbar-Mini
+[qbmRelease]:https://github.com/Silverfeelin/Starbound-Quickbar-Mini/releases
