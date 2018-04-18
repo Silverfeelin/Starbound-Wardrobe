@@ -1,1 +1,0 @@
-"WardrobeItemFetcher.exe" "D:\Path\To\Assets" "D:\Path\To\output.json.patch" true
