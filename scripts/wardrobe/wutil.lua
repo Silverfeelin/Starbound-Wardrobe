@@ -157,6 +157,7 @@ function wutil.giveItem(item, category, equip)
     params.directives = item.directives
     params.colorIndex = item.colorIndex
     params.shortdescription = item.shortdescription
+    params.inventoryIcon = item.icon
   end
 
   if equip then

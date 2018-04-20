@@ -492,7 +492,7 @@ function wardrobe.selectItem(item, category)
   else
     wardrobe.showColors(item, category)
   end
-  
+
   wardrobe.setSelection(item, category)
 end
 
@@ -526,14 +526,13 @@ function wardrobe.showHead(item, colorIndex)
 
   local itemParams = {}
   if item then
-    if item.directives then
-      itemParams.directives = item.directives
-    else
-      itemParams.colorIndex = item.colorIndex
-    end
+    itemParams.directives = item.directives
+    itemParams.colorIndex = item.colorIndex
+    itemParams.inventoryIcon = item.icon
   end
 
-  widget.setItemSlotItem(wardrobe.widgets.head_icon, item and { name = item.name, parameters = itemParams })
+  local itemSlotItem = item and { name = item.name, parameters = itemParams } or nil
+  widget.setItemSlotItem(wardrobe.widgets.head_icon, itemSlotItem)
   widget.setText(wardrobe.widgets.head_name, item and item.shortdescription or "No selection")
 end
 
@@ -558,11 +557,9 @@ function wardrobe.showChest(item, colorIndex)
 
   local itemParams = {}
   if item then
-    if item.directives then
-      itemParams.directives = item.directives
-    else
-      itemParams.colorIndex = item.colorIndex
-    end
+    itemParams.directives = item.directives
+    itemParams.colorIndex = item.colorIndex
+    itemParams.inventoryIcon = item.icon
   end
 
   widget.setItemSlotItem(wardrobe.widgets.chest_icon, item and { name = item.name, parameters = itemParams })
@@ -586,11 +583,9 @@ function wardrobe.showLegs(item, colorIndex)
 
   local itemParams = {}
   if item then
-    if item.directives then
-      itemParams.directives = item.directives
-    else
-      itemParams.colorIndex = item.colorIndex
-    end
+    itemParams.directives = item.directives
+    itemParams.colorIndex = item.colorIndex
+    itemParams.inventoryIcon = item.icon
   end
 
   widget.setItemSlotItem(wardrobe.widgets.legs_icon, item and { name = item.name, parameters = itemParams })
@@ -614,11 +609,9 @@ function wardrobe.showBack(item, colorIndex)
 
   local itemParams = {}
   if item then
-    if item.directives then
-      itemParams.directives = item.directives
-    else
-      itemParams.colorIndex = item.colorIndex
-    end
+    itemParams.directives = item.directives
+    itemParams.colorIndex = item.colorIndex
+    itemParams.inventoryIcon = item.icon
   end
 
   widget.setItemSlotItem(wardrobe.widgets.back_icon, item and { name = item.name, parameters = itemParams })
@@ -685,11 +678,9 @@ end
 function wardrobe.setSelection(item, category)
     local params = {}
     if item then
-      if item.directives then
-        params.directives = item.directives
-      else
-        params.colorIndex = item.colorIndex or 0
-      end
+      params.directives = item.directives
+      params.colorIndex = item.colorIndex or 0
+      params.inventoryIcon = item.icon
     end
 
     widget.setItemSlotItem(wardrobe.widgets[category .. "_icon"], item and {name = item.name, parameters = params} or nil)
