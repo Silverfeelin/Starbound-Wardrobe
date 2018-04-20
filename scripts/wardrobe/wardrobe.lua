@@ -175,7 +175,7 @@ function wardrobe.addHeadItem(li, item, index)
 
   -- Draw
   local image = wardrobe.getDefaultImageForItem(item)
-  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives or wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1 then
     wardrobe.headCanvas = widget.bindCanvas(li .. ".canvas")
@@ -183,7 +183,13 @@ function wardrobe.addHeadItem(li, item, index)
 
   local mask
   if item.mask then
-    mask = "?addmask=" .. wutil.fixImagePath(item.path, item.mask)
+    -- TODO: Better custom masks.
+    if item.mask:find("%?submask=/items/armors/decorative/hats/eyepatch/mask.png") then
+      -- Fully mask hair
+      mask = item.mask
+    else
+      mask = "?addmask=" .. wutil.fixImagePath(item.path, item.mask)
+    end
   end
 
   wardrobe.drawDummy(
@@ -201,7 +207,7 @@ function wardrobe.addChestItem(li, item, index)
 
   -- Draw
   local images = wardrobe.getDefaultImageForItem(item, true)
-  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives or wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1  then
     wardrobe.chestCanvas = widget.bindCanvas(li .. ".canvas")
@@ -222,7 +228,7 @@ function wardrobe.addLegsItem(li, item, index)
 
   -- Draw
   local image = wardrobe.getDefaultImageForItem(item, true)
-  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives or wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1  then
     wardrobe.legsCanvas = widget.bindCanvas(li .. ".canvas")
@@ -241,7 +247,7 @@ function wardrobe.addBackItem(li, item, index)
 
   -- Draw
   local image = wardrobe.getDefaultImageForItem(item, true)
-  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives or wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1  then
     wardrobe.backCanvas = widget.bindCanvas(li .. ".canvas")
@@ -492,7 +498,13 @@ function wardrobe.showHead(item, colorIndex)
 
   local mask = ""
   if item and item.mask then
-    mask = "?addmask=" .. wutil.fixImagePath(item.path, item.mask)
+    -- TODO: Better custom masks.
+    if item.mask:find("%?submask=/items/armors/decorative/hats/eyepatch/mask.png") then
+      -- Fully mask hair
+      mask = item.mask
+    else
+      mask = "?addmask=" .. wutil.fixImagePath(item.path, item.mask)
+    end
   end
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
   wutil.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)

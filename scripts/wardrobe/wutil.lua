@@ -47,7 +47,12 @@ end
     'name' (string), 'colorIndex' (number), 'icon' (path), 'dir' (string), 'rarity' (string).
 ]]
 function wutil.getParametersForShowing(item, colorIndex)
-  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 0 end
+  if
+    not colorIndex
+    or (item and item.colorOptions and colorIndex > #item.colorOptions)
+  then
+    colorIndex = 0
+  end
   local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
   local dir = item and wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex + 1] or nil)
   local icon = "/assetMissing.png"
@@ -149,11 +154,9 @@ function wutil.giveItem(item, category, equip)
 -- TODO: Helper method for this cuz I've used it multiple times.
   local params = {}
   if item then
-    if item.directives then
-      params.directives = item.directives
-    else
-      params.colorIndex = item.colorIndex
-    end
+    params.directives = item.directives
+    params.colorIndex = item.colorIndex
+    params.shortdescription = item.shortdescription
   end
 
   if equip then
