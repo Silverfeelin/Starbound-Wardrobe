@@ -486,7 +486,13 @@ function wardrobe.selectItem(item, category)
     wardrobe.selection[category].colorIndex = 0
   end
   wardrobe.showItemForCategory[category](item, colorIndex)
-  wardrobe.showColors(item, category)
+
+  if item.directives then
+    wardrobe.hideColors(category)
+  else
+    wardrobe.showColors(item, category)
+  end
+  
   wardrobe.setSelection(item, category)
 end
 
@@ -631,6 +637,17 @@ wardrobe.showItemForCategory = {
 }
 
 -- #endregion
+
+function wardrobe.hideColors(category, startIndex)
+  startIndex = type(startIndex) == number and startIndex or 1
+  if startIndex < 1 then startIndex = 1 end
+
+  local w = category .. ".color_"
+
+  for i = startIndex, 16 do
+    widget.setVisible(w .. i, false)
+  end
+end
 
 --[[
   Updates and shows color option buttons relevant for the given item. Does this
