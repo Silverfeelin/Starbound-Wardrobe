@@ -118,18 +118,23 @@ function wardrobe.getCategory(slot)
   return i == -1 and "vanilla" or i == 0 and "mod" or "custom"
 end
 
-function wardrobe.showHeadItems(category)
-  wardrobe.lists.head:clear()
-
-  local li = wardrobe.lists.head:addEmpty()
-  wardrobe.headCanvas = widget.bindCanvas(li .. ".canvas")
+--- Adds an item to remove clothing.
+function wardrobe.addEmpty(slot, list)
+  local li = list:addEmpty()
+  local canvas = widget.bindCanvas(li .. ".canvas")
+  wardrobe[slot .. "Canvas"] = canvas
 
   wardrobe.drawDummy(
-    wardrobe.headCanvas,
+    canvas,
     {
       head = "/assetMissing.png?replace;ffffff00=ffffffff?crop;0;0;43;43?blendmult=/interface/wardrobe/x.png;-13;-13?replace;ffffffff=00000000"
     }
   )
+end
+
+function wardrobe.showHeadItems(category)
+  wardrobe.lists.head:clear()
+  wardrobe.addEmpty("head", wardrobe.lists.head)
 
   local filter = widget.getText(wardrobe.widgets.head_search)
   wardrobe.lists.head:show(wutil.filterList(wardrobe.items[category].head, filter))
@@ -138,12 +143,16 @@ end
 function wardrobe.showChestItems(category)
   wardrobe.lists.chest:clear()
 
+  wardrobe.addEmpty("chest", wardrobe.lists.chest)
+
   local filter = widget.getText(wardrobe.widgets.chest_search)
   wardrobe.lists.chest:show(wutil.filterList(wardrobe.items[category].chest, filter))
 end
 
 function wardrobe.showLegsItems(category)
   wardrobe.lists.legs:clear()
+
+  wardrobe.addEmpty("legs", wardrobe.lists.legs)
 
   local filter = widget.getText(wardrobe.widgets.legs_search)
   wardrobe.lists.legs:show(wutil.filterList(wardrobe.items[category].legs, filter))
@@ -152,11 +161,11 @@ end
 function wardrobe.showBackItems(category)
   wardrobe.lists.back:clear()
 
+  wardrobe.addEmpty("back", wardrobe.lists.back)
+
   local filter = widget.getText(wardrobe.widgets.back_search)
   wardrobe.lists.back:show(wutil.filterList(wardrobe.items[category].back, filter))
 end
-
--- "Last" list item canvas, used to draw up to 3 items.
 
 --- Gets the widget name of the list item button.
 -- 1: ".first", 2: ".second", 3
@@ -774,30 +783,6 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
   if (layers.head) then
     canvas:drawImage(layers.head, offset)
   end
-end
-
---[[
-  Returns data stored in a widget dedicated to passing information between
-  script lifetimes. This due to the script resetting each time the interface
-  is re-opened, while widgets remain as they were until the game session is
-  reloaded.
-  @return - Stored data.
-]]
-function wardrobe.getInterfaceData()
-  return widget.getData(wardrobe.widgets.storage)
-end
-
---[[
-  Sets data on a widget dedicated to passing information between script
-  lifetimes. This due to the script resetting each time the interface is
-  re-opened, while widgets remain as they were until the game session is
-  reloaded.
-  It is highly recommended to retrieve the interface data before setting it
-  (see wardrobe.getInterfaceData), as the data will be overwritten.
-  @param data - Data to set on the widget. Overwrites existing data.
-]]
-function wardrobe.setInterfaceData(data)
-  widget.setData(wardrobe.widgets.storage, data)
 end
 
 function wardrobe.setConfigParameters()
