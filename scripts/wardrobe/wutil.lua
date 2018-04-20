@@ -146,19 +146,23 @@ wutil.placeholders.chestCosmetic = wutil.placeholders.chest
 wutil.placeholders.legsCosmetic = wutil.placeholders.legs
 wutil.placeholders.backCosmetic = wutil.placeholders.back
 
+function wutil.itemParameters(item)
+  if not item then return {} end
+  local params = {}
+  params.directives = item.directives
+  params.colorIndex = item.colorIndex
+  params.shortdescription = item.shortdescription
+  params.inventoryIcon = item.icon
+  params.mask = item.mask
+  return params
+end
+
 function wutil.giveItem(item, category, equip)
   local oppositeCategory = category:find("Cosmetic") and category:gsub("Cosmetic", "") or (category .. "Cosmetic")
   local equipped = player.equippedItem(category)
   local oppositeEquipped = player.equippedItem(oppositeCategory)
 
--- TODO: Helper method for this cuz I've used it multiple times.
-  local params = {}
-  if item then
-    params.directives = item.directives
-    params.colorIndex = item.colorIndex
-    params.shortdescription = item.shortdescription
-    params.inventoryIcon = item.icon
-  end
+  local params = wutil.itemParameters(item)
 
   if equip then
     -- Equip the item, add the previous to the inventory.

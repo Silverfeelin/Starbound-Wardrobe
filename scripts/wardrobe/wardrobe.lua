@@ -38,26 +38,7 @@ function init()
   wardrobe.widgets = config.getParameter("widgetNames")
   wardrobe.idleFrames = wutil.getIdleFrames()
 
-  wardrobe.items = {
-    vanilla = root.assetJson("/wardrobe/vanilla.json"),
-    mod = root.assetJson("/wardrobe/mod.json"),
-    custom = root.assetJson("/wardrobe/custom.json")
-  }
-
-  --  Compatibility for older patches
-  local wearables = root.assetJson("/wardrobe/wearables.json")
-  for _,v in ipairs(wearables.head) do
-    table.insert(wardrobe.items.mod.head, v)
-  end
-  for _,v in ipairs(wearables.chest) do
-    table.insert(wardrobe.items.mod.chest, v)
-  end
-  for _,v in ipairs(wearables.legs) do
-    table.insert(wardrobe.items.mod.legs, v)
-  end
-  for _,v in ipairs(wearables.back) do
-    table.insert(wardrobe.items.mod.back, v)
-  end
+  wardrobe.loadItems()
 
   wardrobe.setConfigParameters()
 
@@ -79,6 +60,45 @@ function init()
 
   wardrobe.loadPreview()
   wardrobe.loadEquipped()
+end
+
+function wardrobe.loadItems()
+  wardrobe.items = {
+    vanilla = {
+      head = {}, chest = {}, legs = {}, back = {}
+    },
+    mod = {
+      head = {}, chest = {}, legs = {}, back = {}
+    },
+    custom = {
+      head = {}, chest = {}, legs = {}, back = {}
+    }
+  }
+
+  -- Add items.head/chest/legs/back to tbl.head/chest/legs/back
+  local function addItems(tbl, items)
+    for key,subItems in pairs(items) do
+      for _,v in ipairs(subItems) do
+        table.insert(tbl[key], v)
+      end
+    end
+  end
+
+  -- Load files and add items to tbl
+  local function loadFiles(files, tbl)
+    for _,v in ipairs(files) do
+      if v:find("/") ~= 1 then
+        v = "/wardrobe/" .. v
+      end
+      local f = root.assetJson(v)
+      addItems(tbl, f)
+    end
+  end
+
+  local config = root.assetJson("/wardrobe/wardrobe.config")
+  loadFiles(config.vanilla, wardrobe.items.vanilla)
+  loadFiles(config.mod, wardrobe.items.mod)
+  loadFiles(config.custom, wardrobe.items.custom)
 end
 
 --[[
@@ -487,7 +507,7 @@ function wardrobe.selectItem(item, category)
   end
   wardrobe.showItemForCategory[category](item, colorIndex)
 
-  if item.directives then
+  if not item or item.directives then
     wardrobe.hideColors(category)
   else
     wardrobe.showColors(item, category)
@@ -524,12 +544,7 @@ function wardrobe.showHead(item, colorIndex)
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
   wutil.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
 
-  local itemParams = {}
-  if item then
-    itemParams.directives = item.directives
-    itemParams.colorIndex = item.colorIndex
-    itemParams.inventoryIcon = item.icon
-  end
+  local itemParams = wutil.itemParameters(item)
 
   local itemSlotItem = item and { name = item.name, parameters = itemParams } or nil
   widget.setItemSlotItem(wardrobe.widgets.head_icon, itemSlotItem)
@@ -555,12 +570,7 @@ function wardrobe.showChest(item, colorIndex)
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
   wutil.setWidgetImage(w .. ".image", images[3] .. (item and item.directives or params.dir))
 
-  local itemParams = {}
-  if item then
-    itemParams.directives = item.directives
-    itemParams.colorIndex = item.colorIndex
-    itemParams.inventoryIcon = item.icon
-  end
+  local itemParams = wutil.itemParameters(item)
 
   widget.setItemSlotItem(wardrobe.widgets.chest_icon, item and { name = item.name, parameters = itemParams })
   widget.setText(wardrobe.widgets.chest_name, item and item.shortdescription or "No selection")
@@ -581,12 +591,7 @@ function wardrobe.showLegs(item, colorIndex)
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
   wutil.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
 
-  local itemParams = {}
-  if item then
-    itemParams.directives = item.directives
-    itemParams.colorIndex = item.colorIndex
-    itemParams.inventoryIcon = item.icon
-  end
+  local itemParams = wutil.itemParameters(item)
 
   widget.setItemSlotItem(wardrobe.widgets.legs_icon, item and { name = item.name, parameters = itemParams })
   widget.setText(wardrobe.widgets.legs_name, item and item.shortdescription or "No selection")
@@ -607,12 +612,7 @@ function wardrobe.showBack(item, colorIndex)
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
   wutil.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
 
-  local itemParams = {}
-  if item then
-    itemParams.directives = item.directives
-    itemParams.colorIndex = item.colorIndex
-    itemParams.inventoryIcon = item.icon
-  end
+  local itemParams = wutil.itemParameters(item)
 
   widget.setItemSlotItem(wardrobe.widgets.back_icon, item and { name = item.name, parameters = itemParams })
   widget.setText(wardrobe.widgets.back_name, item and item.shortdescription or "No selection")
