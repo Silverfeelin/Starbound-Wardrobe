@@ -1,7 +1,9 @@
 require "/scripts/util.lua"
+require "/scripts/vec2.lua"
+
 require "/scripts/wardrobe/wutil.lua"
 require "/scripts/wardrobe/wardrobe_callbacks.lua"
-require "/scripts/vec2.lua"
+require "/scripts/wardrobe/itemList.lua"
 
 if not wardrobe then
   wardrobe  = {}
@@ -23,9 +25,7 @@ wardrobe.preview = {
 ]]
 wardrobe.selection = {}
 
-------------------------------
---[[ Engine Callbacks ]]--
-------------------------------
+-- #region Engine
 
 --[[
   Initializes the Wardrobe.
@@ -36,7 +36,28 @@ function init()
   wardrobe.cb.init()
 
   wardrobe.widgets = config.getParameter("widgetNames")
-  wardrobe.idleFrames = config.getParameter("idleFrames")
+  wardrobe.idleFrames = wutil.getIdleFrames()
+
+  wardrobe.items = {
+    vanilla = root.assetJson("/wardrobe/vanilla.json"),
+    mod = root.assetJson("/wardrobe/mod.json"),
+    custom = root.assetJson("/wardrobe/custom.json")
+  }
+
+  --  Compatibility for older patches
+  local wearables = root.assetJson("/wardrobe/wearables.json")
+  for _,v in ipairs(wearables.head) do
+    table.insert(wardrobe.items.mod.head, v)
+  end
+  for _,v in ipairs(wearables.chest) do
+    table.insert(wardrobe.items.mod.chest, v)
+  end
+  for _,v in ipairs(wearables.legs) do
+    table.insert(wardrobe.items.mod.legs, v)
+  end
+  for _,v in ipairs(wearables.back) do
+    table.insert(wardrobe.items.mod.back, v)
+  end
 
   wardrobe.setConfigParameters()
 
@@ -44,41 +65,20 @@ function init()
   wardrobe.preview.custom = {}
   wardrobe.preview.default = {}
 
-  wardrobe.searching = false
-  wardrobe.searchCategories = {}
-  wardrobe.searchDelay, wardrobe.searchTick = 10, 10
+  wardrobe.search = {
+    delay = 10,
+    tick = 10
+  }
 
-  wardrobe.resetWidgets()
-
-  -- TEST
-  for i=1,300 do
-    -- body...
-    local li = widget.addListItem("legsSelection.list")
-    local c = widget.bindCanvas("legsSelection.list." .. li .. ".canvas")
-    wardrobe.drawDummy(c, {body="/items/armors/human/human-tier1/chestm.png:idle.1"})
-    widget.setData("legsSelection.list." .. li .. ".first", i * 3)
-    wardrobe.drawDummy(c, {
-      body="/items/armors/human/human-tier1/chestm.png:idle.1",
-      backArm="/items/armors/human/human-tier1/bsleeve.png:idle.1",
-      frontArm="/items/armors/human/human-tier1/fsleeve.png:idle.1"
-    }, {43,0})
-    widget.setData("legsSelection.list." .. li .. ".second", "s" .. i * 3 + 1)
-    wardrobe.drawDummy(c, {body="/items/armors/human/human-tier1/chestm.png:idle.1"}, {86, 0})
-    widget.setData("legsSelection.list." .. li .. ".third", i * 3 + 2)
-  end
-end
-
---[[
-  Resets all widgets. Should be used when re-initializing the interface.
-  Also alters relevent data, eg. reverting selection back to equipped items.
-]]
-function wardrobe.resetWidgets()
-  widget.setText("head.name", "No selection")
-  widget.setText("chest.name", "No selection")
-  widget.setText("legs.name", "No selection")
-  widget.setText("back.name", "No selection")
+  wardrobe.lists = {
+    head = ItemList.new("headSelection.list", wardrobe.addHeadItem, 3),
+    chest = ItemList.new("chestSelection.list", wardrobe.addChestItem, 3),
+    legs = ItemList.new("legsSelection.list", wardrobe.addLegsItem, 3),
+    back = ItemList.new("backSelection.list", wardrobe.addBackItem, 3)
+  }
 
   wardrobe.loadPreview()
+  wardrobe.loadEquipped()
 end
 
 --[[
@@ -86,182 +86,178 @@ end
   @param dt - Delay between this and the previous update tick.
 ]]
 function update(dt)
-  if wardrobe.searching then
-    wardrobe.searchTick = wardrobe.searchTick - 1
-    if wardrobe.searchTick <= 0 then
-      for k,v in pairs(wardrobe.searchCategories) do
-        wardrobe.showItems("wardrobe" .. k .. "Scroll.list", k:lower(), false, v)
-      end
-      wardrobe.searching = false
+  for _,v in pairs(wardrobe.lists) do
+    v:update()
+  end
+
+  if wardrobe.search.changed then
+    wardrobe.search.tick = wardrobe.search.tick - 1
+    if wardrobe.search.tick <= 0 then
+      -- TODO: Only update changed ones.
+      wardrobe.showHeadItems(wardrobe.getCategory("head"))
+      wardrobe.showChestItems(wardrobe.getCategory("chest"))
+      wardrobe.showLegsItems(wardrobe.getCategory("legs"))
+      wardrobe.showBackItems(wardrobe.getCategory("back"))
+      wardrobe.search.changed = false
     end
   end
 end
 
---[[
-  Uninitializes the Wardrobe. Called by MUI when the interface is closed.
-  May not be called properly when the MMU interface is closed directly.
-]]
-function uninit()
-  wardrobe.closeLeftBar()
-  wardrobe.closeRightBar()
-  for i=1,16 do
-    widget.setVisible("wardrobeHeadColor_" .. i, false)
-    widget.setVisible("wardrobeChestColor_" .. i, false)
-    widget.setVisible("wardrobeLegsColor_" .. i, false)
-    widget.setVisible("wardrobeBackColor_" .. i, false)
+-- #endregion
+
+-- #region Add List Items
+
+function wardrobe.getCategory(slot)
+  local gw =
+    slot == "head" and wardrobe.widgets.head_group
+    or slot == "chest" and wardrobe.widgets.chest_group
+    or slot == "legs" and wardrobe.widgets.legs_group
+    or slot == "back" and wardrobe.widgets.back_group
+
+  local i = widget.getSelectedOption(gw)
+  return i == -1 and "vanilla" or i == 0 and "mod" or "custom"
+end
+
+function wardrobe.showHeadItems(category)
+  wardrobe.lists.head:clear()
+
+  local li = wardrobe.lists.head:addEmpty()
+  wardrobe.headCanvas = widget.bindCanvas(li .. ".canvas")
+
+  wardrobe.drawDummy(
+    wardrobe.headCanvas,
+    {
+      head = "/assetMissing.png?replace;ffffff00=ffffffff?crop;0;0;43;43?blendmult=/interface/wardrobe/x.png;-13;-13?replace;ffffffff=00000000"
+    }
+  )
+
+  local filter = widget.getText(wardrobe.widgets.head_search)
+  wardrobe.lists.head:show(wutil.filterList(wardrobe.items[category].head, filter))
+end
+
+function wardrobe.showChestItems(category)
+  wardrobe.lists.chest:clear()
+
+  local filter = widget.getText(wardrobe.widgets.chest_search)
+  wardrobe.lists.chest:show(wutil.filterList(wardrobe.items[category].chest, filter))
+end
+
+function wardrobe.showLegsItems(category)
+  wardrobe.lists.legs:clear()
+
+  local filter = widget.getText(wardrobe.widgets.legs_search)
+  wardrobe.lists.legs:show(wutil.filterList(wardrobe.items[category].legs, filter))
+end
+
+function wardrobe.showBackItems(category)
+  wardrobe.lists.back:clear()
+
+  local filter = widget.getText(wardrobe.widgets.back_search)
+  wardrobe.lists.back:show(wutil.filterList(wardrobe.items[category].back, filter))
+end
+
+-- "Last" list item canvas, used to draw up to 3 items.
+
+--- Gets the widget name of the list item button.
+-- 1: ".first", 2: ".second", 3
+local function getListButtonName(index)
+  return "." .. index
+end
+
+local function setListButtonData(li, item, index)
+  -- Set button data
+  local btn = li .. getListButtonName(index)
+  widget.setData(btn, item)
+end
+
+function wardrobe.addHeadItem(li, item, index)
+  setListButtonData(li, item, index)
+
+  -- Draw
+  local image = wardrobe.getDefaultImageForItem(item)
+  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+
+  if index == 1 then
+    wardrobe.headCanvas = widget.bindCanvas(li .. ".canvas")
   end
-end
 
---------------------------
---[[ Widget Callbacks ]]--
---------------------------
-
---[[
-  Shows or hides the left item selection bar.
-  @param bool - Value indicating whether to show (true) or hide (false) the selection bar.
-  @param category - head or chest.
-]]
-function wardrobe.showLeftBar(bool, category)
-  bool = not not bool
-  wutil.setVisible(wardrobe.widgets.left, bool)
-
-  if category == "head" or category == "chest" then
-    wutil.setVisible(wardrobe.widgets[category .. "Selection"], bool)
+  local mask
+  if item.mask then
+    mask = "?addmask=" .. wutil.fixImagePath(item.path, item.mask)
   end
+
+  wardrobe.drawDummy(
+    wardrobe.headCanvas,
+    {
+      head = image .. dir
+    },
+    {(index - 1) * 43, 0},
+    mask
+  )
 end
 
---[[
-  Shows or hides the right item selection bar.
-  @param bool - Value indicating whether to show (true) or hide (false) the selection bar.
-  @param category - legs or back.
-]]
-function wardrobe.showRightBar(bool, category)
-  bool = not not bool
-  wutil.setVisible(wardrobe.widgets.right, bool)
+function wardrobe.addChestItem(li, item, index)
+  setListButtonData(li, item, index)
 
-  if category == "legs" or category == "back" then
-    wutil.setVisible(wardrobe.widgets[category .. "Selection"], bool)
+  -- Draw
+  local images = wardrobe.getDefaultImageForItem(item, true)
+  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+
+  if index == 1  then
+    wardrobe.chestCanvas = widget.bindCanvas(li .. ".canvas")
   end
+
+  wardrobe.drawDummy(
+    wardrobe.chestCanvas,
+    {
+      backArm = images[1] .. dir,
+      body = images[2] .. dir,
+      frontArm = images[3] .. dir
+    },
+    {(index -1) * 43, 0})
 end
 
---[[
-  Widget callback function. Hides the left item selection bar.
-]]
-function wardrobe.closeLeftBar()
-  wardrobe.showLeftBar(false)
-  wutil.setVisible(wardrobe.widgets.headSelection, false)
-  wutil.setVisible(wardrobe.widgets.chestSelection, false)
-end
+function wardrobe.addLegsItem(li, item, index)
+  setListButtonData(li, item, index)
 
---[[
-  Widget callback function. Hides the right item selection bar.
-]]
-function wardrobe.closeRightBar()
-  wardrobe.showRightBar(false)
-  wutil.setVisible(wardrobe.widgets.legsSelection, false)
-  wutil.setVisible(wardrobe.widgets.backSelection, false)
-end
+  -- Draw
+  local image = wardrobe.getDefaultImageForItem(item, true)
+  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
---[[
-  Widget callback function. Called when a head is selected from the list.
-  Shows the selected item on the preview character.
-]]
-function wardrobe.headSelected()
-  local sel = widget.getListSelected("wardrobeHeadScroll.list")
-  if sel then
-    wardrobe.selectItem(widget.getData("wardrobeHeadScroll.list." .. sel), "head")
+  if index == 1  then
+    wardrobe.legsCanvas = widget.bindCanvas(li .. ".canvas")
   end
+
+  wardrobe.drawDummy(
+    wardrobe.legsCanvas,
+    {
+      body = image .. dir
+    },
+    {(index -1) * 43, 0})
 end
 
---[[
-Widget callback function. Called when a chest piece is selected from the list.
-Shows the selected item on the preview character.
-]]
-function wardrobe.chestSelected()
-  local sel = widget.getListSelected("wardrobeChestScroll.list")
-  if sel then
-    wardrobe.selectItem(widget.getData("wardrobeChestScroll.list." .. sel), "chest")
+function wardrobe.addBackItem(li, item, index)
+  setListButtonData(li, item, index)
+
+  -- Draw
+  local image = wardrobe.getDefaultImageForItem(item, true)
+  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+
+  if index == 1  then
+    wardrobe.backCanvas = widget.bindCanvas(li .. ".canvas")
   end
+
+  wardrobe.drawDummy(
+    wardrobe.backCanvas,
+    {
+      back = image .. dir
+    },
+    {(index -1) * 43, 0})
 end
 
---[[
-Widget callback function. Called when bottoms are selected from the list.
-Shows the selected item on the preview character.
-]]
-function wardrobe.legsSelected(w, d)
-  local sel = "legsSelection.list." .. widget.getListSelected("legsSelection.list") .. "." .. w
-  local data = widget.getData(sel)
-  sb.logInfo("Widget: %s | Param: %s | Data Widget: %s | Data: %s", w, d, sel, data)
+-- #endregion
 
-  --[[
-  local sel = widget.getListSelected("wardrobeLegsScroll.list")
-  if sel then
-    wardrobe.selectItem(widget.getData("wardrobeLegsScroll.list." .. sel), "legs")
-  end
-  ]]
-end
-
---[[
-Widget callback function. Called when a back item is selected from the list.
-Shows the selected item on the preview character.
-]]
-function wardrobe.backSelected()
-  local sel = widget.getListSelected("wardrobeBackScroll.list")
-  if sel then
-    wardrobe.selectItem(widget.getData("wardrobeBackScroll.list." .. sel), "back")
-  end
-end
-
---[[
-  Widget callback function. Applies the selected color option to the selected
-  head.
-  @param d - Widget data, contains selected color option index.
-]]
-function wardrobe.selectHeadColor(_,d)
-  wardrobe.showHead(wardrobe.selection["head"], d)
-  wardrobe.selection["head"].selectedColor = d
-end
-
---[[
-  Widget callback function. Applies the selected color option to the selected
-  chest piece.
-  @param d - Widget data, contains selected color option index.
-]]
-function wardrobe.selectChestColor(_,d)
-  wardrobe.showChest(wardrobe.selection["chest"], d)
-  wardrobe.selection["chest"].selectedColor = d
-end
-
---[[
-  Widget callback function. Applies the selected color option to the selected
-  bottoms.
-  @param d - Widget data, contains selected color option index.
-]]
-function wardrobe.selectLegsColor(_,d)
-  wardrobe.showLegs(wardrobe.selection["legs"], d)
-  wardrobe.selection["legs"].selectedColor = d
-end
-
---[[
-  Widget callback function. Applies the selected color option to the selected
-  back item.
-  @param d - Widget data, contains selected color option index.
-]]
-function wardrobe.selectBackColor(_,d)
-  wardrobe.showBack(wardrobe.selection["back"], d)
-  wardrobe.selection["back"].selectedColor = d
-end
-
---[[
-  Reference collection for all select<Category>Color functions.
-  Accessing is done through wardrobe.selectColorForCategory[category](_, colorIndex).
-]]
-wardrobe.selectColorForCategory = {
-  head = wardrobe.selectHeadColor,
-  chest = wardrobe.selectChestColor,
-  legs = wardrobe.selectLegsColor,
-  back = wardrobe.selectBackColor
-}
+-- #region Spawn
 
 --[[
   Widget callback function. Gives the player all selected items in the given
@@ -289,59 +285,9 @@ function wardrobe.equip()
   wutil.giveItem(wardrobe.selection["back"], "back" .. suffix, true)
 end
 
---[[
-  Widget callback function.
-  Sets the head category to be filtered when the user stops typing.
-  @param w - Widget name, used to fetch the value to filter by.
-]]
-function wardrobe.filterHead(w)
-  wardrobe.filter("Head", w)
-end
+-- #endregion
 
---[[
-  Widget callback function.
-  Sets the chest category to be filtered when the user stops typing.
-  @param w - Widget name, used to fetch the value to filter by.
-]]
-function wardrobe.filterChest(w)
-  wardrobe.filter("Chest", w)
-end
-
---[[
-  Widget callback function.
-  Sets the legs category to be filtered when the user stops typing.
-  @param w - Widget name, used to fetch the value to filter by.
-]]
-function wardrobe.filterLegs(w)
-  wardrobe.filter("Legs", w)
-end
-
---[[
-  Widget callback function.
-  Sets the back category to be filtered when the user stops typing.
-  @param w - Widget name, used to fetch the value to filter by.
-]]
-function wardrobe.filterBack(w)
-  wardrobe.filter("Back", w)
-end
-
-----------------------------
---[[ Wardrobe Functions ]]--
-----------------------------
-
---[[
-  Sets the list for the given category to be filtered when the user stops typing
-  for a set duration. This check can be found in the update function.
-  Resets the search delay.
-  @param category - Item category to filter.
-  @param wid - Widget name, used to retrieve the value to filter by.
-]]
-function wardrobe.filter(category, wid)
-  local text = widget.getText(wid)
-  wardrobe.searchTick = wardrobe.searchDelay
-  wardrobe.searching = true
-  wardrobe.searchCategories[category] = text
-end
+-- #region Preview
 
 --[[
   Loads the preview by adding layers to the preview widget.
@@ -352,12 +298,12 @@ end
   [5] = Shirt, [6] = Head, [7] = FrontSleeve
 
   Some data you're free to skip over:
-  Human: backarm backsleeve backitem head emote hair body pants shirt head frontarm frontsleeve
-  Avian: backarm backsleeve backitem head emote hair body pants shirt fluff beaks head frontarm frontsleeve
-  Hylotl: backarm backsleeve backitem head emote hair body pants shirt head frontarm frontsleeve
-  Glitch: backarm backsleeve backitem head emote hair body pants shirt head frontarm frontsleeve
-  Novakid: backarm backsleeve backitem head emote hair body pants shirt brand head frontarm frontsleeve
-  Apex: backarm backsleeve backitem head emote hair body pants shirt beard head frontarm frontsleeve
+  Human: backarm [backsleeve] [backitem] head emote hair body [pants] [shirt] head frontarm [frontsleeve]
+  Avian: backarm [backsleeve] [backitem] head emote hair body [pants] [shirt] fluff beaks head frontarm [frontsleeve]
+  Hylotl: backarm [backsleeve] [backitem] head emote hair body [pants] [shirt] head frontarm [frontsleeve]
+  Glitch: backarm [backsleeve] [backitem] head emote hair body [pants] [shirt] head frontarm [frontsleeve]
+  Novakid: backarm [backsleeve] [backitem] head emote hair body [pants] [shirt] brand head frontarm [frontsleeve]
+  Apex: backarm [backsleeve] [backitem] head emote hair body [pants] [shirt] beard head frontarm [frontsleeve]
   # == 6 => backarm head emote hair body <empty> <empty> frontarm
   # == 7 => backarm head emote hair body brand <empty> frontarm
   # == 7 => backarm head emote hair body beard <empty> frontarm
@@ -373,35 +319,25 @@ function wardrobe.loadPreview()
   local layers = {}
 
   local playerID = player.id()
-  if not playerID then
-    sb.logInfo("Wardrobe: Displaying the character failed; the player ID could not be found.")
-    return
-  else
-    -- Fetch portrait and remove item layers
-    local portrait = wutil.getEntityPortrait()
-    portrait = util.filter(portrait, function(item)
-      return not item.image:find("^/items")
-    end)
+  -- Fetch portrait and remove item layers
+  local portrait = wutil.getEntityPortrait()
+  portrait = util.filter(portrait, function(item)
+    return not item.image:find("^/items")
+  end)
 
-    -- Set the layer table, using the amount of layers found in the entity portrait as a guideline.
-    local portraitFrames = #portrait
-    layers = {
-      portrait[1].image,
-      portrait[2].image,
-      portrait[3].image,
-      portrait[4].image:gsub('%?addmask=[^%?]+',''),
-      portrait[5].image
-    }
+  -- Set the layer table, using the amount of layers found in the entity portrait as a guideline.
+  local portraitFrames = #portrait
+  layers = {
+    portrait[1].image,
+    portrait[2].image,
+    portrait[3].image,
+    portrait[4].image:gsub('%?addmask=[^%?]+',''),
+    portrait[5].image
+  }
 
-    wardrobe.idleFrames = {
-      arm = layers[1]:match('/%w+%.png:([%w%.]+)') or "idle.1",
-      body = layers[5]:match('/%w+%.png:([%w%.]+)') or "idle.1"
-    }
-
-    if portraitFrames > 6 then layers[6] = portrait[6].image end
-    if portraitFrames > 7 then layers[7] = portrait[7].image end
-    layers[8] = portrait[#portrait].image
-  end
+  if portraitFrames > 6 then layers[6] = portrait[6].image end
+  if portraitFrames > 7 then layers[7] = portrait[7].image end
+  layers[8] = portrait[#portrait].image
 
   -- Add the preview layers
   widget.clearListItems(preview)
@@ -427,6 +363,101 @@ function wardrobe.loadPreview()
   end
 end
 
+function wardrobe.loadEquipped()
+  local suff = wardrobe.getConfigParameter("useArmorSlot") and "" or "Cosmetic"
+  local head = player.equippedItem("head" .. suff)
+  local chest = player.equippedItem("chest" .. suff)
+  local legs = player.equippedItem("legs" .. suff)
+  local back = player.equippedItem("back" .. suff)
+
+ -- TODO: function to save some lines
+  if head then
+    head.parameters = head.parameters or {}
+
+    local itemConfig = root.itemConfig(head.name)
+    local item = {
+      name = head.name,
+      shortdescription = head.parameters.shortdescription or itemConfig.config.shortdescription,
+      category = "head",
+      path = itemConfig.directory,
+      icon = head.parameters.inventoryIcon or itemConfig.config.inventoryIcon,
+      -- fileName Unknown,
+      maleFrames = head.parameters.maleFrames or itemConfig.config.maleFrames,
+      femaleFrames = head.parameters.femaleFrames or itemConfig.config.femaleFrames,
+      mask = head.parameters.mask or itemConfig.config.mask,
+      colorOptions = head.parameters.colorOptions or itemConfig.config.colorOptions,
+      directives = head.parameters.directives
+    }
+
+    wardrobe.selectItem(item, "head")
+    wardrobe.showHead(item, head.parameters.colorIndex or 0)
+  end
+
+  if chest then
+    chest.parameters = chest.parameters or {}
+
+    local itemConfig = root.itemConfig(chest.name)
+    local item = {
+      name = chest.name,
+      shortdescription = chest.parameters.shortdescription or itemConfig.config.shortdescription,
+      category = "chest",
+      path = itemConfig.directory,
+      icon = chest.parameters.inventoryIcon or itemConfig.config.inventoryIcon,
+      -- fileName Unknown,
+      maleFrames = chest.parameters.maleFrames or itemConfig.config.maleFrames,
+      femaleFrames = chest.parameters.femaleFrames or itemConfig.config.femaleFrames,
+      colorOptions = chest.parameters.colorOptions or itemConfig.config.colorOptions,
+      directives = chest.parameters.directives
+    }
+
+    wardrobe.selectItem(item, "chest")
+    wardrobe.showChest(item, chest.parameters.colorIndex or 0)
+  end
+
+  if legs then
+    legs.parameters = legs.parameters or {}
+
+    local itemConfig = root.itemConfig(legs.name)
+    local item = {
+      name = legs.name,
+      shortdescription = legs.parameters.shortdescription or itemConfig.config.shortdescription,
+      category = "legs",
+      path = itemConfig.directory,
+      icon = legs.parameters.inventoryIcon or itemConfig.config.inventoryIcon,
+      -- fileName Unknown,
+      maleFrames = legs.parameters.maleFrames or itemConfig.config.maleFrames,
+      femaleFrames = legs.parameters.femaleFrames or itemConfig.config.femaleFrames,
+      colorOptions = legs.parameters.colorOptions or itemConfig.config.colorOptions,
+      directives = legs.parameters.directives
+    }
+
+    wardrobe.selectItem(item, "legs")
+    wardrobe.showLegs(item, legs.parameters.colorIndex or 0)
+  end
+
+  if back then
+    back.parameters = back.parameters or {}
+
+    local itemConfig = root.itemConfig(back.name)
+    local item = {
+      name = back.name,
+      shortdescription = back.parameters.shortdescription or itemConfig.config.shortdescription,
+      category = "back",
+      path = itemConfig.directory,
+      icon = back.parameters.inventoryIcon or itemConfig.config.inventoryIcon,
+      -- fileName Unknown,
+      maleFrames = back.parameters.maleFrames or itemConfig.config.maleFrames,
+      femaleFrames = back.parameters.femaleFrames or itemConfig.config.femaleFrames,
+      colorOptions = back.parameters.colorOptions or itemConfig.config.colorOptions,
+      directives = back.parameters.directives
+    }
+
+    wardrobe.selectItem(item, "back")
+    wardrobe.showBack(item, back.parameters.colorIndex or 0)
+  end
+end
+
+
 --[[
   Sets the selection for the category of the item to this item, resets the
   selected color option and displays the item.
@@ -437,10 +468,11 @@ function wardrobe.selectItem(item, category)
   category = category or item.category
   wardrobe.selection[category] = item
   if item then
-    wardrobe.selection[category].selectedColor = 1
+    wardrobe.selection[category].colorIndex = 0
   end
   wardrobe.showItemForCategory[category](item, colorIndex)
   wardrobe.showColors(item, category)
+  wardrobe.setSelection(item, category)
 end
 
 --[[
@@ -450,11 +482,13 @@ end
   @param [colorIndex=1] - Index of the color option to apply to the item.
 ]]
 function wardrobe.showHead(item, colorIndex)
+  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 0 end
+
   local params = wutil.getParametersForShowing(item, colorIndex)
-  local image = item and wardrobe.getDefaultImageForItem(item) or "/assetMissing.png"
+  local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
-  wutil.setWidgetImage(w .. ".image", image .. params.dir)
+  wutil.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
 
   local mask = ""
   if item and item.mask then
@@ -463,72 +497,105 @@ function wardrobe.showHead(item, colorIndex)
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
   wutil.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
 
-  wutil.setWidgetImage("wardrobeHeadIcon", params.icon)
-  wutil.setWidgetImage("wardrobeHeadRarity", params.rarity)
-  widget.setText("wardrobeHeadName", params.name)
+  local itemParams = {}
+  if item then
+    if item.directives then
+      itemParams.directives = item.directives
+    else
+      itemParams.colorIndex = item.colorIndex
+    end
+  end
+
+  widget.setItemSlotItem(wardrobe.widgets.head_icon, item and { name = item.name, parameters = itemParams })
+  widget.setText(wardrobe.widgets.head_name, item and item.shortdescription or "No selection")
 end
 
 --[[
   Shows the given chest item on the preview character, optionally using the color option found at the given index.
   @param item - Item to display on the preview character. Category and layers
     are determined by the configuration of the item. A nil value will remove the chest item.
-  @param [colorIndex=1] - Index of the color option to apply to the item.
+  @param [colorIndex=0] - Index of the color option to apply to the item.
 ]]
 function wardrobe.showChest(item, colorIndex)
-  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
-  local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
-  local dir = item and wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex])
-  local icon = "/assetMissing.png"
-  if dir then icon = wutil.getIconForItem(item) .. dir
-  else dir = "" end
+  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 0 end
+
+  local params = wutil.getParametersForShowing(item, colorIndex)
   local images = item and wardrobe.getDefaultImageForItem(item, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
-  wutil.setWidgetImage(w .. ".image", images[1] .. dir)
+  wutil.setWidgetImage(w .. ".image", images[1] .. (item and item.directives or params.dir))
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
-  wutil.setWidgetImage(w .. ".image", images[2] .. dir)
+  wutil.setWidgetImage(w .. ".image", images[2] .. (item and item.directives or params.dir))
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
-  wutil.setWidgetImage(w .. ".image", images[3] .. dir)
+  wutil.setWidgetImage(w .. ".image", images[3] .. (item and item.directives or params.dir))
 
-  wutil.setWidgetImage("wardrobeChestIcon", icon)
-  wutil.setWidgetImage("wardrobeChestRarity", item and item.rarity and wutil.rarities[item.rarity] or wutil.rarities["common"])
-  widget.setText("wardrobeChestName", name)
+  local itemParams = {}
+  if item then
+    if item.directives then
+      itemParams.directives = item.directives
+    else
+      itemParams.colorIndex = item.colorIndex
+    end
+  end
+
+  widget.setItemSlotItem(wardrobe.widgets.chest_icon, item and { name = item.name, parameters = itemParams })
+  widget.setText(wardrobe.widgets.chest_name, item and item.shortdescription or "No selection")
 end
 
 --[[
   Shows the given legs item on the preview character, optionally using the color option found at the given index.
   @param item - Item to display on the preview character. Category and layers
     are determined by the configuration of the item. A nil value will remove the legs item.
-  @param [colorIndex=1] - Index of the color option to apply to the item.
+  @param [colorIndex=0] - Index of the color option to apply to the item.
 ]]
 function wardrobe.showLegs(item, colorIndex)
+  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 0 end
+
   local params = wutil.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
-  wutil.setWidgetImage(w .. ".image", image .. params.dir)
+  wutil.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
 
-  wutil.setWidgetImage("wardrobeLegsIcon", params.icon .. params.dir)
-  wutil.setWidgetImage("wardrobeLegsRarity", params.rarity)
-  widget.setText("wardrobeLegsName", params.name)
+  local itemParams = {}
+  if item then
+    if item.directives then
+      itemParams.directives = item.directives
+    else
+      itemParams.colorIndex = item.colorIndex
+    end
+  end
+
+  widget.setItemSlotItem(wardrobe.widgets.legs_icon, item and { name = item.name, parameters = itemParams })
+  widget.setText(wardrobe.widgets.legs_name, item and item.shortdescription or "No selection")
 end
 
 --[[
   Shows the given back item on the preview character, optionally using the color option found at the given index.
   @param item - Item to display on the preview character. Category and layers
     are determined by the configuration of the item. A nil value will remove the back item.
-  @param [colorIndex=1] - Index of the color option to apply to the item.
+  @param [colorIndex=0] - Index of the color option to apply to the item.
 ]]
 function wardrobe.showBack(item, colorIndex)
+  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 0 end
+
   local params = wutil.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
-  wutil.setWidgetImage(w .. ".image", image .. params.dir)
+  wutil.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
 
-  wutil.setWidgetImage("wardrobeBackIcon", params.icon .. params.dir)
-  wutil.setWidgetImage("wardrobeBackRarity", params.rarity)
-  widget.setText("wardrobeBackName", params.name)
+  local itemParams = {}
+  if item then
+    if item.directives then
+      itemParams.directives = item.directives
+    else
+      itemParams.colorIndex = item.colorIndex
+    end
+  end
+
+  widget.setItemSlotItem(wardrobe.widgets.back_icon, item and { name = item.name, parameters = itemParams })
+  widget.setText(wardrobe.widgets.back_name, item and item.shortdescription or "No selection")
 end
 
 --[[
@@ -542,79 +609,7 @@ wardrobe.showItemForCategory = {
   back = wardrobe.showBack
 }
 
---[[
-  Populates the leftList and rightList of the given scroll area with items
-  matching the given category. Clears existing entries in both lists before
-  adding matches.
-  @param w - Full widget reference (eg. list.scroll rather than list or scroll).
-  @param category - Category used to filter items.
-]]
-function wardrobe.showItems(w, category, selectEquipped, filter)
-  widget.clearListItems(w)
-
-  -- Add blank item to clear selection.
-  local clear = widget.addListItem(w)
-  wutil.setWidgetImage(w .. "." .. clear .. ".imageFront", "/assetMissing.png?replace;ffffff00=ffffffff?crop;0;0;43;43?blendmult=/interface/wardrobe/x.png;-13;-13?replace;ffffffff=00000000")
-
-  category = category:lower()
-  if category == "head" then category = "head"
-  elseif category == "top" or category == "shirt" then category = "chest"
-  elseif category == "skirt" or category == "leg" then category = "legs"
-  elseif category == "cape" or category == "enviroprotectionpack" then category = "back" end
-
-  local equipped
-  if selectEquipped then
-    local c = category
-    if not wardrobe.getConfigParameter("useArmorSlot") then c = c .. "Cosmetic" end
-    equipped = player.equippedItem(c)
-  end
-
-  local items = root.assetJson("/wardrobe/wearables.json")
-  if not items or not items[category] then sb.logError("Wardrobe: Could not load items for category %s", category) return end
-  items = items[category]
-
-  items = wutil.filterList(items, filter)
-
-  local itemCount = #items
-  -- Add items
-  for i=1,itemCount do
-    local item = items[i]
-    if equipped and item.name == equipped.name then
-      local index = equipped.parameters.colorIndex or 1
-      local cfg = root.itemConfig(item.name).config
-      local colors = cfg.colorOptions and #cfg.colorOptions or 12
-      index = index - 1
-      -- This should automatically select the color options of the equipped item.
-      index = (index % colors) + 2
-      wardrobe.selectItem(item, category)
-      wardrobe.selectColorForCategory[category](_, index)
-    end
-    wardrobe.addItem(w .. "." .. widget.addListItem(w), item)
-  end
-end
-
---[[
-  Adds an item to the given list item widget.
-  @param w - Full widget reference (eg. list.123 rather than list or 123).
-  @param item - Item to add, as stored in the item dump.
-]]
-function wardrobe.addItem(w, item)
-  widget.setData(w, item)
-  local images = wardrobe.getDefaultImageForItem(item)
-  local dir = wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
-
-  if item.category == "head" then
-    wutil.setWidgetImage(w .. ".imageFront", images .. dir)
-  elseif item.category == "chest" then
-    wutil.setWidgetImage(w .. ".imageBack", images[1] .. dir)
-    wutil.setWidgetImage(w .. ".image", images[2] .. dir)
-    wutil.setWidgetImage(w .. ".imageFront", images[3] .. dir)
-  elseif item.category == "legs" then
-    wutil.setWidgetImage(w .. ".image", images .. dir)
-  elseif item.category == "back" then
-    wutil.setWidgetImage(w .. ".imageBack", images .. dir)
-  end
-end
+-- #endregion
 
 --[[
   Updates and shows color option buttons relevant for the given item. Does this
@@ -627,13 +622,13 @@ function wardrobe.showColors(item, category)
   if not item then item = { colorOptions = {} } end
 
   if category == "head" then
-    w = "wardrobeHeadColor_"
+    w = "head.color_"
   elseif category == "chest" then
-    w = "wardrobeChestColor_"
+    w = "chest.color_"
   elseif category == "legs" then
-    w = "wardrobeLegsColor_"
+    w = "legs.color_"
   elseif category == "back" then
-    w = "wardrobeBackColor_"
+    w = "back.color_"
   end
   if w then
     if not item.colorOptions then item.colorOptions = {} end
@@ -647,6 +642,20 @@ function wardrobe.showColors(item, category)
       widget.setVisible(w .. i, false)
     end
   end
+end
+
+function wardrobe.setSelection(item, category)
+    local params = {}
+    if item then
+      if item.directives then
+        params.directives = item.directives
+      else
+        params.colorIndex = item.colorIndex or 0
+      end
+    end
+
+    widget.setItemSlotItem(wardrobe.widgets[category .. "_icon"], item and {name = item.name, parameters = params} or nil)
+    widget.setText(wardrobe.widgets[category .. "_name"], item and item.shortdescription or "No selection")
 end
 
 --[[
@@ -689,34 +698,67 @@ end
     For example, { "back": "/backimg.png:idle.1" }
   @param [offset={0,0}] - Drawing offset from bottom left corner of canvas.
 ]]
-function wardrobe.drawDummy(canvas, layers, offset)
+function wardrobe.drawDummy(canvas, layers, offset, mask)
   offset = offset or {0,0}
+  local bodyPortrait = wutil.getBodyPortrait()
 
-  -- Back layer (back items)
-  if (layers.back) then
-    canvas:drawImage(layers.back, offset)
-  end
+  --- `body`:
+  -- backarm head emote hair body <empty> <empty> frontarm
+  -- backarm head emote hair body brand   <empty> frontarm
+  -- backarm head emote hair body beard   <empty> frontarm
+  -- backarm head emote hair body fluff   beaks   frontarm
+  local body = {
+    bodyPortrait[1].image,
+    bodyPortrait[2].image,
+    bodyPortrait[3].image,
+    bodyPortrait[4].image:gsub('%?addmask=[^%?]+',''),
+    bodyPortrait[5].image
+  }
+  local c = #bodyPortrait
+  if c > 6 then body[6] = bodyPortrait[6].image end
+  if c > 7 then body[7] = bodyPortrait[7].image end
+  body[8] = bodyPortrait[c].image
 
-  -- BackArm layer (sleeves)
-  canvas:drawImage("/humanoid/any/dummybackarm.png", offset)
+  -- BackArm
+  canvas:drawImage(body[1], offset)
   if (layers.backArm) then
     canvas:drawImage(layers.backArm, offset)
   end
 
-  -- Middle layer (chest/legs)
-  canvas:drawImage("/humanoid/any/dummybody.png", offset)
+  -- Back
+  if (layers.back) then
+    canvas:drawImage(layers.back, offset)
+  end
+
+  -- Head
+  canvas:drawImage(body[2], offset)
+  canvas:drawImage(body[3], offset)
+  canvas:drawImage(body[4] .. (mask or ""), offset)
+
+  -- Body
+  canvas:drawImage(body[5], offset)
+
+  -- Chest/Pants
   if (layers.body) then
     canvas:drawImage(layers.body, offset)
   end
 
--- FrontArm layer (sleeves)
-  canvas:drawImage("/humanoid/any/dummyfrontarm.png", offset)
+  -- Face
+  if body[6] then
+    canvas:drawImage(body[6], offset)
+  end
+
+  if body[7] then
+    canvas:drawImage(body[7], offset)
+  end
+
+  -- FrontArm
+  canvas:drawImage(body[8], offset)
   if (layers.frontArm) then
     canvas:drawImage(layers.frontArm, offset)
   end
 
-  -- Front layer (head)
-  canvas:drawImage("/humanoid/any/dummyhead.png", offset)
+  -- Hat
   if (layers.head) then
     canvas:drawImage(layers.head, offset)
   end

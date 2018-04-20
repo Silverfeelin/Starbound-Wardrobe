@@ -1,3 +1,5 @@
+require "/scripts/util.lua"
+
 --[[
   Script containing utility functions for the Wardrobe Interface mod.
   Generally, functions in this script are expected to work with only the arguments
@@ -45,9 +47,9 @@ end
     'name' (string), 'colorIndex' (number), 'icon' (path), 'dir' (string), 'rarity' (string).
 ]]
 function wutil.getParametersForShowing(item, colorIndex)
-  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
+  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 0 end
   local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
-  local dir = item and wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex] or nil)
+  local dir = item and wutil.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex + 1] or nil)
   local icon = "/assetMissing.png"
   if dir then icon = wutil.getIconForItem(item) .. dir
   else dir = "" end
@@ -95,8 +97,23 @@ end
   @return - Entity portrait, or nil.
 ]]
 function wutil.getEntityPortrait()
-  local id = player.id()
-  if id then return world.entityPortrait(id, "full") end
+  return world.entityPortrait(player.id(), "full")
+end
+
+function wutil.getBodyPortrait()
+  return util.filter(
+    wutil.getEntityPortrait(),
+    function(item) return not item.image:find("^/items") end
+  )
+end
+
+function wutil.getIdleFrames()
+  local portrait = wutil.getBodyPortrait()
+
+  return {
+    arm = portrait[1].image:match('/%w+%.png:([%w%.]+)') or "idle.1",
+    body = portrait[5].image:match('/%w+%.png:([%w%.]+)') or "idle.1"
+  }
 end
 
 --[[
@@ -129,6 +146,16 @@ function wutil.giveItem(item, category, equip)
   local equipped = player.equippedItem(category)
   local oppositeEquipped = player.equippedItem(oppositeCategory)
 
+-- TODO: Helper method for this cuz I've used it multiple times.
+  local params = {}
+  if item then
+    if item.directives then
+      params.directives = item.directives
+    else
+      params.colorIndex = item.colorIndex
+    end
+  end
+
   if equip then
     -- Equip the item, add the previous to the inventory.
     if equipped then
@@ -136,12 +163,12 @@ function wutil.giveItem(item, category, equip)
       player.giveItem(equipped)
       if not oppositeEquipped then player.setEquippedItem(oppositeCategory, nil) end
     end
-    player.setEquippedItem(category, item and {name=item.name,parameters={colorIndex=(item.selectedColor - 1)}} or nil)
+    player.setEquippedItem(category, item and {name=item.name,parameters=params} or nil)
   elseif item then
     -- Add the item to the inventory; do not equip it.
     if not equipped then player.setEquippedItem(category, wutil.placeholders[category]) end
-    if not oppositeEquipped then  player.setEquippedItem(oppositeCategory, wutil.placeholders[category]) end
-    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
+    if not oppositeEquipped then player.setEquippedItem(oppositeCategory, wutil.placeholders[category]) end
+    player.giveItem({name=item.name,parameters=params})
     if not equipped then player.setEquippedItem(category, nil) end
     if not oppositeEquipped then player.setEquippedItem(oppositeCategory, nil) end
   end
