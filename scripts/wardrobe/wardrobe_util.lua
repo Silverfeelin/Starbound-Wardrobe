@@ -34,7 +34,7 @@ end
   @return - Absolute asset path to image.
 ]]
 function wardrobeUtil.getIconForItem(item)
-  return wardrobeUtil.fixImagePath(item.path, item.icon)
+  return wardrobeUtil.fixImagePath(item.path, item.icon or item.inventoryIcon)
 end
 
 --[[
@@ -157,7 +157,7 @@ function wardrobeUtil.itemParameters(item)
   params.directives = item.directives
   params.colorIndex = item.colorIndex
   params.shortdescription = item.shortdescription
-  params.inventoryIcon = item.icon
+  params.inventoryIcon = item.icon or item.inventoryIcon
   params.mask = item.mask
   return params
 end
