@@ -46,6 +46,7 @@ function init()
 
   -- Search timer
   wardrobe.search = {
+    slots = {},
     delay = 10,
     tick = 10
   }
@@ -121,12 +122,10 @@ function update(dt)
   if wardrobe.search.changed then
     wardrobe.search.tick = wardrobe.search.tick - 1
     if wardrobe.search.tick <= 0 then
-      -- TODO: Only update changed ones.
-      wardrobe.showItems("head", wardrobe.getCategory("head"), wardrobe.getSearch("head"))
-      wardrobe.showItems("chest", wardrobe.getCategory("chest"), wardrobe.getSearch("chest"))
-      wardrobe.showItems("legs", wardrobe.getCategory("legs"), wardrobe.getSearch("legs"))
-      wardrobe.showItems("back", wardrobe.getCategory("back"), wardrobe.getSearch("back"))
-
+      for k in pairs(wardrobe.search.slots) do
+        wardrobe.search.slots[k] = nil
+        wardrobe.showItems(k, wardrobe.getCategory(k), wardrobe.getSearch(k))
+      end
       wardrobe.search.changed = false
     end
   end

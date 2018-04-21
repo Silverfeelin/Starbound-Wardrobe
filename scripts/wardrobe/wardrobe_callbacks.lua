@@ -189,25 +189,25 @@ end
 
 function cb.filterHead()
   wardrobe.search.changed = true
-  wardrobe.search.head = true
+  wardrobe.search.slots.head = true
   wardrobe.search.tick = wardrobe.search.delay
 end
 
 function cb.filterChest()
   wardrobe.search.changed = true
-  wardrobe.search.chest = true
+  wardrobe.search.slots.chest = true
   wardrobe.search.tick = wardrobe.search.delay
 end
 
 function cb.filterLegs()
   wardrobe.search.changed = true
-  wardrobe.search.legs = true
+  wardrobe.search.slots.legs = true
   wardrobe.search.tick = wardrobe.search.delay
 end
 
 function cb.filterBack()
   wardrobe.search.changed = true
-  wardrobe.search.back = true
+  wardrobe.search.slots.back = true
   wardrobe.search.tick = wardrobe.search.delay
 end
 
