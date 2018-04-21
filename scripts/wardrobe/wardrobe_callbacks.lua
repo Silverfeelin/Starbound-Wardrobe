@@ -26,6 +26,8 @@ function cb.showHeadSelection()
 
   wardrobeUtil.setVisible(widgets.left_show, false)
 
+  widget.focus(widgets.head_search)
+
   -- First load
   if not shown.head then
     wardrobe.showItems("head", "vanilla", wardrobe.getSearch("head"))
@@ -39,6 +41,8 @@ function cb.showChestSelection()
   wardrobeUtil.setVisible(widgets.headSelection, false)
 
   wardrobeUtil.setVisible(widgets.left_show, false)
+
+  widget.focus(widgets.chest_search)
 
   -- First load
   if not shown.chest then
@@ -54,6 +58,8 @@ function cb.showLegsSelection()
 
   wardrobeUtil.setVisible(widgets.right_show, false)
 
+  widget.focus(widgets.legs_search)
+
   -- First load
   if not shown.legs then
     wardrobe.showItems("legs", "vanilla", wardrobe.getSearch("legs"))
@@ -68,6 +74,8 @@ function cb.showBackSelection()
 
   wardrobeUtil.setVisible(widgets.right_show, false)
 
+  widget.focus(widgets.back_search)
+
   -- First load
   if not shown.back then
     wardrobe.showItems("back", "vanilla", wardrobe.getSearch("back"))
@@ -80,6 +88,9 @@ function cb.closeLeftSelection()
   wardrobeUtil.setVisible(widgets.headSelection, false)
   wardrobeUtil.setVisible(widgets.chestSelection, false)
   wardrobeUtil.setVisible(widgets.left_show, true)
+
+  widget.blur(widgets.head_search)
+  widget.blur(widgets.chest_search)
 end
 
 function cb.closeRightSelection()
@@ -87,6 +98,9 @@ function cb.closeRightSelection()
   wardrobeUtil.setVisible(widgets.legsSelection, false)
   wardrobeUtil.setVisible(widgets.backSelection, false)
   wardrobeUtil.setVisible(widgets.right_show, true)
+
+  widget.blur(widgets.legs_search)
+  widget.blur(widgets.back_search)
 end
 
 -- #endregion
@@ -195,6 +209,12 @@ function cb.filterBack()
   wardrobe.search.changed = true
   wardrobe.search.back = true
   wardrobe.search.tick = wardrobe.search.delay
+end
+
+function cb.clearFilter(_, slot)
+  local w = slot .. "_search"
+  widget.setText(w, "")
+  widget.focus(w)
 end
 
 -- #endregion

@@ -462,6 +462,7 @@ function wardrobe.loadEquipped()
       femaleFrames = equippedItem.parameters.femaleFrames or itemConfig.config.femaleFrames,
       mask = equippedItem.parameters.mask or itemConfig.config.mask,
       colorOptions = equippedItem.parameters.colorOptions or itemConfig.config.colorOptions,
+      colorIndex = equippedItem.parameters.colorIndex or 0,
       directives = equippedItem.parameters.directives
     }
 
@@ -483,10 +484,10 @@ end
 function wardrobe.selectItem(item, category)
   category = category or item.category
   wardrobe.selection[category] = item
-  if item then
-    wardrobe.selection[category].colorIndex = 0
+  if item and not item.colorIndex then
+    item.colorIndex = 0
   end
-  wardrobe.showItemForCategory[category](item, colorIndex)
+  wardrobe.showItemForCategory[category](item, item.colorIndex)
 
   if not item or item.directives then
     wardrobe.hideColors(category)
