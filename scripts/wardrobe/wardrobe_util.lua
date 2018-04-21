@@ -1,12 +1,14 @@
+require "/scripts/util.lua"
+
 --[[
   Script containing utility functions for the Wardrobe Interface mod.
   Generally, functions in this script are expected to work with only the arguments
   passed to the function.
 ]]
 
-wardrobe_util = {}
+wardrobeUtil = {}
 
-wardrobe_util.rarities = {
+wardrobeUtil.rarities = {
   common = "/interface/inventory/itembordercommon.png",
   uncommon = "/interface/inventory/itemborderuncommon.png",
   rare = "/interface/inventory/itemborderrare.png",
@@ -23,7 +25,7 @@ wardrobe_util.rarities = {
   @param [path] - Asset path.
   @param image - Absolute or relative image path.
 ]]
-function wardrobe_util.fixImagePath(path, image)
+function wardrobeUtil.fixImagePath(path, image)
   return not path and image or image:find("^/") and image or (path .. image):gsub("//", "/")
 end
 
@@ -31,8 +33,8 @@ end
   Returns the icon for the given item. Does not apply any color option.
   @return - Absolute asset path to image.
 ]]
-function wardrobe_util.getIconForItem(item)
-  return wardrobe_util.fixImagePath(item.path, item.icon)
+function wardrobeUtil.getIconForItem(item)
+  return wardrobeUtil.fixImagePath(item.path, item.icon or item.inventoryIcon)
 end
 
 --[[
@@ -44,14 +46,19 @@ end
   @return - Table containing the most befitting:
     'name' (string), 'colorIndex' (number), 'icon' (path), 'dir' (string), 'rarity' (string).
 ]]
-function wardrobe_util.getParametersForShowing(item, colorIndex)
-  if not colorIndex or item and colorIndex > #item.colorOptions then colorIndex = 1 end
+function wardrobeUtil.getParametersForShowing(item, colorIndex)
+  if
+    not colorIndex
+    or (item and item.colorOptions and colorIndex > #item.colorOptions)
+  then
+    colorIndex = item.colorIndex or 0
+  end
   local name = item and (item.shortdescription or item.name or "Name missing") or "No selection"
-  local dir = item and wardrobe_util.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex] or nil)
+  local dir = item and wardrobeUtil.colorOptionToDirectives(item.colorOptions and item.colorOptions[colorIndex + 1] or nil)
   local icon = "/assetMissing.png"
-  if dir then icon = wardrobe_util.getIconForItem(item) .. dir
+  if dir then icon = wardrobeUtil.getIconForItem(item) .. dir
   else dir = "" end
-  local rarity = item and item.rarity and wardrobe_util.rarities[item.rarity] or wardrobe_util.rarities["common"]
+  local rarity = item and item.rarity and wardrobeUtil.rarities[item.rarity] or wardrobeUtil.rarities["common"]
   return { name = name, colorIndex = colorIndex, icon = icon, dir = dir, rarity = rarity }
 end
 
@@ -61,7 +68,7 @@ end
   @param w - Widget to set the image on.
   @param p - Absolute asset path to the image to set.
 ]]
-function wardrobe_util.setWidgetImage(w, p)
+function wardrobeUtil.setWidgetImage(w, p)
   if not pcall(root.imageSize, p) then p = "/assetMissing.png" end
   widget.setImage(w, p)
 end
@@ -74,7 +81,7 @@ end
   are compared to the filter. The filter is case-insensitive.
   @return - Table containing items matching the given filter.
 ]]
-function wardrobe_util.filterList(items, filter)
+function wardrobeUtil.filterList(items, filter)
   if type(filter) ~= "string" then return items end
   if filter == "" then return items end
 
@@ -94,9 +101,29 @@ end
   Attempts to return the full entity portrait of the user's character.
   @return - Entity portrait, or nil.
 ]]
-function wardrobe_util.getEntityPortrait()
-  local id = player.id()
-  if id then return world.entityPortrait(id, "full") end
+function wardrobeUtil.getEntityPortrait()
+  return world.entityPortrait(player.id(), "full")
+end
+
+function wardrobeUtil.getBodyPortrait()
+  return util.filter(
+    wardrobeUtil.getEntityPortrait(),
+    function(item) return not item.image:find("^/items") end
+  )
+end
+
+function wardrobeUtil.getIdleFrames()
+  local portrait = wardrobeUtil.getBodyPortrait()
+
+  return {
+    arm = portrait[1].image:match('/%w+%.png:([%w%.]+)') or "idle.1",
+    body = portrait[5].image:match('/%w+%.png:([%w%.]+)') or "idle.1"
+  }
+end
+
+function wardrobeUtil.getColorIndex(item, fallback)
+  fallback = fallback or 0
+  return item and item.colorIndex or fallback
 end
 
 --[[
@@ -104,7 +131,7 @@ end
   @param colorOption - Color option table, as stored in item configurations.
   @return - Formatted directive string for the color option.
 ]]
-function wardrobe_util.colorOptionToDirectives(colorOption)
+function wardrobeUtil.colorOptionToDirectives(colorOption)
   if not colorOption then return "" end
   local dir = "?replace"
   for k,v in pairs(colorOption) do
@@ -113,56 +140,38 @@ function wardrobe_util.colorOptionToDirectives(colorOption)
   return dir
 end
 
-wardrobe_util.placeholders = {
+wardrobeUtil.placeholders = {
   head = { name = "cupidshead", count = 1 },
   chest = { name = "cupidschest", count = 1 },
   legs = { name = "cupidslegs", count = 1 },
   back = { name = "cupidsback", count = 1 }
 }
-wardrobe_util.placeholders.headCosmetic = wardrobe_util.placeholders.head
-wardrobe_util.placeholders.chestCosmetic = wardrobe_util.placeholders.chest
-wardrobe_util.placeholders.legsCosmetic = wardrobe_util.placeholders.legs
-wardrobe_util.placeholders.backCosmetic = wardrobe_util.placeholders.back
+wardrobeUtil.placeholders.headCosmetic = wardrobeUtil.placeholders.head
+wardrobeUtil.placeholders.chestCosmetic = wardrobeUtil.placeholders.chest
+wardrobeUtil.placeholders.legsCosmetic = wardrobeUtil.placeholders.legs
+wardrobeUtil.placeholders.backCosmetic = wardrobeUtil.placeholders.back
 
-function wardrobe_util.giveItem(item, category, equip)
-  local oppositeCategory = category:find("Cosmetic") and category:gsub("Cosmetic", "") or (category .. "Cosmetic")
-  local equipped = player.equippedItem(category)
-  local oppositeEquipped = player.equippedItem(oppositeCategory)
-
-  if equip then
-    -- Equip the item, add the previous to the inventory.
-    if equipped then
-      if not oppositeEquipped then player.setEquippedItem(oppositeCategory, wardrobe_util.placeholders[category]) end
-      player.giveItem(equipped)
-      if not oppositeEquipped then player.setEquippedItem(oppositeCategory, nil) end
-    end
-    player.setEquippedItem(category, item and {name=item.name,parameters={colorIndex=(item.selectedColor - 1)}} or nil)
-  elseif item then
-    -- Add the item to the inventory; do not equip it.
-    if not equipped then player.setEquippedItem(category, wardrobe_util.placeholders[category]) end
-    if not oppositeEquipped then  player.setEquippedItem(oppositeCategory, wardrobe_util.placeholders[category]) end
-    player.giveItem({name=item.name,parameters={colorIndex=(item.selectedColor - 1)}})
-    if not equipped then player.setEquippedItem(category, nil) end
-    if not oppositeEquipped then player.setEquippedItem(oppositeCategory, nil) end
-  end
+function wardrobeUtil.itemParameters(item)
+  if not item then return {} end
+  local params = {}
+  params.directives = item.directives
+  params.colorIndex = item.colorIndex
+  params.shortdescription = item.shortdescription
+  params.inventoryIcon = item.icon or item.inventoryIcon
+  params.mask = item.mask
+  return params
 end
 
--- Define the player table if it isn't already.
-player = player or {}
-
---[[
-  Returns the player's entity ID. Works around the limitations of Starbound's
-  API, but may be unreliable.
-  @return - Player's entity ID, or nil.
-]]
-function player.id()
-  local id = nil
-  pcall(function()
-    local uid = player.ownShipWorldId():match":(.+)"
-    local pos =  world.findUniqueEntity(uid):result()
-    id = world.entityQuery(pos,3,{order = "nearest",includedTypes = {"player"}})[1]
-  end)
-  return id
+function wardrobeUtil.setVisible(widgetNames, bool)
+  if type(widgetNames) == "string" then
+    widget.setVisible(widgetNames, bool)
+  elseif type(widgetNames) == "table" then
+    for _,w in ipairs(widgetNames) do
+      widget.setVisible(w, bool)
+    end
+  else
+    error("Can't convert " .. type(widgetNames) .. " to string or table.")
+  end
 end
 
 --[[
