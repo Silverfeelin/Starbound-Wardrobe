@@ -486,7 +486,7 @@ function wardrobe.selectItem(item, category)
   if item and not item.colorIndex then
     item.colorIndex = 0
   end
-  wardrobe.showItemForCategory[category](item, item.colorIndex)
+  wardrobe.showItemForCategory[category](item, item and item.colorIndex)
 
   if not item or item.directives then
     wardrobe.hideColors(category)
