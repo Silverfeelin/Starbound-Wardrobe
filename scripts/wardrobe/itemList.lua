@@ -19,6 +19,7 @@ function ItemList.new(widgetName, addFunction, itemsPerListItem)
     buffer = ItemList.default.buffer,
     addFunction = addFunction,
     itemsPerListItem = itemsPerListItem or 1,
+    itemCount = 0,
     pending = {}
   }
   setmetatable(instance, ItemList)
@@ -95,7 +96,7 @@ function ItemList:addEmpty()
   end
 
   self.itemCount = self.itemCount + 1
-  
+
   return self.li, index
 end
 

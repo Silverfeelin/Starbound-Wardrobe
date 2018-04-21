@@ -1,106 +1,111 @@
-require "/scripts/wardrobe/wutil.lua"
+require "/scripts/wardrobe/wardrobe_util.lua"
 
-if not wardrobe then wardrobe = {} end
-if not wardrobe.cb then wardrobe.cb = {} end
+local cb = {}
+wardrobeCallbacks = cb
 
 local widgets
 
-function wardrobe.cb.init()
+--- Register list item callbacks
+function cb.init()
   widgets = config.getParameter("widgetNames")
 
-  widget.registerMemberCallback("headSelection.list", "wardrobe.cb.selectHead", wardrobe.cb.selectHead)
-  widget.registerMemberCallback("chestSelection.list", "wardrobe.cb.selectChest", wardrobe.cb.selectChest)
-  widget.registerMemberCallback("legsSelection.list", "wardrobe.cb.selectLegs", wardrobe.cb.selectLegs)
-  widget.registerMemberCallback("backSelection.list", "wardrobe.cb.selectBack", wardrobe.cb.selectBack)
+  widget.registerMemberCallback("headSelection.list", "wardrobeCallbacks.selectHead", cb.selectHead)
+  widget.registerMemberCallback("chestSelection.list", "wardrobeCallbacks.selectChest", cb.selectChest)
+  widget.registerMemberCallback("legsSelection.list", "wardrobeCallbacks.selectLegs", cb.selectLegs)
+  widget.registerMemberCallback("backSelection.list", "wardrobeCallbacks.selectBack", cb.selectBack)
 end
 
 -- #region Show Selection
 
 local shown = {}
 
-function wardrobe.cb.showHeadSelection()
-  wutil.setVisible(widgets.left, true)
-  wutil.setVisible(widgets.headSelection, true)
-  wutil.setVisible(widgets.chestSelection, false)
+function cb.showHeadSelection()
+  wardrobeUtil.setVisible(widgets.left, true)
+  wardrobeUtil.setVisible(widgets.headSelection, true)
+  wardrobeUtil.setVisible(widgets.chestSelection, false)
 
-  wutil.setVisible(widgets.left_show, false)
+  wardrobeUtil.setVisible(widgets.left_show, false)
 
+  -- First load
   if not shown.head then
-    wardrobe.showHeadItems("vanilla")
+    wardrobe.showItems("head", "vanilla", wardrobe.getSearch("head"))
     shown.head = true
   end
 end
 
-function wardrobe.cb.showChestSelection()
-  wutil.setVisible(widgets.left, true)
-  wutil.setVisible(widgets.chestSelection, true)
-  wutil.setVisible(widgets.headSelection, false)
+function cb.showChestSelection()
+  wardrobeUtil.setVisible(widgets.left, true)
+  wardrobeUtil.setVisible(widgets.chestSelection, true)
+  wardrobeUtil.setVisible(widgets.headSelection, false)
 
-  wutil.setVisible(widgets.left_show, false)
+  wardrobeUtil.setVisible(widgets.left_show, false)
 
+  -- First load
   if not shown.chest then
-    wardrobe.showChestItems("vanilla")
+    wardrobe.showItems("chest", "vanilla", wardrobe.getSearch("chest"))
     shown.chest = true
   end
 end
 
-function wardrobe.cb.showLegsSelection()
-  wutil.setVisible(widgets.right, true)
-  wutil.setVisible(widgets.legsSelection, true)
-  wutil.setVisible(widgets.backSelection, false)
+function cb.showLegsSelection()
+  wardrobeUtil.setVisible(widgets.right, true)
+  wardrobeUtil.setVisible(widgets.legsSelection, true)
+  wardrobeUtil.setVisible(widgets.backSelection, false)
 
-  wutil.setVisible(widgets.right_show, false)
+  wardrobeUtil.setVisible(widgets.right_show, false)
 
+  -- First load
   if not shown.legs then
-    wardrobe.showLegsItems("vanilla")
+    wardrobe.showItems("legs", "vanilla", wardrobe.getSearch("legs"))
     shown.legs = true
   end
 end
 
-function wardrobe.cb.showBackSelection()
-  wutil.setVisible(widgets.right, true)
-  wutil.setVisible(widgets.backSelection, true)
-  wutil.setVisible(widgets.legsSelection, false)
+function cb.showBackSelection()
+  wardrobeUtil.setVisible(widgets.right, true)
+  wardrobeUtil.setVisible(widgets.backSelection, true)
+  wardrobeUtil.setVisible(widgets.legsSelection, false)
 
-  wutil.setVisible(widgets.right_show, false)
+  wardrobeUtil.setVisible(widgets.right_show, false)
 
+  -- First load
   if not shown.back then
-    wardrobe.showBackItems("vanilla")
+    wardrobe.showItems("back", "vanilla", wardrobe.getSearch("back"))
     shown.back = true
   end
 end
 
-function wardrobe.cb.closeLeftSelection()
-  wutil.setVisible(widgets.left, false)
-  wutil.setVisible(widgets.headSelection, false)
-  wutil.setVisible(widgets.chestSelection, false)
-  wutil.setVisible(widgets.left_show, true)
+function cb.closeLeftSelection()
+  wardrobeUtil.setVisible(widgets.left, false)
+  wardrobeUtil.setVisible(widgets.headSelection, false)
+  wardrobeUtil.setVisible(widgets.chestSelection, false)
+  wardrobeUtil.setVisible(widgets.left_show, true)
 end
 
-function wardrobe.cb.closeRightSelection()
-  wutil.setVisible(widgets.right, false)
-  wutil.setVisible(widgets.legsSelection, false)
-  wutil.setVisible(widgets.backSelection, false)
-  wutil.setVisible(widgets.right_show, true)
+function cb.closeRightSelection()
+  wardrobeUtil.setVisible(widgets.right, false)
+  wardrobeUtil.setVisible(widgets.legsSelection, false)
+  wardrobeUtil.setVisible(widgets.backSelection, false)
+  wardrobeUtil.setVisible(widgets.right_show, true)
 end
 
 -- #endregion
 
 -- #region Select items
 
-function wardrobe.cb.selectHead(_, data)
+function cb.selectHead(_, data)
   wardrobe.selectItem(data, "head")
 end
 
-function wardrobe.cb.selectChest(_, data)
+function cb.selectChest(_, data)
   wardrobe.selectItem(data, "chest")
 end
 
-function wardrobe.cb.selectLegs(_, data)
+function cb.selectLegs(_, data)
   wardrobe.selectItem(data, "legs")
 end
 
-function wardrobe.cb.selectBack(_, data)
+function cb.selectBack(_, data)
   wardrobe.selectItem(data, "back")
 end
 
@@ -108,55 +113,59 @@ end
 
 -- #region Select group
 
-function wardrobe.cb.selectHeadGroup(_, data)
-  wardrobe.showHeadItems(data)
+function cb.selectHeadGroup(_, data)
+  wardrobe.showItems("head", data, widget.getText(widgets.head_search))
 end
 
-function wardrobe.cb.selectChestGroup(_, data)
-  wardrobe.showChestItems(data)
+function cb.selectChestGroup(_, data)
+  wardrobe.showItems("chest", data, widget.getText(widgets.chest_search))
 end
 
-function wardrobe.cb.selectLegsGroup(_, data)
-  wardrobe.showLegsItems(data)
+function cb.selectLegsGroup(_, data)
+  wardrobe.showItems("legs", data, widget.getText(widgets.legs_search))
 end
 
-function wardrobe.cb.selectBackGroup(_, data)
-  wardrobe.showBackItems(data)
+function cb.selectBackGroup(_, data)
+  wardrobe.showItems("back", data, widget.getText(widgets.back_search))
 end
 
 -- #endregion
 
 -- #region Select color
 
-function wardrobe.cb.selectHeadColor(_, index)
+function cb.selectHeadColor(_, index)
   wardrobe.selection["head"].colorIndex = index
-  wardrobe.showHead(wardrobe.selection["head"], index)
+  wardrobe.showHead(wardrobe.selection["head"])
+  wardrobe.setSelection("head", wardrobe.selection["head"])
 end
 
-function wardrobe.cb.selectChestColor(_, index)
+function cb.selectChestColor(_, index)
   wardrobe.selection["chest"].colorIndex = index
-  wardrobe.showChest(wardrobe.selection["chest"], index)
+  wardrobe.showChest(wardrobe.selection["chest"])
+  wardrobe.setSelection("chest", wardrobe.selection["chest"])
 end
 
-function wardrobe.cb.selectLegsColor(_, index)
+function cb.selectLegsColor(_, index)
   wardrobe.selection["legs"].colorIndex = index
-  wardrobe.showLegs(wardrobe.selection["legs"], index)
+  wardrobe.showLegs(wardrobe.selection["legs"])
+  wardrobe.setSelection("legs", wardrobe.selection["legs"])
 end
 
-function wardrobe.cb.selectBackColor(_, index)
+function cb.selectBackColor(_, index)
   wardrobe.selection["back"].colorIndex = index
-  wardrobe.showBack(wardrobe.selection["back"], index)
+  wardrobe.showBack(wardrobe.selection["back"])
+  wardrobe.setSelection("back", wardrobe.selection["back"])
 end
 
 -- #endregion
 
 -- #region Spawn itemslot
 
-function wardrobe.cb.equip()
+function cb.equip()
   wardrobe.equip()
 end
 
-function wardrobe.cb.spawn()
+function cb.spawn()
   wardrobe.spawn()
 end
 
@@ -164,25 +173,25 @@ end
 
 -- #region Text filter
 
-function wardrobe.cb.filterHead()
+function cb.filterHead()
   wardrobe.search.changed = true
   wardrobe.search.head = true
   wardrobe.search.tick = wardrobe.search.delay
 end
 
-function wardrobe.cb.filterChest()
+function cb.filterChest()
   wardrobe.search.changed = true
   wardrobe.search.chest = true
   wardrobe.search.tick = wardrobe.search.delay
 end
 
-function wardrobe.cb.filterLegs()
+function cb.filterLegs()
   wardrobe.search.changed = true
   wardrobe.search.legs = true
   wardrobe.search.tick = wardrobe.search.delay
 end
 
-function wardrobe.cb.filterBack()
+function cb.filterBack()
   wardrobe.search.changed = true
   wardrobe.search.back = true
   wardrobe.search.tick = wardrobe.search.delay
