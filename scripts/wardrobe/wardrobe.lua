@@ -19,6 +19,18 @@ wardrobe.preview = {
 -- Keys: 'head', 'chest', 'legs', 'back'.
 wardrobe.selection = {}
 
+--- The default palette for color options.
+wardrobe.defaultColors = {
+  ["ffca8a"] = true,
+  ["e0975c"] = true,
+  ["a85636"] = true,
+  ["6f2919"] = true,
+  [1] = "ffca8a",
+  [2] = "e0975c",
+  [3] = "a85636",
+  [4] = "6f2919"
+}
+
 -- #region Engine
 
 --- Initializes the Wardrobe.
@@ -615,7 +627,16 @@ function wardrobe.showColors(category, item)
   if not item.colorOptions then item.colorOptions = {} end
   for i=1,#item.colorOptions do
     widget.setVisible(w .. i, true)
-    local img = "/interface/wardrobe/color.png" .. wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[i])
+
+    local option = item.colorOptions[i]
+    local colors = wardrobe.util.orderColorOption(option)
+    local newOption = {}
+    for i=1,4 do
+      local c = colors[i]
+      if not c then break end
+      newOption[wardrobe.defaultColors[i]] = c.to
+    end
+    local img = "/interface/wardrobe/color.png" .. wardrobe.util.colorOptionToDirectives(newOption)
     widget.setButtonImages(w .. i, {base=img, hover=img})
   end
 

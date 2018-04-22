@@ -140,6 +140,41 @@ function wardrobeUtil.colorOptionToDirectives(colorOption)
   return dir
 end
 
+--- Hex to {r,g,b} [0-255].
+-- Thanks Magicks love ya.
+function wardrobeUtil.getColor(hex)
+    local len = #hex
+    local out = {}
+    for i = 1,len,2 do
+        table.insert(out, tonumber(hex:sub(i,i+1), 16))
+    end
+    return out
+end
+
+--- Calculates the luminance from {r,g,b} [0-255].
+function wardrobeUtil.getLuminance(color)
+  local r, g, b = color[1], color[2], color[3]
+  return (r*0.299 + g*0.587 + b*0.114) / 255;
+end
+
+--- Orders color options by luminance (based on resulting color).
+-- {
+--   [1] = { from = "aaaaaa", to = "ffffff", lum = 1},
+--   [2] = { from = "dddddd", to = "000000", lum = 0}
+-- }
+-- Uses https://stackoverflow.com/a/1754281
+function wardrobeUtil.orderColorOption(colorOption)
+  local res = {}
+  for from, to in pairs(colorOption) do
+    local c = wardrobeUtil.getColor(to)
+    local l = wardrobeUtil.getLuminance(c)
+    table.insert(res, { from = from:lower(), to = to:lower(), lum = l})
+  end
+
+  table.sort(res, function(a,b) return a.lum > b.lum end)
+  return res
+end
+
 wardrobeUtil.placeholders = {
   head = { name = "cupidshead", count = 1 },
   chest = { name = "cupidschest", count = 1 },
