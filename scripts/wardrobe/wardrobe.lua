@@ -522,6 +522,14 @@ function wardrobe.showHead(item, colorIndex)
   end
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
   wardrobe.util.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
+  if wardrobe.layers[6] then
+    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[6]
+    wardrobe.util.setWidgetImage(w .. ".image", wardrobe.layers[6] .. mask)
+  end
+  if wardrobe.layers[7] then
+    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[7]
+    wardrobe.util.setWidgetImage(w .. ".image", wardrobe.layers[7] .. mask)
+  end
 end
 
 --- Renders a chest item on the preview character.
@@ -704,11 +712,11 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
 
   -- Face
   if body[6] then
-    canvas:drawImage(body[6], offset)
+    canvas:drawImage(body[6] .. (mask or ""), offset)
   end
 
   if body[7] then
-    canvas:drawImage(body[7], offset)
+    canvas:drawImage(body[7] .. (mask or ""), offset)
   end
 
   -- FrontArm
