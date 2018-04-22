@@ -9,7 +9,7 @@ Starbound Wardrobe is a mod that uses [Quickbar Mini][qbm] to add a wardrobe int
  - [Opening the interface](#opening-the-interface)
  - [Using the interface](#using-the-interface)
 - [Potential issues](#potential-issues)
-- [Adding items](#adding-items)
+- [Add-ons](#add-ons)
 - [Contributing](#contributing)
 
 ## Installation
@@ -43,16 +43,13 @@ The functionality of the interface is shown in the below images.
 
 * Items are fetched from an item dump bundled with the mod. Game updates that remove items may cause issues (but shouldn't), and items added in updates to the game will not appear in the Wardrobe until the mod is updated.
 
-## Adding items
+## Add-ons
 
-There's a lot of custom clothing out there, and no easy way to fetch all items in-game automatically!
+The [Starbound-Wardrobe-Addons](https://github.com/Silverfeelin/Starbound-Wardrobe-Addons) repository houses various add-ons that can be used to add clothing from mods to the Wardrobe. These add-ons can be installed like any other mod.
 
-The [Wardrobe Item Fetcher](https://github.com/Silverfeelin/Starbound-WardrobeItemFetcher) can be used to easily create patches for mods. All necessary information for this tool can be found on the Wiki.
+The repository also contains information on how to create patches for the Wardrobe, if you're interested in creating or updating add-ons.
 
-**Quick Navigation**
-
- * [Installation](https://github.com/Silverfeelin/Starbound-WardrobeItemFetcher/wiki/Installation)
- * [Usage](https://github.com/Silverfeelin/Starbound-WardrobeItemFetcher/wiki/Usage)
+More information can be found on the repository itself.
 
 ## Contributing
 
