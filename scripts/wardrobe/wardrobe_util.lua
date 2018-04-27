@@ -140,6 +140,47 @@ function wardrobeUtil.colorOptionToDirectives(colorOption)
   return dir
 end
 
+local itemTypes = {
+  headarmour = "head",
+  headwear = "head",
+  head = "head",
+  chestarmour = "chest",
+  chestwear = "chest",
+  chest = "chest",
+  legarmour = "legs",
+  legwear = "legs",
+  legs = "legs",
+  backarmour = "back",
+  backwear = "back",
+  back = "back",
+  enviroprotectionpack = "back"
+}
+
+--- Guesses item type from item category.
+-- Unsafe (especially for mods) as item categories are not strict.
+function wardrobeUtil.getItemType(category)
+  if not category then return end
+  return itemTypes[category:lower()]
+end
+
+function wardrobeUtil.getItemFromName(name)
+  local cfg = root.itemConfig(name)
+  local item = {
+    name = name,
+    path = cfg.directory,
+    -- fileName unknown
+    category = wardrobe.util.getItemType(cfg.config.category),
+    shortdescription = cfg.config.shortdescription,
+    icon = cfg.config.inventoryIcon,
+    maleFrames = cfg.config.maleFrames,
+    femaleFrames = cfg.config.femaleFrames,
+    mask = cfg.config.mask,
+    rarity = cfg.config.rarity,
+    colorOptions = cfg.config.colorOptions
+  }
+  return item
+end
+
 --- Hex to {r,g,b} [0-255].
 -- Thanks Magicks love ya.
 function wardrobeUtil.getColor(hex)
