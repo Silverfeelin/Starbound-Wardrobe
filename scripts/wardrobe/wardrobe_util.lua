@@ -63,17 +63,6 @@ function wardrobeUtil.getParametersForShowing(item, colorIndex)
 end
 
 --[[
-  Alternate function that calls widget.setImage. Uses "/assetMissing.png" if the
-  given image path is invalid.
-  @param w - Widget to set the image on.
-  @param p - Absolute asset path to the image to set.
-]]
-function wardrobeUtil.setWidgetImage(w, p)
-  if not pcall(root.imageSize, p) then p = "/assetMissing.png" end
-  widget.setImage(w, p)
-end
-
---[[
   Filters the given item collection on the given filter, and returns a new table
   containing references to the items matching the filter.
   @param items - List of items to filter.

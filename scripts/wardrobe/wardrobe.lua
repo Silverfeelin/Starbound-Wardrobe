@@ -453,7 +453,7 @@ function wardrobe.loadPreview()
     -- Add default layer
     local li = widget.addListItem(preview)
     if layers[i] then
-      wardrobe.util.setWidgetImage(preview .. "." .. li .. ".image", layers[i])
+      widget.setImage(preview .. "." .. li .. ".image", layers[i])
     end
     table.insert(wardrobe.preview.default, li)
 
@@ -537,7 +537,7 @@ function wardrobe.showHead(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
-  wardrobe.util.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", image .. (item and item.directives or params.dir))
 
   local mask = ""
   if item and item.mask then
@@ -550,14 +550,14 @@ function wardrobe.showHead(item, colorIndex)
     end
   end
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
-  wardrobe.util.setWidgetImage(w .. ".image", wardrobe.layers[4] .. mask)
+  widget.setImage(w .. ".image", wardrobe.layers[4] .. mask)
   if wardrobe.layers[6] then
     w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[6]
-    wardrobe.util.setWidgetImage(w .. ".image", wardrobe.layers[6] .. mask)
+    widget.setImage(w .. ".image", wardrobe.layers[6] .. mask)
   end
   if wardrobe.layers[7] then
     w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[7]
-    wardrobe.util.setWidgetImage(w .. ".image", wardrobe.layers[7] .. mask)
+    widget.setImage(w .. ".image", wardrobe.layers[7] .. mask)
   end
 end
 
@@ -572,11 +572,11 @@ function wardrobe.showChest(item, colorIndex)
   local images = item and wardrobe.getDefaultImageForItem(item, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
-  wardrobe.util.setWidgetImage(w .. ".image", images[1] .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[1] .. (item and item.directives or params.dir))
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
-  wardrobe.util.setWidgetImage(w .. ".image", images[2] .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[2] .. (item and item.directives or params.dir))
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
-  wardrobe.util.setWidgetImage(w .. ".image", images[3] .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[3] .. (item and item.directives or params.dir))
 end
 
 --- Renders a legs item on the preview character.
@@ -590,7 +590,7 @@ function wardrobe.showLegs(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
-  wardrobe.util.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", image .. (item and item.directives or params.dir))
 end
 
 --- Renders a back item on the preview character.
@@ -604,7 +604,7 @@ function wardrobe.showBack(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
-  wardrobe.util.setWidgetImage(w .. ".image", image .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", image .. (item and item.directives or params.dir))
 end
 
 --- Reference collection for all show<Category> functions.
