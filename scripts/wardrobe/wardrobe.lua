@@ -102,6 +102,17 @@ function wardrobe.loadItems()
     end
   end
 
+  -- Validates if the first item for each slot exists.
+  -- Not perfect since mods may remove certain items, but will let us know that an user doesn't have the mod in most cases.
+  local function validateItems(items)
+    for _,slot in ipairs(wardrobe.slots) do
+      if items[slot] and #items[slot] > 0 then
+        if not root.itemConfig(items[slot][1]) then return false end
+      end
+    end
+    return true
+  end
+
   -- Load files and add items to tbl
   local function loadFiles(files, tbl)
     for _,v in ipairs(files) do
@@ -109,7 +120,14 @@ function wardrobe.loadItems()
         v = "/wardrobe/" .. v
       end
       local f = root.assetJson(v)
-      addItems(tbl, f)
+
+      if type(f.head) ~= "table" and type(f.chest) ~= "table" and type(f.legs) ~= "table" and type(f.back) ~= "table" then
+        sb.logWarn("Wardrobe: Skipping %s due to malformed JSON.\nWas this file made using the Wardrobe Item Fetcher?", v)
+      elseif not validateItems(f) then
+        sb.logWarn("Wardrobe: Skipping %s due to missing items.\nDid you install the mod this add-on is made for? If you did, the add-on might be outdated.", v)
+      else
+        addItems(tbl, f)
+      end
     end
   end
 
@@ -121,9 +139,8 @@ function wardrobe.loadItems()
   return items
 end
 
----
--- Update function, called every game update.
--- @param dt Delay between this and the previous update tick.
+--- Update function, called every game update.
+-- @param dt Time between this and the previous update tick.
 function update(dt)
   -- Update item lists. This adds some items every update, until all items are shown.
   for _,v in pairs(wardrobe.lists) do
