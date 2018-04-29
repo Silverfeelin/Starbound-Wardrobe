@@ -76,14 +76,16 @@ function wardrobeUtil.filterList(items, filter)
 
   filter = filter:lower()
 
-  local results = {}
-  for _,v in pairs(items) do
-    if v.shortdescription:lower():find(filter) or v.name:lower():find(filter) then
-      table.insert(results, v)
+  local warned = false -- Because I know this will happen and spam the logs.
+  return util.filter(items, function(item)
+    if type(item) == "table" then
+      return item.name and item.name:lower():find(filter)
+        or item.shortdescription and item.shortdescription:lower():find(filter)
+    else -- String
+      if not warned then warned = true; sb.logError("Wardrobe: Can't filter item names. Well we can but then people could only search for the item names and not descriptions.") end
+      return true
     end
-  end
-
-  return results
+  end)
 end
 
 --[[
