@@ -1,51 +1,64 @@
 require "/scripts/util.lua"
 
---[[
-  Script containing utility functions for the Wardrobe Interface mod.
-  Generally, functions in this script are expected to work with only the arguments
-  passed to the function.
-]]
-
+--- Script containing utility functions for the Wardrobe Interface mod.
+-- Generally, functions in this script are expected to work with only the arguments passed to the function.
 wardrobeUtil = {}
 
-wardrobeUtil.rarities = {
-  common = "/interface/inventory/itembordercommon.png",
-  uncommon = "/interface/inventory/itemborderuncommon.png",
-  rare = "/interface/inventory/itemborderrare.png",
-  legendary = "/interface/inventory/itemborderlegendary.png",
-  essential = "/interface/inventory/itemborderessential.png"
+--- Placeholder items that can be used when spawning items without equipping them.
+wardrobeUtil.placeholders = {
+  head = { name = "cupidshead", count = 1 },
+  chest = { name = "cupidschest", count = 1 },
+  legs = { name = "cupidslegs", count = 1 },
+  back = { name = "cupidsback", count = 1 }
+}
+wardrobeUtil.placeholders.headCosmetic = wardrobeUtil.placeholders.head
+wardrobeUtil.placeholders.chestCosmetic = wardrobeUtil.placeholders.chest
+wardrobeUtil.placeholders.legsCosmetic = wardrobeUtil.placeholders.legs
+wardrobeUtil.placeholders.backCosmetic = wardrobeUtil.placeholders.back
+
+--- Lookup table for item slot based on item category.
+-- Keys are all lowercase.
+wardrobeUtil.itemTypes = {
+  headarmour = "head",
+  headwear = "head",
+  head = "head",
+  chestarmour = "chest",
+  chestwear = "chest",
+  chest = "chest",
+  legarmour = "legs",
+  legwear = "legs",
+  legs = "legs",
+  backarmour = "back",
+  backwear = "back",
+  back = "back",
+  enviroprotectionpack = "back"
 }
 
---[[
-  Returns a fixed absolute path to the given image.
-  If the image itself starts with a forward slash, it is interpreted as an absolute
-  path. If the image doesn't, concatenate the path and image and remove any
-  potentional duplicate forward slashes. If path is nil, just the image is
-  returned.
-  @param [path] - Asset path.
-  @param image - Absolute or relative image path.
-]]
+--- Returns an absolute path to the given image.
+-- If path is nil, just the image is returned.
+-- If the image itself starts with a forward slash, it is interpreted as an absolute path.
+-- If the image doesn't, concatenate the path and image.
+-- @param path Asset path. Can be nil.
+-- @param image Absolute or relative image path.
+-- @return Absolute image path.
 function wardrobeUtil.fixImagePath(path, image)
   return not path and image or image:find("^/") and image or (path .. image):gsub("//", "/")
 end
 
---[[
-  Returns the icon for the given item. Does not apply any color option.
-  @return - Absolute asset path to image.
-]]
+--- Returns the icon for the given wardrobe item. Does not apply any color option.
+-- @param item Wardrobe item.
+-- @return - Absolute asset path to image.
 function wardrobeUtil.getIconForItem(item)
   return wardrobeUtil.fixImagePath(item.path, item.icon or item.inventoryIcon)
 end
 
---[[
-  Returns a table containing parameters useful for showing the given item.
-  Uses default values such as 'No selection' and "/assetMissing.png" if no item is passed.
-  The actual image is not returned, as the default value for this varies between item categories (table with three images for chest, unlike the other categories).
-  @param item - Item to retrieve parameters for. A nil value will return parameters indicating that no item was selected.
-  @param [colorIndex=1] - Preferred color index. Defaults to 1 if no value is given or the value falls outside of the available color options.
-  @return - Table containing the most befitting:
-    'name' (string), 'colorIndex' (number), 'icon' (path), 'dir' (string), 'rarity' (string).
-]]
+--- Returns a table containing parameters useful for showing the given item.
+-- Uses default values such as 'No selection' and "/assetMissing.png" if no item is passed.
+-- The actual image is not returned, as the default value for this varies between item categories (table with three images for chest, unlike the other categories).
+-- @param item Item to retrieve parameters for. A nil value will return parameters indicating that no item was selected.
+-- @param [colorIndex=0] Preferred color index. Defaults to 1 if no value is given or the value falls outside of the available color options.
+-- @return Table containing the most befitting:
+--  'name' (string), 'colorIndex' (number), 'icon' (path), 'dir' (string).
 function wardrobeUtil.getParametersForShowing(item, colorIndex)
   if
     not colorIndex
@@ -58,18 +71,14 @@ function wardrobeUtil.getParametersForShowing(item, colorIndex)
   local icon = "/assetMissing.png"
   if dir then icon = wardrobeUtil.getIconForItem(item) .. dir
   else dir = "" end
-  local rarity = item and item.rarity and wardrobeUtil.rarities[item.rarity] or wardrobeUtil.rarities["common"]
-  return { name = name, colorIndex = colorIndex, icon = icon, dir = dir, rarity = rarity }
+  return { name = name, colorIndex = colorIndex, icon = icon, dir = dir }
 end
 
---[[
-  Filters the given item collection on the given filter, and returns a new table
-  containing references to the items matching the filter.
-  @param items - List of items to filter.
-  @param filter - String to filter items by. The item names and short descriptions
-  are compared to the filter. The filter is case-insensitive.
-  @return - Table containing items matching the given filter.
-]]
+--- Returns a filtered collection of the given items.
+-- @param items List of items to filter.
+-- @param filter String to filter items by (case-insensitive).
+--  The item names and short descriptions are compared to the filter.
+-- @return Table containing items matching the given filter.
 function wardrobeUtil.filterList(items, filter)
   if type(filter) ~= "string" then return items end
   if filter == "" then return items end
@@ -88,14 +97,16 @@ function wardrobeUtil.filterList(items, filter)
   end)
 end
 
---[[
-  Attempts to return the full entity portrait of the user's character.
-  @return - Entity portrait, or nil.
-]]
+--- Returns the full entity portrait of the user's character.
+-- This contains both body and clothing layers.
+-- @return Entity portrait
 function wardrobeUtil.getEntityPortrait()
   return world.entityPortrait(player.id(), "full")
 end
 
+--- Returns the fully entity portrait, minus the clothing layers.
+-- There can be 6 to 8 layers, depending on the species (i.e. beard/fluff).
+-- @return Entity portrait without clothing.
 function wardrobeUtil.getBodyPortrait()
   return util.filter(
     wardrobeUtil.getEntityPortrait(),
@@ -103,6 +114,10 @@ function wardrobeUtil.getBodyPortrait()
   )
 end
 
+--- Returns the idle frames used by the given body portrait (no clothing layers).
+-- @param [portrait=wardrobeUtil.getBodyPortrait()] Entity portrait with only body layers.
+-- @return { arm = "idle.x", body = "idle.y" }.  Defaults to "idle.1" if the value could not be determined.
+-- @see wardrobeUtil.getBodyPortrait
 function wardrobeUtil.getIdleFrames()
   local portrait = wardrobeUtil.getBodyPortrait()
 
@@ -112,16 +127,17 @@ function wardrobeUtil.getIdleFrames()
   }
 end
 
+--- Returns the color index from the item.
+-- @param item Wardrobe item.
+-- @param [fallback=0] Fallback value if item is nil or no colorIndex is set.
 function wardrobeUtil.getColorIndex(item, fallback)
   fallback = fallback or 0
   return item and item.colorIndex or fallback
 end
 
---[[
-  Converts a color option to a replace directive.
-  @param colorOption - Color option table, as stored in item configurations.
-  @return - Formatted directive string for the color option.
-]]
+--- Converts a color option to a replace directive.
+-- @param colorOption Color option dictionary.
+-- @return - ?replace directive.
 function wardrobeUtil.colorOptionToDirectives(colorOption)
   if not colorOption then return "" end
   local dir = "?replace"
@@ -131,29 +147,16 @@ function wardrobeUtil.colorOptionToDirectives(colorOption)
   return dir
 end
 
-local itemTypes = {
-  headarmour = "head",
-  headwear = "head",
-  head = "head",
-  chestarmour = "chest",
-  chestwear = "chest",
-  chest = "chest",
-  legarmour = "legs",
-  legwear = "legs",
-  legs = "legs",
-  backarmour = "back",
-  backwear = "back",
-  back = "back",
-  enviroprotectionpack = "back"
-}
-
 --- Guesses item type from item category.
 -- Unsafe (especially for mods) as item categories are not strict.
 function wardrobeUtil.getItemType(category)
-  if not category then return end
-  return itemTypes[category:lower()]
+  return wardrobeUtil.itemTypes[category:lower()]
 end
 
+--- Returns a wardrobe item config for the given item name
+-- Everything but the fileName is present.
+-- @param name Item name.
+-- @return Wardrobe item.
 function wardrobeUtil.getItemFromName(name)
   local cfg = root.itemConfig(name)
   local item = {
@@ -174,6 +177,8 @@ end
 
 --- Hex to {r,g,b} [0-255].
 -- Thanks Magicks love ya.
+-- @param hex ffffff
+-- @return {255, 255, 255}
 function wardrobeUtil.getColor(hex)
     local len = #hex
     local out = {}
@@ -195,6 +200,8 @@ end
 --   [2] = { from = "dddddd", to = "000000", lum = 0}
 -- }
 -- Uses https://stackoverflow.com/a/1754281
+-- @param colorOption Color option dictionary.
+-- @return Ordered colors. See description for format.
 function wardrobeUtil.orderColorOption(colorOption)
   local res = {}
   for from, to in pairs(colorOption) do
@@ -207,17 +214,9 @@ function wardrobeUtil.orderColorOption(colorOption)
   return res
 end
 
-wardrobeUtil.placeholders = {
-  head = { name = "cupidshead", count = 1 },
-  chest = { name = "cupidschest", count = 1 },
-  legs = { name = "cupidslegs", count = 1 },
-  back = { name = "cupidsback", count = 1 }
-}
-wardrobeUtil.placeholders.headCosmetic = wardrobeUtil.placeholders.head
-wardrobeUtil.placeholders.chestCosmetic = wardrobeUtil.placeholders.chest
-wardrobeUtil.placeholders.legsCosmetic = wardrobeUtil.placeholders.legs
-wardrobeUtil.placeholders.backCosmetic = wardrobeUtil.placeholders.back
-
+--- Turns a wardrobe item into item parameters (not descriptor).
+-- @param item Wardrobe item.
+-- @return Item parameters
 function wardrobeUtil.itemParameters(item)
   if not item then return {} end
   local params = {}
@@ -229,6 +228,9 @@ function wardrobeUtil.itemParameters(item)
   return params
 end
 
+--- Sets one or more widgets (in)visible.
+-- @param widgetNames widget name (string) or widget names (table).
+-- @param bool Show (true) or hide (false).
 function wardrobeUtil.setVisible(widgetNames, bool)
   if type(widgetNames) == "string" then
     widget.setVisible(widgetNames, bool)
@@ -241,9 +243,7 @@ function wardrobeUtil.setVisible(widgetNames, bool)
   end
 end
 
---[[
-  Logs environmental functions, tables and nested functions.
-]]
+--- Logs environmental functions, tables and nested functions.
 function logENV()
   for i,v in pairs(_ENV) do
     if type(v) == "function" then
