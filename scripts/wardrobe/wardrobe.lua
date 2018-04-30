@@ -237,7 +237,7 @@ function wardrobe.addHeadItem(li, item, index)
 
   -- Draw
   local image = wardrobe.getDefaultImageForItem(item)
-  local dir = item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives ~= "" and item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1 then
     wardrobe.headCanvas = widget.bindCanvas(li .. ".canvas")
@@ -274,7 +274,7 @@ function wardrobe.addChestItem(li, item, index)
 
   -- Draw
   local images = wardrobe.getDefaultImageForItem(item, true)
-  local dir = item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives ~= "" and item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1  then
     wardrobe.chestCanvas = widget.bindCanvas(li .. ".canvas")
@@ -300,7 +300,7 @@ function wardrobe.addLegsItem(li, item, index)
 
   -- Draw
   local image = wardrobe.getDefaultImageForItem(item, true)
-  local dir = item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives ~= "" and item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1  then
     wardrobe.legsCanvas = widget.bindCanvas(li .. ".canvas")
@@ -324,7 +324,7 @@ function wardrobe.addBackItem(li, item, index)
 
   -- Draw
   local image = wardrobe.getDefaultImageForItem(item, true)
-  local dir = item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
+  local dir = item.directives ~= "" and item.directives or wardrobe.util.colorOptionToDirectives(item.colorOptions and item.colorOptions[1])
 
   if index == 1  then
     wardrobe.backCanvas = widget.bindCanvas(li .. ".canvas")
@@ -520,7 +520,7 @@ function wardrobe.selectItem(item, category)
   end
   wardrobe.showItemForCategory[category](item, item and item.colorIndex)
 
-  if not item or item.directives then
+  if not item or (item.directives ~= "" and item.directives) then
     wardrobe.hideColors(category)
   else
     wardrobe.showColors(category, item)
@@ -540,7 +540,7 @@ function wardrobe.showHead(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
-  widget.setImage(w .. ".image", image .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", image .. (item and item.directives ~= "" and item.directives or params.dir))
 
   local mask = ""
   if item and item.mask then
@@ -575,11 +575,11 @@ function wardrobe.showChest(item, colorIndex)
   local images = item and wardrobe.getDefaultImageForItem(item, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
-  widget.setImage(w .. ".image", images[1] .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[1] .. (item and item.directives ~= "" and item.directives or params.dir))
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
-  widget.setImage(w .. ".image", images[2] .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[2] .. (item and item.directives ~= "" and item.directives or params.dir))
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
-  widget.setImage(w .. ".image", images[3] .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[3] .. (item and item.directives ~= "" and item.directives or params.dir))
 end
 
 --- Renders a legs item on the preview character.
@@ -593,7 +593,7 @@ function wardrobe.showLegs(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
-  widget.setImage(w .. ".image", image .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", image .. (item and item.directives ~= "" and item.directives or params.dir))
 end
 
 --- Renders a back item on the preview character.
@@ -607,7 +607,7 @@ function wardrobe.showBack(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
-  widget.setImage(w .. ".image", image .. (item and item.directives or params.dir))
+  widget.setImage(w .. ".image", image .. (item and item.directives ~= "" and item.directives or params.dir))
 end
 
 --- Reference collection for all show<Category> functions.
