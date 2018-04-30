@@ -42,6 +42,10 @@ wardrobeUtil.itemTypes = {
 -- @param image Absolute or relative image path.
 -- @return Absolute image path.
 function wardrobeUtil.fixImagePath(path, image)
+  if type(image) == "table" then
+    error(string.format("Unexpected table value for image. path: %s image: %s", path, sb.print(image)))
+  end
+
   return not path and image or image:find("^/") and image or (path .. image):gsub("//", "/")
 end
 

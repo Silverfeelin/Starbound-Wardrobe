@@ -97,6 +97,9 @@ function wardrobe.loadItems()
   local function addItems(tbl, items)
     for key,subItems in pairs(items) do
       for _,v in ipairs(subItems) do
+        -- Fix improper categories. Makes the category param in the item files obsolete/unused.
+        v.category = key
+
         table.insert(tbl[key], v)
       end
     end
