@@ -1,3 +1,5 @@
+require "/scripts/util.lua"
+
 ItemList = {}
 ItemList.__index = ItemList
 
@@ -41,14 +43,14 @@ end
 -- @see ItemList:clear
 -- @see ItemList:enqueue
 function ItemList:show(items)
-  self.pending = {table.unpack(items)}
+  self.pending = copy(items)
 end
 
 --- Enqueues the items
 -- @param items Items to show.
 function ItemList:enqueue(items)
   for _,item in ipairs(items) do
-    table.insert(self.pending, item)
+    table.insert(self.pending, copy(item))
   end
 end
 
@@ -71,7 +73,6 @@ end
 -- @return false if no item was added, addFunction result if an item was added.
 function ItemList:addNext()
   if #self.pending == 0 then return false end
-
   local index = self:count() % self.itemsPerListItem + 1
   -- Add next list item
   if index == 1 then
