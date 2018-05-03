@@ -407,7 +407,10 @@ function wardrobe.giveItem(item, category, equip)
     -- Equip the item, add the previous to the inventory.
     if equipped then
       if not oppositeEquipped then player.setEquippedItem(oppositeCategory, wardrobeUtil.placeholders[category]) end
-      player.giveItem(equipped)
+      -- Give equipped item back if it's not part of an outfit.
+      if equipped.parameters and equipped.parameters.outfit ~= true then
+        player.giveItem(equipped)
+      end
       if not oppositeEquipped then player.setEquippedItem(oppositeCategory, nil) end
     end
     player.setEquippedItem(category, item and {name=item.name,parameters=params} or nil)
@@ -931,7 +934,19 @@ function wardrobe.saveOutfit()
     back = copy(wardrobe.selection.back),
     id = sb.makeUuid()
   }
-
+  if outfit.head then
+    outfit.head.outfit = true
+  end
+  if outfit.chest then
+    outfit.chest.outfit = true
+  end
+  if outfit.legs then
+    outfit.legs.outfit = true
+  end
+  if outfit.back then
+    outfit.back.outfit = true
+  end
+  
   table.insert(wardrobe.outfits, outfit)
   status.setStatusProperty("wardrobeOutfits", wardrobe.outfits)
   wardrobe.lists.outfits:enqueue({outfit})

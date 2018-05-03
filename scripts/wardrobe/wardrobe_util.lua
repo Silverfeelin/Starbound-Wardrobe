@@ -229,6 +229,7 @@ function wardrobeUtil.itemParameters(item)
   params.shortdescription = item.shortdescription
   params.inventoryIcon = item.icon or item.inventoryIcon
   params.mask = item.mask
+  params.outfit = item.outfit
   return params
 end
 
