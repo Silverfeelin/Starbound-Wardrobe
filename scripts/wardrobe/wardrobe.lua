@@ -5,6 +5,8 @@ require "/scripts/wardrobe/wardrobe_util.lua"
 require "/scripts/wardrobe/wardrobe_callbacks.lua"
 require "/scripts/wardrobe/itemList.lua"
 
+require "/scripts/wardrobe_tooltip/tooltip.lua"
+
 wardrobe = {}
 
 --- Collection of list items for the preview widget.
