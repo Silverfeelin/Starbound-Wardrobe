@@ -1,5 +1,3 @@
-require "/scripts/wardrobe/wardrobe_util.lua"
-
 local cb = {}
 wardrobeCallbacks = cb
 
@@ -13,6 +11,7 @@ function cb.init()
   widget.registerMemberCallback("chestSelection.list", "wardrobeCallbacks.selectChest", cb.selectChest)
   widget.registerMemberCallback("legsSelection.list", "wardrobeCallbacks.selectLegs", cb.selectLegs)
   widget.registerMemberCallback("backSelection.list", "wardrobeCallbacks.selectBack", cb.selectBack)
+  widget.registerMemberCallback("outfitSelection.list", "wardrobeCallbacks.selectOutfit", cb.selectOutfit)
 end
 
 -- #region Show Selection
@@ -215,6 +214,39 @@ function cb.clearFilter(_, slot)
   local w = slot .. "_search"
   widget.setText(w, "")
   widget.focus(w)
+end
+
+-- #endregion
+
+-- #region Outfits
+
+function cb.showOutfits()
+  wardrobeUtil.setVisible(widgets.right_show, false)
+  wardrobe.util.setVisible(wardrobe.widgets.outfitSelection, true)
+end
+
+function cb.hideOutfits()
+  wardrobeUtil.setVisible(widgets.right_show, true)
+  wardrobe.util.setVisible(wardrobe.widgets.outfitSelection, false)
+end
+
+function cb.saveOutfit()
+  wardrobe.saveOutfit()
+end
+
+function cb.trashOutfit(data)
+  wardrobe.trashing = not wardrobe.trashing
+  widget.setButtonOverlayImage("outfits_trash", wardrobe.trashing and "/interface/wardrobe/outfitselection.png" or "/assetmissing.png")
+end
+
+function cb.selectOutfit(_, data)
+  if not data then return end
+
+  if wardrobe.trashing then
+    wardrobe.trashOutfit(data)
+  else
+    wardrobe.selectOutfit(data)
+  end
 end
 
 -- #endregion

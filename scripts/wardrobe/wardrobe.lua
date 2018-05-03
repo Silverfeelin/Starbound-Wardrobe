@@ -34,7 +34,9 @@ wardrobe.defaultColors = {
 -- #region Engine
 
 --- Initializes the Wardrobe.
-function init()
+function wardrobe.init()
+  --status.setStatusProperty("wardrobeOutfits", nil)
+
   -- Reference required scripts
   wardrobe.cb = wardrobeCallbacks
   wardrobe.util = wardrobeUtil
@@ -68,12 +70,28 @@ function init()
     head = ItemList.new("headSelection.list", wardrobe.addHeadItem, 3),
     chest = ItemList.new("chestSelection.list", wardrobe.addChestItem, 3),
     legs = ItemList.new("legsSelection.list", wardrobe.addLegsItem, 3),
-    back = ItemList.new("backSelection.list", wardrobe.addBackItem, 3)
+    back = ItemList.new("backSelection.list", wardrobe.addBackItem, 3),
+    outfits = ItemList.new("outfitSelection.list", wardrobe.addOutfit, 3)
   }
 
   -- Load preview with equipped items
   wardrobe.loadPreview()
   wardrobe.loadEquipped()
+
+  -- Outfits
+  wardrobe.trashing = false
+  wardrobe.outfits = wardrobe.util.statusList("wardrobeOutfits")
+  wardrobe.outfitIcons = config.getParameter("outfitIcons", {})
+  wardrobe.lists.outfits:show(wardrobe.outfits)
+  wardrobe.updateIcon()
+end
+
+-- Hook
+if init then
+  local i = init
+  init = function() i() wardrobe.init() end
+else
+  init = wardrobe.init
 end
 
 --- Loads all items from the config
@@ -144,7 +162,7 @@ end
 
 --- Update function, called every game update.
 -- @param dt Time between this and the previous update tick.
-function update(dt)
+function wardrobe.update(dt)
   -- Update item lists. This adds some items every update, until all items are shown.
   for _,v in pairs(wardrobe.lists) do
     v:update()
@@ -161,6 +179,14 @@ function update(dt)
       wardrobe.search.changed = false
     end
   end
+end
+
+-- Hook
+if update then
+  local u = update
+  update = function(dt) u(dt) wardrobe.update(dt) end
+else
+  update = wardrobe.update
 end
 
 -- #endregion
@@ -703,7 +729,7 @@ end
 --- Draws a dummy, adding the provided layered images.
 -- @param canvas Canvas to draw on.
 -- @param [layers] Layers to add between the dummy parts. Each value represents an image to draw.
---  Supported keys: back, backArm, body, frontArm, head
+--  Supported keys: back, backArm, legs, body, frontArm, head
 --  For example, { "back": "/backimg.png:idle.1" }
 -- @param [offset={0,0}] - Drawing offset from bottom left corner of canvas.
 function wardrobe.drawDummy(canvas, layers, offset, mask)
@@ -746,7 +772,12 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
   -- Body
   canvas:drawImage(body[5], offset)
 
-  -- Chest/Pants
+  -- Pants
+  if (layers.legs) then
+    canvas:drawImage(layers.legs, offset)
+  end
+
+  -- Chest
   if (layers.body) then
     canvas:drawImage(layers.body, offset)
   end
@@ -801,3 +832,131 @@ function wardrobe.getConfigParameter(path)
   local cfg = status.statusProperty("wardrobeInterface") or {}
   return path == nil and cfg or cfg[path]
 end
+
+-- #region Outfits
+
+--- ItemList handler. Draws an outfit.
+function wardrobe.addOutfit(li, items, index)
+  setListButtonData(li, items, index)
+
+  if index == 1  then
+    wardrobe.outfitCanvas = widget.bindCanvas(li .. ".canvas")
+  end
+  local pos = {(index - 1) * 43, 0}
+
+  local head, chest, legs, back = items.head, items.chest, items.legs, items.back
+  local headImage, chestImages, legsImage, backImage
+  local mask
+
+  -- Head image
+  if head then
+    local headDir = head.directives ~= "" and head.directives
+      or wardrobe.util.colorOptionToDirectives(head.colorOptions and head.colorOptions[head.colorIndex and (head.colorIndex + 1) or 1])
+
+    headImage = wardrobe.getDefaultImageForItem(head, true) .. headDir
+
+    if head.mask then
+      -- TODO: Better custom masks.
+      if head.mask:find("%?submask=/items/armors/decorative/hats/eyepatch/mask.png") then
+        -- Fully mask hair
+        mask = head.mask
+      else
+        mask = "?addmask=" .. wardrobe.util.fixImagePath(head.path, head.mask)
+      end
+    end
+  end
+
+  -- Chest image
+  if chest then
+    local dir = chest.directives ~= "" and chest.directives
+      or wardrobe.util.colorOptionToDirectives(chest.colorOptions and chest.colorOptions[chest.colorIndex and (chest.colorIndex + 1) or 1])
+
+    chestImages = wardrobe.getDefaultImageForItem(chest, true)
+    chestImages[1] = chestImages[1] .. dir
+    chestImages[2] = chestImages[2] .. dir
+    chestImages[3] = chestImages[3] .. dir
+  end
+
+  -- Legs image
+  if legs then
+    local dir = legs.directives ~= "" and legs.directives
+      or wardrobe.util.colorOptionToDirectives(legs.colorOptions and legs.colorOptions[legs.colorIndex and (legs.colorIndex + 1) or 1])
+
+    legsImage = wardrobe.getDefaultImageForItem(legs, true) .. dir
+  end
+
+  -- Back image
+  if back then
+    local dir = back.directives ~= "" and back.directives
+      or wardrobe.util.colorOptionToDirectives(back.colorOptions and back.colorOptions[back.colorIndex and (back.colorIndex + 1) or 1])
+
+    backImage = wardrobe.getDefaultImageForItem(back, true) .. dir
+  end
+
+  -- Draw preview image
+  wardrobe.drawDummy(
+    wardrobe.outfitCanvas,
+    {
+      back = backImage,
+      legs = legsImage,
+      backArm = chestImages[1],
+      body = chestImages[2],
+      frontArm = chestImages[3],
+      head = headImage
+    },
+    pos,
+    mask
+  )
+end
+
+--- Sets the given outfit as selected.
+-- @param data stored outfit.
+function wardrobe.selectOutfit(data)
+  wardrobe.selection.outfit = data
+  wardrobe.selectItem(data.head, "head")
+  wardrobe.selectItem(data.chest, "chest")
+  wardrobe.selectItem(data.legs, "legs")
+  wardrobe.selectItem(data.back, "back")
+end
+
+-- Saves the current selection as a new outfit.
+-- @return Outfit.
+function wardrobe.saveOutfit()
+  local outfit = {
+    head = copy(wardrobe.selection.head),
+    chest = copy(wardrobe.selection.chest),
+    legs = copy(wardrobe.selection.legs),
+    back = copy(wardrobe.selection.back),
+    id = sb.makeUuid()
+  }
+
+  table.insert(wardrobe.outfits, outfit)
+  status.setStatusProperty("wardrobeOutfits", wardrobe.outfits)
+  wardrobe.lists.outfits:enqueue({outfit})
+  wardrobe.updateIcon()
+  return outfit
+end
+
+--- Updates the outfit icon based on the amount of stored outfits.
+function wardrobe.updateIcon()
+  local c = #wardrobe.outfits
+  widget.setButtonOverlayImage("outfits_show", wardrobe.outfitIcons[(c+1)] or wardrobe.outfitIcons[#outfitIcons])
+end
+
+function wardrobe.trashOutfit(data)
+  if not data then return end
+
+  for i=1,#wardrobe.outfits do
+    if wardrobe.outfits[i].id == data.id then
+      table.remove(wardrobe.outfits, i)
+      break;
+    end
+  end
+
+  wardrobe.lists.outfits:clear()
+  wardrobe.lists.outfits:show(wardrobe.outfits)
+  status.setStatusProperty("wardrobeOutfits", wardrobe.outfits)
+  wardrobe.updateIcon()
+end
+
+-- #endregion
