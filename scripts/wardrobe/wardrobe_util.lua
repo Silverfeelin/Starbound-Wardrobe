@@ -220,7 +220,7 @@ end
 
 --- Turns a wardrobe item into item parameters (not descriptor).
 -- @param item Wardrobe item.
--- @return Item parameters
+-- @return Item parameters.
 function wardrobeUtil.itemParameters(item)
   if not item then return {} end
   local params = {}
@@ -232,19 +232,67 @@ function wardrobeUtil.itemParameters(item)
   return params
 end
 
+--- String iterator for strings and tables of strings.
+-- @param ... One or more strings or tables of strings.
+-- @return Iterator used to iterate over all strings.
+function wardrobeUtil.iterateStrings(...)
+  local ws = {...}
+  local strs = {}
+  for _,v in ipairs(ws) do
+    if type(v) == "string" then
+      table.insert(strs, v)
+    elseif type(v) == "table" then
+      for _,w in ipairs(v) do
+        table.insert(strs, w)
+      end
+    end
+  end
+
+  local i = 0
+  local c = #strs
+  return function()
+    i = i + 1
+    if i <= c then return strs[i] end
+  end
+end
+
 --- Sets one or more widgets (in)visible.
+-- Widget names prefixed with a ! are set to the opposite value.
 -- @param widgetNames widget name (string) or widget names (table).
 -- @param bool Show (true) or hide (false).
 function wardrobeUtil.setVisible(widgetNames, bool)
   if type(widgetNames) == "string" then
+    if widgetNames:find("!") == 1 then bool = not bool end
     widget.setVisible(widgetNames, bool)
   elseif type(widgetNames) == "table" then
     for _,w in ipairs(widgetNames) do
-      widget.setVisible(w, bool)
+      if w:find("!") ~= 1 then
+        widget.setVisible(w, bool)
+      else
+        widget.setVisible(w, not bool)
+      end
     end
   else
     error("Can't convert " .. type(widgetNames) .. " to string or table.")
   end
+end
+
+--- Calls status.statusProperty and turns it into a list.
+-- Accounts for [n] and ["n"] keys.
+-- @param str Status property.
+-- @return Lua table.
+function wardrobeUtil.statusList(str)
+  local items = status.statusProperty(str, {}) or {}
+  local results = {}
+  local i = 1
+
+  while true do
+    local item = items[tostring(i)] or items[i]
+    if not item then break end
+    table.insert(results, item)
+    i = i + 1
+  end
+  return results
 end
 
 --- Logs environmental functions, tables and nested functions.
