@@ -946,7 +946,7 @@ function wardrobe.saveOutfit()
   if outfit.back then
     outfit.back.outfit = true
   end
-  
+
   table.insert(wardrobe.outfits, outfit)
   status.setStatusProperty("wardrobeOutfits", wardrobe.outfits)
   wardrobe.lists.outfits:enqueue({outfit})
@@ -957,7 +957,7 @@ end
 --- Updates the outfit icon based on the amount of stored outfits.
 function wardrobe.updateIcon()
   local c = #wardrobe.outfits
-  widget.setButtonOverlayImage("outfits_show", wardrobe.outfitIcons[(c+1)] or wardrobe.outfitIcons[#outfitIcons])
+  widget.setButtonOverlayImage("outfits_show", wardrobe.outfitIcons[(c+1)] or wardrobe.outfitIcons[#wardrobe.outfitIcons])
 end
 
 function wardrobe.trashOutfit(data)
