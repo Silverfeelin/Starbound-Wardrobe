@@ -139,6 +139,17 @@ function wardrobeUtil.getColorIndex(item, fallback)
   return item and item.colorIndex or fallback
 end
 
+--- Brings the color index down from a generated number down to 0 <= index < #colorOptions.
+-- @param item Wardrobe item.
+function wardrobeUtil.fixColorIndex(item)
+  if not item then return end
+  if not item.colorIndex then item.colorIndex = 0 return end
+
+  local colorOptions = item.colorOptions or root.itemConfig(item.name).config.colorOptions or {}
+  local c = #colorOptions
+  item.colorIndex = (c == 0 and 0) or (item.colorIndex and item.colorIndex % c) or 0
+end
+
 --- Converts a color option to a replace directive.
 -- @param colorOption Color option dictionary.
 -- @return - ?replace directive.

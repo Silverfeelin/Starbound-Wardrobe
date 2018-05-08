@@ -535,8 +535,10 @@ function wardrobe.loadEquipped()
       directives = equippedItem.parameters.directives
     }
 
+    wardrobe.util.fixColorIndex(item)
+
     wardrobe.selectItem(item, slot)
-    showFunc(item, equippedItem.parameters.colorIndex or 0)
+    showFunc(item, item.colorIndex or 0)
   end
 
   show(head, "head", wardrobe.showHead)
@@ -851,9 +853,14 @@ end
 function wardrobe.addOutfit(li, items, index)
   -- Restore missing color options
   for _,slot in ipairs(wardrobe.slots) do
-    if type(items[slot]) == "table" then
-      local cfg = root.itemConfig(items[slot].name)
-      items[slot].colorOptions = cfg.config.colorOptions
+    local item = items[slot]
+    if type(item) == "table" then
+      -- Restore color options
+      wardrobe.util.fixColorIndex(item)
+      local cfg = root.itemConfig(item.name)
+      item.colorOptions = cfg.config.colorOptions
+      -- Fix index
+      wardrobe.util.fixColorIndex(item)
     end
   end
 
