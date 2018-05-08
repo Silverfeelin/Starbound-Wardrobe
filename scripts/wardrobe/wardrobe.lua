@@ -181,6 +181,13 @@ function wardrobe.update(dt)
       wardrobe.search.changed = false
     end
   end
+
+  -- Repopulate outfits
+  if wardrobe.refreshOutfits then
+    wardrobe.refreshOutfits = false
+    wardrobe.lists.outfits:clear()
+    wardrobe.lists.outfits:show(wardrobe.outfits)
+  end
 end
 
 -- Hook
@@ -842,12 +849,21 @@ end
 
 --- ItemList handler. Draws an outfit.
 function wardrobe.addOutfit(li, items, index)
+  -- Restore missing color options
+  for _,slot in ipairs(wardrobe.slots) do
+    if type(items[slot]) == "table" then
+      local cfg = root.itemConfig(items[slot].name)
+      items[slot].colorOptions = cfg.config.colorOptions
+    end
+  end
+
+  -- Add outfit to button
   setListButtonData(li, items, index)
 
+  -- Bind new canvas
   if index == 1  then
     wardrobe.outfitCanvas = widget.bindCanvas(li .. ".canvas")
   end
-  local pos = {(index - 1) * 43, 0}
 
   local head, chest, legs, back = items.head, items.chest, items.legs, items.back
   local headImage, chestImages, legsImage, backImage
@@ -909,7 +925,7 @@ function wardrobe.addOutfit(li, items, index)
       frontArm = chestImages[3],
       head = headImage
     },
-    pos,
+    {(index - 1) * 43, 0},
     mask
   )
 end
@@ -918,6 +934,8 @@ end
 -- @param data stored outfit.
 function wardrobe.selectOutfit(data)
   wardrobe.selection.outfit = data
+
+  -- Set item selection
   wardrobe.selectItem(data.head, "head")
   wardrobe.selectItem(data.chest, "chest")
   wardrobe.selectItem(data.legs, "legs")
@@ -934,17 +952,23 @@ function wardrobe.saveOutfit()
     back = copy(wardrobe.selection.back),
     id = sb.makeUuid()
   }
+
+  -- Optimize data
   if outfit.head then
     outfit.head.outfit = true
+    outfit.head.colorOptions = nil
   end
   if outfit.chest then
     outfit.chest.outfit = true
+    outfit.chest.colorOptions = nil
   end
   if outfit.legs then
     outfit.legs.outfit = true
+    outfit.legs.colorOptions = nil
   end
   if outfit.back then
     outfit.back.outfit = true
+    outfit.back.colorOptions = nil
   end
 
   table.insert(wardrobe.outfits, outfit)
@@ -970,8 +994,7 @@ function wardrobe.trashOutfit(data)
     end
   end
 
-  wardrobe.lists.outfits:clear()
-  wardrobe.lists.outfits:show(wardrobe.outfits)
+  wardrobe.refreshOutfits = true -- Because clearing instantly seems to cause (in)frequent crashes.
   status.setStatusProperty("wardrobeOutfits", wardrobe.outfits)
   wardrobe.updateIcon()
 end
