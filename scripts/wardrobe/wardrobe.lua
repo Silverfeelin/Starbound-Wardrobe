@@ -927,9 +927,9 @@ function wardrobe.addOutfit(li, items, index)
     {
       back = backImage,
       legs = legsImage,
-      backArm = chestImages[1],
-      body = chestImages[2],
-      frontArm = chestImages[3],
+      backArm = chestImages and chestImages[1],
+      body = chestImages and chestImages[2],
+      frontArm = chestImages and chestImages[3],
       head = headImage
     },
     {(index - 1) * 43, 0},
