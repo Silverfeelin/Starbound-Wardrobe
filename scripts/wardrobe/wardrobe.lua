@@ -154,7 +154,21 @@ function wardrobe.loadItems()
     end
   end
 
+  local function loadScripts(scripts, tbl)
+    for _,v in ipairs(scripts) do
+      import = {}
+      if pcall(function() require(v) end) then
+        addItems(tbl, import)
+      else
+        sb.logError("Wardrobe: Failed to load script %s", v)
+      end
+    end
+  end
+
   local config = root.assetJson("/wardrobe/wardrobe.config")
+  loadScripts(config.scripts.vanilla, items.vanilla)
+  loadScripts(config.scripts.mod, items.mod)
+  loadScripts(config.scripts.custom, items.custom)
   loadFiles(config.vanilla, items.vanilla)
   loadFiles(config.mod, items.mod)
   loadFiles(config.custom, items.custom)
