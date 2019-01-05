@@ -157,6 +157,7 @@ function wardrobeUtil.colorOptionToDirectives(colorOption)
   if not colorOption then return "" end
   local dir = "?replace"
   for k,v in pairs(colorOption) do
+    if string.sub(k, 1, 1) == "#" then k = string.sub(k, 2) end
     dir = dir .. ";" .. k .. "=" .. v
   end
   return dir
