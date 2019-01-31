@@ -45,8 +45,11 @@ function wardrobeUtil.fixImagePath(path, image)
   if type(image) == "table" then
     error(string.format("Unexpected table value for image. path: %s image: %s", path, sb.print(image)))
   end
-
-  return not path and image or image:find("^/") and image or (path .. image):gsub("//", "/")
+  if not path and not image then return end
+  return
+    not path and image
+    or image:find("^/") and image
+    or (path .. image):gsub("//", "/")
 end
 
 --- Returns the icon for the given wardrobe item. Does not apply any color option.
@@ -144,8 +147,11 @@ end
 function wardrobeUtil.fixColorIndex(item)
   if not item then return end
   if not item.colorIndex then item.colorIndex = 0 return end
-
-  local colorOptions = item.colorOptions or root.itemConfig(item.name).config.colorOptions or {}
+  local colorOptions = item.colorOptions
+  if not colorOptions then
+    local cfg = root.itemConfig(item.name)
+    colorOptions = cfg and cfg.config and cfg.colorOptions or {}
+  end
   local c = #colorOptions
   item.colorIndex = (c == 0 and 0) or (item.colorIndex and item.colorIndex % c) or 0
 end

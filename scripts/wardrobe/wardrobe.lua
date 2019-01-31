@@ -589,6 +589,7 @@ end
 --  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
 function wardrobe.showHead(item, colorIndex)
+  if not item.maleFrames and not item.femaleFrames then return end
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
@@ -624,6 +625,7 @@ end
 --  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
 function wardrobe.showChest(item, colorIndex)
+  if not item.maleFrames and not item.femaleFrames then return end
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
@@ -642,6 +644,7 @@ end
 --  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
 function wardrobe.showLegs(item, colorIndex)
+  if not item.maleFrames and not item.femaleFrames then return end
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
@@ -656,6 +659,7 @@ end
 --  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
 function wardrobe.showBack(item, colorIndex)
+  if not item.maleFrames and not item.femaleFrames then return end
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
@@ -874,7 +878,7 @@ function wardrobe.addOutfit(li, items, index)
       -- Restore color options
       wardrobe.util.fixColorIndex(item)
       local cfg = root.itemConfig(item.name)
-      item.colorOptions = cfg.config.colorOptions
+      item.colorOptions = cfg and cfg.config and cfg.config.colorOptions or {}
       -- Fix index
       wardrobe.util.fixColorIndex(item)
     end
