@@ -150,7 +150,7 @@ function wardrobeUtil.fixColorIndex(item)
   local colorOptions = item.colorOptions
   if not colorOptions then
     local cfg = root.itemConfig(item.name)
-    colorOptions = cfg and cfg.config and cfg.colorOptions or {}
+    colorOptions = cfg and cfg.config and cfg.config.colorOptions or {}
   end
   local c = #colorOptions
   item.colorIndex = (c == 0 and 0) or (item.colorIndex and item.colorIndex % c) or 0
