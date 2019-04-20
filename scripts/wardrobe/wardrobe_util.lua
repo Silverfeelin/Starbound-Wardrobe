@@ -202,10 +202,13 @@ end
 -- @param hex ffffff
 -- @return {255, 255, 255}
 function wardrobeUtil.getColor(hex)
+    if string.sub(hex, 1, 1) == "#" then hex = string.sub(hex, 2) end
     local len = #hex
     local out = {}
     for i = 1,len,2 do
         table.insert(out, tonumber(hex:sub(i,i+1), 16))
+        -- Invalid hex is converted to white. Who knew 'biffff' was a hexadecimal color?
+        table.insert(out, tonumber(hex:sub(i,i+1), 16) or 255)
     end
     return out
 end
