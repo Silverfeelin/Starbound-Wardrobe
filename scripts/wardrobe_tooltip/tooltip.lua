@@ -22,7 +22,7 @@ end
 -- @param screenPosition Screen position.
 function tooltip.cursorOverride(screenPosition)
   local w = widget.getChildAt(screenPosition)
-  local t
+  local t, pos
   local tipped = false
   if w then
     w = w:sub(2)
@@ -35,7 +35,7 @@ function tooltip.cursorOverride(screenPosition)
   if t and tooltip.previousWidget ~= w then
     -- Only draw new tooltip if w is different.
     tooltip.canvas:clear()
-    local pos = widget.getPosition(w)
+    pos = t.position or widget.getPosition(w)
     local size = widget.getSize(w)
 
     tooltip.draw(t, pos, size)

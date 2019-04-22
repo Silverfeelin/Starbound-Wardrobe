@@ -3,10 +3,10 @@ require "/scripts/vec2.lua"
 
 require "/scripts/wardrobe/wardrobe_util.lua"
 require "/scripts/wardrobe/wardrobe_callbacks.lua"
+require "/scripts/wardrobe/wardrobe_ds.lua"
 require "/scripts/wardrobe/itemList.lua"
 
 require "/scripts/wardrobe_tooltip/tooltip.lua"
-
 wardrobe = {}
 
 --- Collection of list items for the preview widget.
@@ -42,9 +42,12 @@ function wardrobe.init()
   -- Reference required scripts
   wardrobe.cb = wardrobeCallbacks
   wardrobe.util = wardrobeUtil
+  wardrobe.ds = wardrobeDs
 
   -- Initialize callbacks
   wardrobe.cb.init()
+  -- Initialize DyeSuite compatibility
+  wardrobe.ds.init()
 
   -- Load some useful data
   wardrobe.slots = { "head", "chest", "legs", "back" }
@@ -89,12 +92,7 @@ function wardrobe.init()
 end
 
 -- Hook
-if init then
-  local i = init
-  init = function() i() wardrobe.init() end
-else
-  init = wardrobe.init
-end
+hook('init', wardrobe.init)
 
 --- Loads all items from the config
 -- Items are returned as {vanilla={},mod={},custom={}}.
@@ -207,12 +205,7 @@ function wardrobe.update(dt)
 end
 
 -- Hook
-if update then
-  local u = update
-  update = function(dt) u(dt) wardrobe.update(dt) end
-else
-  update = wardrobe.update
-end
+hook('update', wardrobe.update)
 
 -- #endregion
 
@@ -548,12 +541,16 @@ function wardrobe.loadEquipped()
       mask = equippedItem.parameters.mask or itemConfig.config.mask,
       colorOptions = equippedItem.parameters.colorOptions or itemConfig.config.colorOptions,
       colorIndex = equippedItem.parameters.colorIndex or 0,
-      directives = equippedItem.parameters.directives
+      directives = equippedItem.parameters.directives,
+      ds = equippedItem.parameters.ds
     }
 
-    wardrobe.util.fixColorIndex(item)
+    -- Dye Suite uses -1 combined with item.directives
+    if item.colorIndex ~= -1 then
+      wardrobe.util.fixColorIndex(item)
+    end
 
-    wardrobe.selectItem(item, slot)
+    wardrobe.selectItem(item, slot, false)
     showFunc(item, item.colorIndex or 0)
   end
 
@@ -568,36 +565,41 @@ end
 -- The item selection is updated, and color options are displayed.
 -- @param item Item to select.
 -- @param [category=item.category] head/chest/legs/back
-function wardrobe.selectItem(item, category)
+-- @param [updatePreview=false] Updates the preview image. If false, call it manually.
+function wardrobe.selectItem(item, category, updatePreview)
   category = category or item.category
   wardrobe.selection[category] = item
   if item and not item.colorIndex then
     item.colorIndex = 0
   end
-  wardrobe.showItemForCategory[category](item, item and item.colorIndex)
-
-  if not item or (item.directives ~= "" and item.directives) then
-    wardrobe.hideColors(category)
-  else
-    wardrobe.showColors(category, item)
+  if updatePreview then
+    wardrobe.showItemForCategory[category](item, item and item.colorIndex)
   end
-
+  wardrobe.showColors(category, item)
   wardrobe.setSelection(category, item)
 end
 
 --- Renders a head item on the preview character.
---  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
+-- @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
 function wardrobe.showHead(item, colorIndex)
-  if item and not item.maleFrames and not item.femaleFrames then return end
+  -- Ignore faulty items.
+  if item and not item.maleFrames and not item.femaleFrames then
+    sb.logError("Wardrobe: Skipped showing item with no frames: %s.", item.name)
+    return
+  end
+
+  -- Fix colorIndex out of bounds
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
+  if colorIndex < 0 then colorIndex = 0 end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
-  widget.setImage(w .. ".image", image .. (item and item.directives ~= "" and item.directives or params.dir))
+  local directives = wardrobe.util.getDirectives(item, params.dir)
+  widget.setImage(w .. ".image", image .. directives)
 
   local mask = ""
   if item and item.mask then
@@ -622,52 +624,76 @@ function wardrobe.showHead(item, colorIndex)
 end
 
 --- Renders a chest item on the preview character.
---  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
+-- @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
 function wardrobe.showChest(item, colorIndex)
-  if item and not item.maleFrames and not item.femaleFrames then return end
+  -- Ignore faulty items.
+  if item and not item.maleFrames and not item.femaleFrames then
+    sb.logError("Wardrobe: Skipped showing item with no frames: %s.", item.name)
+    return
+  end
+
+  -- Fix colorIndex out of bounds
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
+  if colorIndex < 0 then colorIndex = 0 end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local images = item and wardrobe.getDefaultImageForItem(item, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
-  widget.setImage(w .. ".image", images[1] .. (item and item.directives ~= "" and item.directives or params.dir))
+  local directives = wardrobe.util.getDirectives(item, params.dir)
+  widget.setImage(w .. ".image", images[1] .. directives)
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
-  widget.setImage(w .. ".image", images[2] .. (item and item.directives ~= "" and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[2] .. directives)
   w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
-  widget.setImage(w .. ".image", images[3] .. (item and item.directives ~= "" and item.directives or params.dir))
+  widget.setImage(w .. ".image", images[3] .. directives)
 end
 
 --- Renders a legs item on the preview character.
---  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
+-- @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
-function wardrobe.showLegs(item, colorIndex)
-  if item and not item.maleFrames and not item.femaleFrames then return end
+function wardrobe.showLegs(item, colorIndex, preserve)
+  -- Ignore faulty items.
+  if item and not item.maleFrames and not item.femaleFrames then
+    sb.logError("Wardrobe: Skipped showing item with no frames: %s.", item.name)
+    return
+  end
+
+  -- Fix colorIndex out of bounds
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
+  if colorIndex < 0 then colorIndex = 0 end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
-  widget.setImage(w .. ".image", image .. (item and item.directives ~= "" and item.directives or params.dir))
+  local directives = wardrobe.util.getDirectives(item, params.dir)
+  widget.setImage(w .. ".image", image .. directives)
 end
 
 --- Renders a back item on the preview character.
---  @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
+-- @param item Item to display on the preview character. Nil to remove the preview images for the item slot.
 -- @param [colorIndex=item.colorIndex] Color options to apply. Ignored if the item has directives, which will be applied instead.
-function wardrobe.showBack(item, colorIndex)
-  if item and not item.maleFrames and not item.femaleFrames then return end
+function wardrobe.showBack(item, colorIndex, preserve)
+  -- Ignore faulty items.
+  if item and not item.maleFrames and not item.femaleFrames then
+    sb.logError("Wardrobe: Skipped showing item with no frames: %s.", item.name)
+    return
+  end
+
+  -- Fix colorIndex out of bounds
   if not colorIndex then colorIndex = wardrobe.util.getColorIndex(item) end
+  if colorIndex < 0 then colorIndex = 0 end
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
-  widget.setImage(w .. ".image", image .. (item and item.directives ~= "" and item.directives or params.dir))
+  local directives = wardrobe.util.getDirectives(item, params.dir)
+  widget.setImage(w .. ".image", image .. directives)
 end
 
 --- Reference collection for all show<Category> functions.
@@ -693,6 +719,7 @@ function wardrobe.hideColors(category, startIndex)
   for i = startIndex, 16 do
     widget.setVisible(w .. i, false)
   end
+  widget.setVisible(w .. "ds", false)
 end
 
 --- Updates and shows color option buttons for the item.
@@ -723,6 +750,7 @@ function wardrobe.showColors(category, item)
   for i=#item.colorOptions+1,16 do
     widget.setVisible(w .. i, false)
   end
+  widget.setVisible(w .. "ds", wardrobe.ds.active and not not item.name)
 end
 
 --- Sets the item selection text and icon.
@@ -963,10 +991,14 @@ function wardrobe.selectOutfit(data)
   wardrobe.selection.outfit = data
 
   -- Set item selection
-  wardrobe.selectItem(data.head, "head")
-  wardrobe.selectItem(data.chest, "chest")
-  wardrobe.selectItem(data.legs, "legs")
-  wardrobe.selectItem(data.back, "back")
+  wardrobe.selectItem(data.head, "head", false)
+  wardrobe.showHead(data.head, nil)
+  wardrobe.selectItem(data.chest, "chest", false)
+  wardrobe.showChest(data.chest, nil)
+  wardrobe.selectItem(data.legs, "legs", false)
+  wardrobe.showLegs(data.legs, nil)
+  wardrobe.selectItem(data.back, "back", false)
+  wardrobe.showBack(data.back, nil)
 end
 
 -- Saves the current selection as a new outfit.

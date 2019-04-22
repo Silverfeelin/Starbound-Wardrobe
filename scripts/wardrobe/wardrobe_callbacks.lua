@@ -107,19 +107,19 @@ end
 -- #region Select items
 
 function cb.selectHead(_, data)
-  wardrobe.selectItem(data, "head")
+  wardrobe.selectItem(data, "head", true)
 end
 
 function cb.selectChest(_, data)
-  wardrobe.selectItem(data, "chest")
+  wardrobe.selectItem(data, "chest", true)
 end
 
 function cb.selectLegs(_, data)
-  wardrobe.selectItem(data, "legs")
+  wardrobe.selectItem(data, "legs", true)
 end
 
 function cb.selectBack(_, data)
-  wardrobe.selectItem(data, "back")
+  wardrobe.selectItem(data, "back", true)
 end
 
 -- #endregion
@@ -147,26 +147,42 @@ end
 -- #region Select color
 
 function cb.selectHeadColor(_, index)
-  wardrobe.selection["head"].colorIndex = index
-  wardrobe.showHead(wardrobe.selection["head"])
+  if type(index) == "table" then index = index.index end
+  local item = wardrobe.selection["head"]
+  item.colorIndex = index
+  item.ds = index == -1 or nil
+  item.directives = item.ds and wardrobe.ds.getDirectives()
+  wardrobe.showHead(wardrobe.selection["head"], index)
   wardrobe.setSelection("head", wardrobe.selection["head"])
 end
 
 function cb.selectChestColor(_, index)
-  wardrobe.selection["chest"].colorIndex = index
-  wardrobe.showChest(wardrobe.selection["chest"])
+  if type(index) == "table" then index = index.index end
+  local item = wardrobe.selection["chest"]
+  item.colorIndex = index
+  item.ds = index == -1 or nil
+  item.directives = item.ds and wardrobe.ds.getDirectives()
+  wardrobe.showChest(wardrobe.selection["chest"], index)
   wardrobe.setSelection("chest", wardrobe.selection["chest"])
 end
 
 function cb.selectLegsColor(_, index)
-  wardrobe.selection["legs"].colorIndex = index
-  wardrobe.showLegs(wardrobe.selection["legs"])
+  if type(index) == "table" then index = index.index end
+  local item = wardrobe.selection["legs"]
+  item.colorIndex = index
+  item.ds = index == -1 or nil
+  item.directives = item.ds and wardrobe.ds.getDirectives()
+  wardrobe.showLegs(wardrobe.selection["legs"], index)
   wardrobe.setSelection("legs", wardrobe.selection["legs"])
 end
 
 function cb.selectBackColor(_, index)
-  wardrobe.selection["back"].colorIndex = index
-  wardrobe.showBack(wardrobe.selection["back"])
+  if type(index) == "table" then index = index.index end
+  local item = wardrobe.selection["back"]
+  item.colorIndex = index
+  item.ds = index == -1 or nil
+  item.directives = item.ds and wardrobe.ds.getDirectives()
+  wardrobe.showBack(wardrobe.selection["back"], index)
   wardrobe.setSelection("back", wardrobe.selection["back"])
 end
 

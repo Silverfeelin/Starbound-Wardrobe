@@ -197,6 +197,12 @@ function wardrobeUtil.getItemFromName(name)
   return item
 end
 
+--- Returns item directives.
+-- Prioritization: item.directives, default.
+function wardrobeUtil.getDirectives(item, default)
+  return item and item.directives ~= "" and item.directives or default
+end
+
 --- Hex to {r,g,b} [0-255].
 -- Thanks Magicks love ya.
 -- @param hex ffffff
@@ -211,6 +217,18 @@ function wardrobeUtil.getColor(hex)
         table.insert(out, tonumber(hex:sub(i,i+1), 16) or 255)
     end
     return out
+end
+
+--- {r,g,b} [0-255] to rrggbb[aa] Hex.
+-- @param color {255, 255, 255[, 255]}
+-- @return hex ffffff[ff]
+function wardrobeUtil.getHex(color)
+  local f = function(n) return ("%02x"):format(n) end
+  local c = f(color[1]) .. f(color[2]) .. f(color[3])
+  if color[4] then
+    c = c .. f(color[4])
+  end
+  return c
 end
 
 --- Calculates the luminance from {r,g,b} [0-255].
@@ -239,13 +257,14 @@ function wardrobeUtil.orderColorOption(colorOption)
   return res
 end
 
---- Turns a wardrobe item into item parameters (not descriptor).
+--- Turns a wardrobe item into item parameters.
 -- @param item Wardrobe item.
 -- @return Item parameters.
 function wardrobeUtil.itemParameters(item)
   if not item then return {} end
   local params = {}
   params.directives = item.directives
+  params.ds = item.ds -- Indicates Dye Suite dye was selected.
   params.colorIndex = item.colorIndex
   params.shortdescription = item.shortdescription
   params.inventoryIcon = item.icon or item.inventoryIcon
