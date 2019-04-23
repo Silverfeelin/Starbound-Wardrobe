@@ -568,10 +568,19 @@ end
 -- @param [updatePreview=false] Updates the preview image. If false, call it manually.
 function wardrobe.selectItem(item, category, updatePreview)
   category = category or item.category
-  wardrobe.selection[category] = item
-  if item and not item.colorIndex then
+  local previous = wardrobe.selection[category]
+
+  -- Retain Dye Suite dye.
+  if previous and previous.colorIndex == -1 then
+    item.colorIndex = -1
+    item.ds = previous.ds
+    item.directives = previous.directives
+  elseif item and not item.colorIndex then
     item.colorIndex = 0
   end
+
+  wardrobe.selection[category] = item
+
   if updatePreview then
     wardrobe.showItemForCategory[category](item, item and item.colorIndex)
   end
