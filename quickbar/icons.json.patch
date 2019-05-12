@@ -1,11 +1,11 @@
 [
   {
     "op": "add",
-    "path": "/normal/-",
+    "path": "/items/silverfeelin:wardrobe",
     "value": {
       "label": "Wardrobe",
-      "pane": "/interface/wardrobe/wardrobe.config",
-      "icon": "/interface/wardrobe/fittingRoom.png"
+      "icon": "/interface/wardrobe/fittingRoom.png",
+      "action": ["pane", "/interface/wardrobe/wardrobe.config"]
     }
   }
 ]
