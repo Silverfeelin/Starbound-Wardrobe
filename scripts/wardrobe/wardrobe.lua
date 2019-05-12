@@ -100,15 +100,9 @@ hook('init', wardrobe.init)
 -- @return Items
 function wardrobe.loadItems()
   local items = {
-    vanilla = {
-      head = {}, chest = {}, legs = {}, back = {}
-    },
-    mod = {
-      head = {}, chest = {}, legs = {}, back = {}
-    },
-    custom = {
-      head = {}, chest = {}, legs = {}, back = {}
-    }
+    vanilla = { head = {}, chest = {}, legs = {}, back = {} },
+    mod = { head = {}, chest = {}, legs = {}, back = {} },
+    custom = { head = {}, chest = {}, legs = {}, back = {} }
   }
 
   -- Add items.head/chest/legs/back to tbl.head/chest/legs/back
@@ -119,6 +113,34 @@ function wardrobe.loadItems()
         v.category = key
 
         table.insert(tbl[key], v)
+      end
+    end
+  end
+
+  -- Add items.head/chest/legs/back to tbl.head/chest/legs/back.
+  -- Uses
+  local function addCustom(tbl, items)
+    for key,subItems in pairs(items) do
+      for _,v in ipairs(subItems) do
+        local cfg = root.itemConfig(v.name)
+        if cfg then
+          if not v.parameters then v.parameters = {} end
+
+          local item = {
+            name = v.name,
+            category = key,
+            icon = v.icon or v.parameters.icon or cfg.config.inventoryIcon,
+            femaleFrames = v.femaleFrames or v.parameters.femaleFrames or cfg.config.femaleFrames,
+            maleFrames = v.maleFrames or v.parameters.maleFrames or cfg.config.maleFrames,
+            mask = v.mask or v.parameters.mask or cfg.config.mask,
+            path = cfg.directory,
+            -- fileName unknown
+            shortdescription = v.shortdescription or v.parameters.shortdescription or cfg.config.shortdescription,
+            directives = v.directives or v.parameters.directives or cfg.config.directives
+          }
+
+          table.insert(tbl[key], item)
+        end
       end
     end
   end
@@ -135,7 +157,7 @@ function wardrobe.loadItems()
   end
 
   -- Load files and add items to tbl
-  local function loadFiles(files, tbl)
+  local function loadFiles(files, tbl, addFunc)
     for _,v in ipairs(files) do
       if v:find("/") ~= 1 then
         v = "/wardrobe/" .. v
@@ -147,7 +169,7 @@ function wardrobe.loadItems()
       elseif not validateItems(f) then
         sb.logWarn("Wardrobe: Skipping %s due to missing items.\nDid you install the mod this add-on is made for? If you did, the add-on might be outdated.", v)
       else
-        addItems(tbl, f)
+        addFunc(tbl, f)
       end
     end
   end
@@ -169,9 +191,10 @@ function wardrobe.loadItems()
   loadScripts(config.scripts.vanilla, items.vanilla)
   loadScripts(config.scripts.mod, items.mod)
   loadScripts(config.scripts.custom, items.custom)
-  loadFiles(config.vanilla, items.vanilla)
-  loadFiles(config.mod, items.mod)
-  loadFiles(config.custom, items.custom)
+  loadFiles(config.vanilla, items.vanilla, addItems)
+  loadFiles(config.mod, items.mod, addItems)
+  sb.logInfo("%s", config.custom)
+  loadFiles(config.custom, items.custom, addCustom)
 
   return items
 end
@@ -571,7 +594,7 @@ function wardrobe.selectItem(item, category, updatePreview)
   local previous = wardrobe.selection[category]
 
   -- Retain Dye Suite dye.
-  if previous and previous.colorIndex == -1 then
+  if item and previous and previous.colorIndex == -1 then
     item.colorIndex = -1
     item.ds = previous.ds
     item.directives = previous.directives
