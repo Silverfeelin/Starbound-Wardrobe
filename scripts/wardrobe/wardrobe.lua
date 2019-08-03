@@ -193,7 +193,6 @@ function wardrobe.loadItems()
   loadScripts(config.scripts.custom, items.custom)
   loadFiles(config.vanilla, items.vanilla, addItems)
   loadFiles(config.mod, items.mod, addItems)
-  sb.logInfo("%s", config.custom)
   loadFiles(config.custom, items.custom, addCustom)
 
   return items
