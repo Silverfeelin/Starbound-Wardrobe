@@ -151,7 +151,7 @@ function cb.selectHeadColor(_, index)
   local item = wardrobe.selection["head"]
   item.colorIndex = index
   item.ds = index == -1 or nil
-  item.directives = item.ds and wardrobe.ds.getDirectives()
+  item.directives = item.ds and wardrobe.ds.getDirectives("head")
   wardrobe.showHead(wardrobe.selection["head"], index)
   wardrobe.setSelection("head", wardrobe.selection["head"])
 end
@@ -161,7 +161,7 @@ function cb.selectChestColor(_, index)
   local item = wardrobe.selection["chest"]
   item.colorIndex = index
   item.ds = index == -1 or nil
-  item.directives = item.ds and wardrobe.ds.getDirectives()
+  item.directives = item.ds and wardrobe.ds.getDirectives("chest")
   wardrobe.showChest(wardrobe.selection["chest"], index)
   wardrobe.setSelection("chest", wardrobe.selection["chest"])
 end
@@ -171,7 +171,7 @@ function cb.selectLegsColor(_, index)
   local item = wardrobe.selection["legs"]
   item.colorIndex = index
   item.ds = index == -1 or nil
-  item.directives = item.ds and wardrobe.ds.getDirectives()
+  item.directives = item.ds and wardrobe.ds.getDirectives("legs")
   wardrobe.showLegs(wardrobe.selection["legs"], index)
   wardrobe.setSelection("legs", wardrobe.selection["legs"])
 end
@@ -181,7 +181,7 @@ function cb.selectBackColor(_, index)
   local item = wardrobe.selection["back"]
   item.colorIndex = index
   item.ds = index == -1 or nil
-  item.directives = item.ds and wardrobe.ds.getDirectives()
+  item.directives = item.ds and wardrobe.ds.getDirectives("back")
   wardrobe.showBack(wardrobe.selection["back"], index)
   wardrobe.setSelection("back", wardrobe.selection["back"])
 end
