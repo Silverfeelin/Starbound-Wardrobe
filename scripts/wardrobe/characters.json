@@ -1,0 +1,170 @@
+{
+  "human": {
+    "male": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/male14.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "maleDirectives": "?replace;ffe2c5=fbe1d4;ffc181=f6baa2;d39c6c=cc9582;c7815b=ac7261;d9c189=a6671d;a38d59=915622;735e3a=743e1d",
+    "female": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/femalehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/fem1.png:normal",
+      "/humanoid/human/femalebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "femaleDirectives": "?replace;ffe2c5=ab8c77;ffc181=86644a;d39c6c=684431;c7815b=40271d;d9c189=D26BA4;a38d59=A54669;735e3a=89334D"
+  },
+  "avian": {
+    "male": [
+      "/humanoid/avian/backarm.png",
+      "/humanoid/avian/malehead.png:normal",
+      "/humanoid/avian/emote.png:idle.1?replace;6F2919=6A3836",
+      "/humanoid/avian/hair/1.png:normal",
+      "/humanoid/avian/malebody.png",
+      "/humanoid/avian/fluff/1.png:normal",
+      "/humanoid/avian/beaks/1.png:normal?replace;D9C189=EACF60;A38D59=C1A24E",
+      "/humanoid/avian/frontarm.png"
+    ],
+    "maleDirectives": "?replace;FFCA8A=F0608B;E0975C=CD5061;A85636=95484C;6F2919=6A3836;F32200=F6FBFB;DC1F00=D7E8E8;BE1B00=8FA7A3;951500=5D6D69",
+    "female": [
+      "/humanoid/avian/backarm.png",
+      "/humanoid/avian/femalehead.png:normal",
+      "/humanoid/avian/emote.png:idle.1?replace;6F2919=3F566E",
+      "/humanoid/avian/hair/4.png:normal",
+      "/humanoid/avian/femalebody.png",
+      "/humanoid/avian/fluff/1.png:normal",
+      "/humanoid/avian/beaks/9.png:normal?replace;D9C189=EACF60;A38D59=C1A24E",
+      "/humanoid/avian/frontarm.png"
+    ],
+    "femaleDirectives": "?replace;FFCA8A=7FDADD;E0975C=61AEBF;A85636=4E7A90;6F2919=3F566E;F32200=F6FBFB;DC1F00=D7E8E8;BE1B00=8FA7A3;951500=5D6D69"
+  },
+  "apex": {
+    "male": [
+      "/humanoid/apex/backarm.png",
+      "/humanoid/apex/malehead.png:normal",
+      "/humanoid/apex/emote.png:idle.1",
+      "/humanoid/apex/hairmale/1.png:normal",
+      "/humanoid/apex/malebody.png",
+      "/humanoid/apex/beardmale/2.png:normal",
+      null,
+      "/humanoid/apex/frontarm.png"
+    ],
+    "maleDirectives": "?replace;e0975c=8f4a24;a85636=66351f;6f2919=522b1d;f7e7b2=c8cee0;d9c189=a3a7b2;a38d59=7c8094;735e3a=5f5f73",
+    "female": [
+      "/humanoid/apex/backarm.png",
+      "/humanoid/apex/malehead.png:normal",
+      "/humanoid/apex/emote.png:idle.1",
+      "/humanoid/apex/hairfemale/19.png:normal",
+      "/humanoid/apex/femalebody.png",
+      "/humanoid/apex/beardfemale/6.png:normal",
+      null,
+      "/humanoid/apex/frontarm.png"
+    ],
+    "femaleDirectives": "?replace;e0975c=7e5938;a85636=5d3e25;6f2919=422a18;f7e7b2=e9c08b;d9c189=d29a5f;a38d59=ac7955;735e3a=8c5d44"
+  },
+  "floran": {
+    "male": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "maleDirectives": "?replace",
+    "female": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "femaleDirectives": "?replace"
+  },
+  "hylotl": {
+    "male": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "maleDirectives": "?replace",
+    "female": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "femaleDirectives": "?replace"
+  },
+  "glitch": {
+    "male": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "maleDirectives": "?replace",
+    "female": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "femaleDirectives": "?replace"
+  },
+  "novakid": {
+    "male": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "maleDirectives": "?replace",
+    "female": [
+      "/humanoid/human/backarm.png",
+      "/humanoid/human/malehead.png:normal",
+      "/humanoid/human/emote.png:idle.1",
+      "/humanoid/human/hair/1.png:normal",
+      "/humanoid/human/malebody.png",
+      null,
+      null,
+      "/humanoid/human/frontarm.png"
+    ],
+    "femaleDirectives": "?replace"
+  }
+}

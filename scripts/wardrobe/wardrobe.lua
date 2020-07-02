@@ -33,6 +33,20 @@ wardrobe.defaultColors = {
   [4] = "6f2919"
 }
 
+wardrobe.armFrames = {
+  [1] = true,
+  [8] = true
+}
+wardrobe.bodyFrames = {
+  [5] = true
+}
+
+-- Current character selection.
+wardrobe.character = {
+  species = nil,
+  gender = nil
+}
+
 -- #region Engine
 
 --- Initializes the Wardrobe.
@@ -53,6 +67,9 @@ function wardrobe.init()
   wardrobe.slots = { "head", "chest", "legs", "back" }
   wardrobe.widgets = config.getParameter("widgetNames")
   wardrobe.idleFrames = wardrobe.util.getIdleFrames()
+  wardrobe.gender = player.gender()
+  wardrobe.character.gender = wardrobe.gender
+  wardrobe.characters = root.assetJson("/scripts/wardrobe/characters.json")
 
   wardrobe.items = wardrobe.loadItems()
 
@@ -80,6 +97,7 @@ function wardrobe.init()
   }
 
   -- Load preview with equipped items
+  wardrobe.initPreview()
   wardrobe.loadPreview()
   wardrobe.loadEquipped()
 
@@ -237,13 +255,13 @@ hook('update', wardrobe.update)
 -- @param slot head/chest/legs/back
 -- @return vanilla/mod/custom
 function wardrobe.getCategory(slot)
-  local gw =
-    slot == "head" and wardrobe.widgets.head_group
-    or slot == "chest" and wardrobe.widgets.chest_group
-    or slot == "legs" and wardrobe.widgets.legs_group
-    or slot == "back" and wardrobe.widgets.back_group
-
-  local i = widget.getSelectedOption(gw)
+  local slots = {
+    head = wardrobe.widgets.head_group,
+    chest = wardrobe.widgets.chest_group,
+    legs = wardrobe.widgets.legs_group,
+    back = wardrobe.widgets.back_group
+  }
+  local i = widget.getSelectedOption(slots[slot])
   return i == -1 and "vanilla" or i == 0 and "mod" or "custom"
 end
 
@@ -466,7 +484,7 @@ end
 
 -- #region Preview
 
---- Loads the preview by adding layers to the preview widget.
+--- Initializes the preview by adding layers to the preview widget.
 --  wardrobe.preview.custom: table with the below indices as image layers.
 --  [1] backarm [2] [3] head emote hair body [4] [5] fluff beaks [6] frontarm [7]
 --  [1] = Background  | [2] = BackSleeve | [3] = BackItem     | [4] = Pants
@@ -488,7 +506,7 @@ end
 --
 --  Layers 4, 6 and 7 need their ?addmask removed (if existent).
 --  Likewise, these layers need a mask added when a head is selected with a mask.
-function wardrobe.loadPreview()
+function wardrobe.initPreview()
   local preview = wardrobe.widgets.preview
 
   local layers = {}
@@ -508,10 +526,13 @@ function wardrobe.loadPreview()
     portrait[4].image:gsub('%?addmask=[^%?]+',''),
     portrait[5].image
   }
-
+  
   if portraitFrames > 6 then layers[6] = portrait[6].image end
   if portraitFrames > 7 then layers[7] = portrait[7].image end
   layers[8] = portrait[#portrait].image
+  
+  -- Set default character
+  wardrobe.characters.default = layers
 
   -- Add the preview layers
   widget.clearListItems(preview)
@@ -524,9 +545,6 @@ function wardrobe.loadPreview()
   for i=1,8 do
     -- Add default layer
     local li = widget.addListItem(preview)
-    if layers[i] then
-      widget.setImage(preview .. "." .. li .. ".image", layers[i])
-    end
     table.insert(wardrobe.preview.default, li)
 
     -- Add blank custom layer(s)
@@ -534,6 +552,36 @@ function wardrobe.loadPreview()
     for j=1,customLayers do
       table.insert(wardrobe.preview.custom, widget.addListItem(preview))
     end
+  end
+end
+
+--- Loads the preview body layers.
+-- Uses the current character selection if chosen.
+function wardrobe.loadPreview()
+  local wPreview = wardrobe.widgets.preview
+  local species = wardrobe.character.species
+  local layers = species
+    and wardrobe.characters[species][wardrobe.character.gender]
+    or wardrobe.characters.default
+  local directives = species
+    and wardrobe.characters[species][wardrobe.character.gender .. "Directives"]
+    or ""
+
+  local bodyFrame = wardrobe.getDefaultFrame("body", true)
+  local armFrame = wardrobe.getDefaultFrame("arm", true)
+
+  for i=1,8 do
+    local li = wardrobe.preview.default[i]
+    local liImage = wPreview .. "." .. li .. ".image"
+
+    local image = layers[i]
+    if image and species then
+      if wardrobe.armFrames[i] then image = image .. ":" .. armFrame end
+      if wardrobe.bodyFrames[i] then image = image .. ":" .. bodyFrame end
+      image = image .. directives
+    end
+
+    widget.setImage(liImage, image or "/assetMissing.png")
   end
 end
 
@@ -793,25 +841,29 @@ function wardrobe.setSelection(category, item)
     widget.setText(wardrobe.widgets[category .. "_name"], item and item.shortdescription or "No selection")
 end
 
+function wardrobe.getDefaultFrame(type, useCharacterFrames)
+  return useCharacterFrames and wardrobe.idleFrames[type] or "idle.1"
+end
+
 --- Returns an image to display the item.
 -- For chest items, a table with three images is returned.
 -- The gender of the player is used to determine the frames to use.
 -- @param item Item to fetch image for.
 -- @param [useCharacterFrames=false] Character idle frames are used, instead of `idle.1`.
 function wardrobe.getDefaultImageForItem(item, useCharacterFrames)
-  local bodyFrame = useCharacterFrames and wardrobe.idleFrames.body or "idle.1"
-  local armFrame = useCharacterFrames and wardrobe.idleFrames.arm or "idle.1"
+  local bodyFrame = wardrobe.getDefaultFrame("body", useCharacterFrames)
+  local armFrame = wardrobe.getDefaultFrame("arm", useCharacterFrames)
 
   if item.category == "head" then
-    local image = wardrobe.util.fixImagePath(item.path, player.gender() == "male" and item.maleFrames or item.femaleFrames) .. ":normal"
+    local image = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames or item.femaleFrames) .. ":normal"
     return image
   elseif item.category == "chest" then
-    local image = wardrobe.util.fixImagePath(item.path, player.gender() == "male" and item.maleFrames.body or item.femaleFrames.body) .. ":" .. bodyFrame
-    local imageBack = wardrobe.util.fixImagePath(item.path, player.gender() == "male" and item.maleFrames.backSleeve or item.femaleFrames.backSleeve) .. ":" .. armFrame
-    local imageFront = wardrobe.util.fixImagePath(item.path, player.gender() == "male" and item.maleFrames.frontSleeve or item.femaleFrames.frontSleeve) .. ":" .. armFrame
+    local image = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames.body or item.femaleFrames.body) .. ":" .. bodyFrame
+    local imageBack = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames.backSleeve or item.femaleFrames.backSleeve) .. ":" .. armFrame
+    local imageFront = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames.frontSleeve or item.femaleFrames.frontSleeve) .. ":" .. armFrame
     return {imageBack, image, imageFront}
   elseif item.category == "legs" then
-    local image = wardrobe.util.fixImagePath(item.path, player.gender() == "male" and item.maleFrames or item.femaleFrames) .. ":" .. bodyFrame
+    local image = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames or item.femaleFrames) .. ":" .. bodyFrame
     return image
   elseif item.category == "back" then
     local image = wardrobe.util.fixImagePath(item.path, item.maleFrames) .. ":" .. bodyFrame
