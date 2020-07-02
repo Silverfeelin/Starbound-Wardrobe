@@ -190,12 +190,15 @@ end
 -- #region Select character
 
 function wardrobeCallbacks.showCharacters()
-  --wardrobeUtil.setVisible(widgets.left_show, false)
+  wardrobeCallbacks.closeLeftSelection()
+  wardrobeUtil.setVisible(widgets.left_show, false)
+  wardrobeUtil.setVisible(widgets.spawn, false)
   wardrobeUtil.setVisible(wardrobe.widgets.characterSelection, true)
 end
 
 function wardrobeCallbacks.hideCharacters()
-  --wardrobeUtil.setVisible(widgets.left_show, true)
+  wardrobeUtil.setVisible(widgets.left_show, true)
+  wardrobeUtil.setVisible(widgets.spawn, true)
   wardrobeUtil.setVisible(wardrobe.widgets.characterSelection, false)
 end
 
@@ -204,6 +207,7 @@ function wardrobeCallbacks.selectCharacter(_, data)
   wardrobe.character.species = selected and data.species or nil
   wardrobe.character.gender = selected and data.gender or player.gender()
   wardrobe.loadPreview()
+  wardrobe.showHead(wardrobe.selection.head)
 end
 
 -- #endregion

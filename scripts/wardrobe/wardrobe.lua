@@ -541,7 +541,7 @@ function wardrobe.initPreview()
   wardrobe.preview.custom = {}
 
   table.insert(wardrobe.preview.custom, widget.addListItem(preview))
-  wardrobe.layers = layers
+  
   for i=1,8 do
     -- Add default layer
     local li = widget.addListItem(preview)
@@ -570,6 +570,8 @@ function wardrobe.loadPreview()
   local bodyFrame = wardrobe.getDefaultFrame("body", true)
   local armFrame = wardrobe.getDefaultFrame("arm", true)
 
+  wardrobe.layers = species and {} or wardrobe.characters.default
+
   for i=1,8 do
     local li = wardrobe.preview.default[i]
     local liImage = wPreview .. "." .. li .. ".image"
@@ -579,6 +581,7 @@ function wardrobe.loadPreview()
       if wardrobe.armFrames[i] then image = image .. ":" .. armFrame end
       if wardrobe.bodyFrames[i] then image = image .. ":" .. bodyFrame end
       image = image .. directives
+      wardrobe.layers[i] = image
     end
 
     widget.setImage(liImage, image or "/assetMissing.png")

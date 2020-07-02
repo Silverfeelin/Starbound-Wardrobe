@@ -73,98 +73,98 @@
   },
   "floran": {
     "male": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/floran/backarm.png",
+      "/humanoid/floran/malehead.png:normal",
+      "/humanoid/floran/emote.png:idle.1",
+      "/humanoid/floran/hair/27.png:normal",      
+      "/humanoid/floran/malebody.png",
       null,
       null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/floran/frontarm.png"
     ],
-    "maleDirectives": "?replace",
+    "maleDirectives": "?replace;ffca8a=c4d0a5;e0975c=a3af83;a85636=7f8760;6f2919=5e6142;f7e7b2=c4d0a5;d9c189=81996C;a38d59=667552;735e3a=515A3F",
     "female": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/floran/backarm.png",
+      "/humanoid/floran/malehead.png:normal",
+      "/humanoid/floran/emote.png:idle.1",
+      "/humanoid/floran/hair/2.png:normal",
+      "/humanoid/floran/femalebody.png",
       null,
       null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/floran/frontarm.png"
     ],
-    "femaleDirectives": "?replace"
+    "femaleDirectives": "?replace;ffca8a=c4d0a5;e0975c=a3af83;a85636=7f8760;6f2919=5e6142;f7e7b2=c4d0a5;d9c189=81996C;a38d59=667552;735e3a=515A3F;C4D0A5=F7E7B2;81996C=D9C189;F32200=E0975C;DC1F00=A85636;BE1B00=6F2919"
   },
   "hylotl": {
     "male": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/hylotl/backarm.png",
+      "/humanoid/hylotl/malehead.png:normal",
+      "/humanoid/hylotl/emote.png:idle.1?replace;941302=670606;B63100=A81F09;F64200=E42B0D",
+      "/humanoid/hylotl/hair/3.png:normal",
+      "/humanoid/hylotl/malebody.png",
       null,
       null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/hylotl/frontarm.png"
     ],
-    "maleDirectives": "?replace",
+    "maleDirectives": "?replace;ffca8a=B8F4D9;e0975c=72DDB3;a85636=4AA586;6f2919=266554;f7e7b2=B5C2FA;d9c189=758BF8;a38d59=4A5BA5;735e3a=272665;f32200=FFFFFF;dc1f00=F2EFF3;be1b00=A6A4AE;951500=818181",
     "female": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/hylotl/backarm.png",
+      "/humanoid/hylotl/malehead.png:normal",
+      "/humanoid/hylotl/emote.png:idle.1?replace;941302=670606;B63100=A81F09;F64200=E42B0D",
+      "/humanoid/hylotl/hair/2.png:normal",
+      "/humanoid/hylotl/femalebody.png",
       null,
       null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/hylotl/frontarm.png"
     ],
-    "femaleDirectives": "?replace"
+    "femaleDirectives": "?replace;ffca8a=B8F4D9;e0975c=72DDB3;a85636=4AA586;6f2919=266554;f7e7b2=B5C2FA;d9c189=758BF8;a38d59=4A5BA5;735e3a=272665;f32200=FFFFFF;dc1f00=F2EFF3;be1b00=A6A4AE;951500=818181"
   },
   "glitch": {
     "male": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/glitch/backarm.png",
+      "/humanoid/glitch/malehead.png:normal",
+      "/humanoid/glitch/emote.png:idle.1",
+      "/humanoid/glitch/hair/0.png:normal",
+      "/humanoid/glitch/malebody.png",
       null,
       null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/glitch/frontarm.png"
     ],
-    "maleDirectives": "?replace",
+    "maleDirectives": "?replace;ffca8a=f0f0f0;e0975c=b1b1b1;a85636=747474;6f2919=4c4c4c;F32200=DE1111;f7e7b2=a7978a;d9c189=74665b;a38d59=524840;735e3a=231f1b",
     "female": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/glitch/backarm.png",
+      "/humanoid/glitch/malehead.png:normal",
+      "/humanoid/glitch/emote.png:idle.1",
+      "/humanoid/glitch/hair/0.png:normal",
+      "/humanoid/glitch/femalebody.png",
       null,
       null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/glitch/frontarm.png"
     ],
-    "femaleDirectives": "?replace"
+    "femaleDirectives": "?replace;ffca8a=f0f0f0;e0975c=b1b1b1;a85636=747474;6f2919=4c4c4c;F32200=DE1111;f7e7b2=a7978a;d9c189=74665b;a38d59=524840;735e3a=231f1b"
   },
   "novakid": {
     "male": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/novakid/backarm.png",
+      "/humanoid/novakid/malehead.png:normal",
+      "/humanoid/novakid/emote.png:idle.1",
+      "/humanoid/novakid/hair/male11.png:normal",
+      "/humanoid/novakid/malebody.png",
+      "/humanoid/novakid/brand/1.png:normal",
       null,
-      null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/novakid/frontarm.png"
     ],
-    "maleDirectives": "?replace",
+    "maleDirectives": "?replace;806319=352B12",
     "female": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/1.png:normal",
-      "/humanoid/human/malebody.png",
+      "/humanoid/novakid/backarm.png",
+      "/humanoid/novakid/malehead.png:normal",
+      "/humanoid/novakid/emote.png:idle.1",
+      "/humanoid/novakid/hair/fem10.png:normal",
+      "/humanoid/novakid/femalebody.png",
+      "/humanoid/novakid/brand/3.png:normal",
       null,
-      null,
-      "/humanoid/human/frontarm.png"
+      "/humanoid/novakid/frontarm.png"
     ],
-    "femaleDirectives": "?replace"
+    "femaleDirectives": "?replace;fff8b5=c7feff;fde03f=56ebf8;f6b919=12c2e8;806319=0c2b4b;806319=0C2B4B"
   }
 }
