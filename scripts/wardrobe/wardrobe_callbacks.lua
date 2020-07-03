@@ -208,6 +208,7 @@ function wardrobeCallbacks.selectCharacter(_, data)
   wardrobe.character.gender = selected and data.gender or player.gender()
   wardrobe.loadPreview()
   wardrobe.showHead(wardrobe.selection.head)
+  wardrobe.showChest(wardrobe.selection.chest)
 end
 
 -- #endregion

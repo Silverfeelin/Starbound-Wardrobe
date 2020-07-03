@@ -677,7 +677,7 @@ function wardrobe.showHead(item, colorIndex)
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
-  local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
+  local image = item and wardrobe.getDefaultImageForItem(item, true, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
   local directives = wardrobe.util.getDirectives(item, params.dir)
@@ -721,7 +721,7 @@ function wardrobe.showChest(item, colorIndex)
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
-  local images = item and wardrobe.getDefaultImageForItem(item, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
+  local images = item and wardrobe.getDefaultImageForItem(item, true, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
   local directives = wardrobe.util.getDirectives(item, params.dir)
@@ -748,7 +748,7 @@ function wardrobe.showLegs(item, colorIndex, preserve)
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
-  local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
+  local image = item and wardrobe.getDefaultImageForItem(item, true, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
   local directives = wardrobe.util.getDirectives(item, params.dir)
@@ -771,7 +771,7 @@ function wardrobe.showBack(item, colorIndex, preserve)
   if item and item.colorOptions and colorIndex >= #item.colorOptions then colorIndex = 0 end
 
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
-  local image = item and wardrobe.getDefaultImageForItem(item, true) or "/assetMissing.png"
+  local image = item and wardrobe.getDefaultImageForItem(item, true, true) or "/assetMissing.png"
 
   local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
   local directives = wardrobe.util.getDirectives(item, params.dir)
@@ -853,20 +853,21 @@ end
 -- The gender of the player is used to determine the frames to use.
 -- @param item Item to fetch image for.
 -- @param [useCharacterFrames=false] Character idle frames are used, instead of `idle.1`.
-function wardrobe.getDefaultImageForItem(item, useCharacterFrames)
+function wardrobe.getDefaultImageForItem(item, useCharacterFrames, useCharacterGender)
   local bodyFrame = wardrobe.getDefaultFrame("body", useCharacterFrames)
   local armFrame = wardrobe.getDefaultFrame("arm", useCharacterFrames)
-
+  local gender = useCharacterGender and wardrobe.character.gender or wardrobe.gender
+  
   if item.category == "head" then
-    local image = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames or item.femaleFrames) .. ":normal"
+    local image = wardrobe.util.fixImagePath(item.path, gender == "male" and item.maleFrames or item.femaleFrames) .. ":normal"
     return image
   elseif item.category == "chest" then
-    local image = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames.body or item.femaleFrames.body) .. ":" .. bodyFrame
-    local imageBack = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames.backSleeve or item.femaleFrames.backSleeve) .. ":" .. armFrame
-    local imageFront = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames.frontSleeve or item.femaleFrames.frontSleeve) .. ":" .. armFrame
+    local image = wardrobe.util.fixImagePath(item.path, gender == "male" and item.maleFrames.body or item.femaleFrames.body) .. ":" .. bodyFrame
+    local imageBack = wardrobe.util.fixImagePath(item.path, gender == "male" and item.maleFrames.backSleeve or item.femaleFrames.backSleeve) .. ":" .. armFrame
+    local imageFront = wardrobe.util.fixImagePath(item.path, gender == "male" and item.maleFrames.frontSleeve or item.femaleFrames.frontSleeve) .. ":" .. armFrame
     return {imageBack, image, imageFront}
   elseif item.category == "legs" then
-    local image = wardrobe.util.fixImagePath(item.path, wardrobe.gender == "male" and item.maleFrames or item.femaleFrames) .. ":" .. bodyFrame
+    local image = wardrobe.util.fixImagePath(item.path, gender == "male" and item.maleFrames or item.femaleFrames) .. ":" .. bodyFrame
     return image
   elseif item.category == "back" then
     local image = wardrobe.util.fixImagePath(item.path, item.maleFrames) .. ":" .. bodyFrame
