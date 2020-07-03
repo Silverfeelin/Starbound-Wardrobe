@@ -209,6 +209,8 @@ function wardrobeCallbacks.selectCharacter(_, data)
   wardrobe.loadPreview()
   wardrobe.showHead(wardrobe.selection.head)
   wardrobe.showChest(wardrobe.selection.chest)
+  wardrobe.showLegs(wardrobe.selection.legs)
+  wardrobe.showBack(wardrobe.selection.back)
 end
 
 -- #endregion
