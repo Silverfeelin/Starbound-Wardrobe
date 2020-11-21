@@ -267,7 +267,9 @@ function wardrobeUtil.itemParameters(item)
   params.ds = item.ds -- Indicates Dye Suite dye was selected.
   params.colorIndex = item.colorIndex
   params.shortdescription = item.shortdescription
+  params.description = item.description
   params.inventoryIcon = item.icon or item.inventoryIcon
+  params.rarity = item.rarity
   params.mask = item.mask
   params.outfit = item.outfit
   return params

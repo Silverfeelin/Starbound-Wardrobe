@@ -605,6 +605,7 @@ function wardrobe.loadEquipped()
     local item = {
       name = equippedItem.name,
       shortdescription = equippedItem.parameters.shortdescription or itemConfig.config.shortdescription,
+      description = equippedItem.parameters.description or nil,
       category = slot,
       path = itemConfig.directory,
       icon = equippedItem.parameters.inventoryIcon or itemConfig.config.inventoryIcon,
@@ -615,6 +616,7 @@ function wardrobe.loadEquipped()
       colorOptions = equippedItem.parameters.colorOptions or itemConfig.config.colorOptions,
       colorIndex = equippedItem.parameters.colorIndex or 0,
       directives = equippedItem.parameters.directives,
+      rarity = equippedItem.parameters.rarity or nil,
       ds = equippedItem.parameters.ds
     }
 
