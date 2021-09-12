@@ -116,14 +116,15 @@ hook('init', wardrobe.init)
 --- Updates the Wardrobe storage.
 function wardrobe.upgrade()
   local cfg = status.statusProperty("wardrobeInterface")
+  local outfits = status.statusProperty("wardrobeOutfits")
+
   if cfg then
     player.setProperty("wardrobeInterface", cfg)
-    status.setStatusProperty("wardrobeOutfits", nil)
+    status.setStatusProperty("wardrobeInterface", nil)
   end
 
-  local outfits = status.statusProperty("wardrobeOutfits")
   if outfits then
-    player.setProperty("wardrobeOutfits", nil)
+    player.setProperty("wardrobeOutfits", outfits)
     status.setStatusProperty("wardrobeOutfits", nil)
   end
 end
