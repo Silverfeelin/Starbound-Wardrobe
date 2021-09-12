@@ -51,7 +51,8 @@ wardrobe.character = {
 
 --- Initializes the Wardrobe.
 function wardrobe.init()
-  --status.setStatusProperty("wardrobeOutfits", nil)
+  -- Upgrade storage (#16)
+  wardrobe.upgrade()
 
   -- Reference required scripts
   wardrobe.cb = wardrobeCallbacks
@@ -103,7 +104,7 @@ function wardrobe.init()
 
   -- Outfits
   wardrobe.trashing = false
-  wardrobe.outfits = wardrobe.util.statusList("wardrobeOutfits")
+  wardrobe.outfits = wardrobe.util.propertyList("wardrobeOutfits")
   wardrobe.outfitIcons = config.getParameter("outfitIcons", {})
   wardrobe.lists.outfits:show(wardrobe.outfits)
   wardrobe.updateIcon()
@@ -111,6 +112,21 @@ end
 
 -- Hook
 hook('init', wardrobe.init)
+
+--- Updates the Wardrobe storage.
+function wardrobe.upgrade()
+  local cfg = status.statusProperty("wardrobeInterface")
+  if cfg then
+    player.setProperty("wardrobeInterface", cfg)
+    status.setStatusProperty("wardrobeOutfits", nil)
+  end
+
+  local outfits = status.statusProperty("wardrobeOutfits")
+  if outfits then
+    player.setProperty("wardrobeOutfits", nil)
+    status.setStatusProperty("wardrobeOutfits", nil)
+  end
+end
 
 --- Loads all items from the config
 -- Items are returned as {vanilla={},mod={},custom={}}.
@@ -959,13 +975,11 @@ end
 -- useArmorSlot = false
 -- @return Configuration
 function wardrobe.setConfigParameters()
-  local cfg = status.statusProperty("wardrobeInterface")
-  if not cfg then
-    cfg = {}
-  end
+  local cfg = player.getProperty("wardrobeInterface")
+  if not cfg then cfg = {} end
   if type(cfg.useArmorSlot) ~= "boolean" then
     cfg.useArmorSlot = false
-    status.setStatusProperty("wardrobeInterface", cfg)
+    player.setProperty("wardrobeInterface", cfg)
   end
   return cfg
 end
@@ -973,14 +987,14 @@ end
 --- Gets the wardrobe config parameters.
 -- @return Wardrobe parameters.
 function wardrobe.getConfigParameters()
-  return status.statusProperty("wardrobeInterface")
+  return player.getProperty("wardrobeInterface")
 end
 
 --- Gets a wardrobe config parameter.
 -- @param path Parameter key.
 -- @return Parameter value.
 function wardrobe.getConfigParameter(path)
-  local cfg = status.statusProperty("wardrobeInterface") or {}
+  local cfg = player.getProperty("wardrobeInterface") or {}
   return path == nil and cfg or cfg[path]
 end
 
@@ -1120,7 +1134,7 @@ function wardrobe.saveOutfit()
   end
 
   table.insert(wardrobe.outfits, outfit)
-  status.setStatusProperty("wardrobeOutfits", wardrobe.outfits)
+  player.setProperty("wardrobeOutfits", wardrobe.outfits)
   wardrobe.lists.outfits:enqueue({outfit})
   wardrobe.updateIcon()
   return outfit
@@ -1143,7 +1157,7 @@ function wardrobe.trashOutfit(data)
   end
 
   wardrobe.refreshOutfits = true -- Because clearing instantly seems to cause (in)frequent crashes.
-  status.setStatusProperty("wardrobeOutfits", wardrobe.outfits)
+  player.setProperty("wardrobeOutfits", wardrobe.outfits)
   wardrobe.updateIcon()
 end
 

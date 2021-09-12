@@ -324,8 +324,8 @@ end
 -- Accounts for [n] and ["n"] keys.
 -- @param str Status property.
 -- @return Lua table.
-function wardrobeUtil.statusList(str)
-  local items = status.statusProperty(str, {}) or {}
+function wardrobeUtil.propertyList(str)
+  local items = player.getProperty(str, {}) or {}
   local results = {}
   local i = 1
 
