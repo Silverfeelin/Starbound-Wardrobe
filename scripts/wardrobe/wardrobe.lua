@@ -933,10 +933,16 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
   if c > 7 then body[7] = bodyPortrait[7].image end
   body[8] = bodyPortrait[c].image
 
+  
+  local bodyFrame = wardrobe.getDefaultFrame("body", true)
+  local armFrame = wardrobe.getDefaultFrame("arm", true)
+
+  local offsets = wardrobeUtil.getOffsets(bodyFrame, armFrame)
+
   -- BackArm
   canvas:drawImage(body[1], offset)
   if (layers.backArm) then
-    canvas:drawImage(layers.backArm, offset)
+    canvas:drawImage(layers.backArm, vec2.add(offset, offsets.arm))
   end
 
   -- Back
@@ -945,9 +951,9 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
   end
 
   -- Head
-  canvas:drawImage(body[2], offset)
-  canvas:drawImage(body[3], offset)
-  canvas:drawImage(body[4] .. (mask or ""), offset)
+  canvas:drawImage(body[2], vec2.add(offset, offsets.head))
+  canvas:drawImage(body[3], vec2.add(offset, offsets.head))
+  canvas:drawImage(body[4] .. (mask or ""), vec2.add(offset, offsets.head))
 
   -- Body
   canvas:drawImage(body[5], offset)
@@ -964,22 +970,22 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
 
   -- Face
   if body[6] then
-    canvas:drawImage(body[6] .. (mask or ""), offset)
+    canvas:drawImage(body[6] .. (mask or ""), vec2.add(offset, offsets.head))
   end
 
   if body[7] then
-    canvas:drawImage(body[7] .. (mask or ""), offset)
+    canvas:drawImage(body[7] .. (mask or ""), vec2.add(offset, offsets.head))
   end
 
   -- FrontArm
   canvas:drawImage(body[8], offset)
   if (layers.frontArm) then
-    canvas:drawImage(layers.frontArm, offset)
+    canvas:drawImage(layers.frontArm, vec2.add(offset, offsets.arm))
   end
 
   -- Hat
   if (layers.head) then
-    canvas:drawImage(layers.head, offset)
+    canvas:drawImage(layers.head, vec2.add(offset, offsets.head))
   end
 end
 
