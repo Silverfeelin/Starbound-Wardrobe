@@ -177,30 +177,5 @@
     ],
     "femaleDirectives": "?replace;fff8b5=c7feff;fde03f=56ebf8;f6b919=12c2e8;806319=0c2b4b;806319=0C2B4B",
     "order": 700
-  },  
-  "neki": {
-    "male": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/malehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/male14.png:normal",
-      "/humanoid/human/malebody.png",
-      null,
-      null,
-      "/humanoid/human/frontarm.png"
-    ],
-    "maleDirectives": "?replace;ffe2c5=fbe1d4;ffc181=f6baa2;d39c6c=cc9582;c7815b=ac7261;d9c189=a6671d;a38d59=915622;735e3a=743e1d",
-    "female": [
-      "/humanoid/human/backarm.png",
-      "/humanoid/human/femalehead.png:normal",
-      "/humanoid/human/emote.png:idle.1",
-      "/humanoid/human/hair/fem1.png:normal",
-      "/humanoid/human/femalebody.png",
-      null,
-      null,
-      "/humanoid/human/frontarm.png"
-    ],
-    "femaleDirectives": "?replace;ffe2c5=ab8c77;ffc181=86644a;d39c6c=684431;c7815b=40271d;d9c189=D26BA4;a38d59=A54669;735e3a=89334D",
-    "order": 900
   }
 }
