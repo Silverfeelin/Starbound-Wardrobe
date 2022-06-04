@@ -8,6 +8,7 @@
     "sb",
     "config",
     "util",
-    "vec2"
+    "vec2",
+    "copy"
   ]
 }

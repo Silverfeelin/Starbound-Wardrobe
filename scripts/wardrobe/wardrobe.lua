@@ -1023,6 +1023,9 @@ function wardrobe.showCharacterPage(page)
     local visible = math.ceil(i / 7) == page
     widget.setOptionVisible('characters_group', (i - 1) * 2, visible)
     widget.setOptionVisible('characters_group', (i - 1) * 2 + 1, visible)
+
+    widget.setVisible("characters_buttons_" .. (i-1) * 2, visible)
+    widget.setVisible("characters_buttons_" .. (i-1) * 2 + 1, visible)
   end
 end
 

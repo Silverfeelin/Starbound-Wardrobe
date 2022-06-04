@@ -195,18 +195,34 @@ function wardrobeCallbacks.showCharacters()
   wardrobeUtil.setVisible(widgets.spawn, false)
   wardrobeUtil.setVisible(wardrobe.widgets.characterSelection, true)
   wardrobeUtil.setVisible(wardrobe.widgets.characterPaging, wardrobe.characterPages > 1)
+  wardrobe.showCharacterPage(wardrobe.characterPage)
 end
 
 function wardrobeCallbacks.hideCharacters()
   wardrobeUtil.setVisible(widgets.left_show, true)
   wardrobeUtil.setVisible(widgets.spawn, true)
   wardrobeUtil.setVisible(wardrobe.widgets.characterSelection, false)
-  wardrobeUtil.setVisible(wardrobe.widgets.characterPaging, false)  
+  wardrobeUtil.setVisible(wardrobe.widgets.characterPaging, false)
+
+  for i = 1, wardrobe.characterCount do
+    widget.setVisible("characters_buttons_" .. (i-1) * 2, false)
+    widget.setVisible("characters_buttons_" .. (i-1) * 2 + 1, false)
+  end
 end
 
 function wardrobeCallbacks.selectCharacter(_, data)
+  local selectedIndex = widget.getSelectedOption("characters_group")
   local selected = widget.getSelectedOption("characters_group") > -1
   data = data or widget.getSelectedData("characters_group")
+
+  local img = "/interface/wardrobe/characters/blank.png"
+  local imgSel = "/interface/wardrobe/characters/blankselected.png"
+  for i = 1, wardrobe.characterCount do
+    local maleSelected = selectedIndex == (i - 1) * 2
+    local femaleSelected = selectedIndex == (i - 1) * 2 + 1
+    widget.setImage("characters_buttons_" .. (i-1) * 2, maleSelected and imgSel or img)
+    widget.setImage("characters_buttons_" .. (i-1) * 2 + 1, femaleSelected and imgSel or img)
+  end
 
   wardrobe.character.species = selected and data.species or nil
   wardrobe.character.gender = selected and data.gender or player.gender()
