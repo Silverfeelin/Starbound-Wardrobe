@@ -5,7 +5,7 @@
     "value": {
       "label": "Wardrobe",
       "icon": "/interface/wardrobe/fittingRoom.png",
-      "action": ["pane", "/interface/wardrobe/wardrobe.config"]
+      "action": ["exec", "/quickbar/wardrobeLoader.lua"]
     }
   }
 ]

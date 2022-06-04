@@ -1,3 +1,13 @@
 {
-  "workbench.colorCustomizations": {}
+  "workbench.colorCustomizations": {},
+  "Lua.diagnostics.globals": [
+    "root",
+    "status",
+    "player",
+    "widget",
+    "sb",
+    "config",
+    "util",
+    "vec2"
+  ]
 }

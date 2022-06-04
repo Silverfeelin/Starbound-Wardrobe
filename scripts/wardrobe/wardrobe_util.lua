@@ -203,6 +203,13 @@ function wardrobeUtil.getDirectives(item, default)
   return item and item.directives ~= "" and item.directives or default
 end
 
+--- Get offsets for head and arm layers based on personality frames.
+function wardrobeUtil.getOffsets(bodyFrame, armFrame)
+  return wardrobe.personalities[bodyFrame]
+    and wardrobe.personalities[bodyFrame][armFrame]
+    or { head = { 0, 0 }, arm = { 0, 0 }}
+end
+
 --- Hex to {r,g,b} [0-255].
 -- Thanks Magicks love ya.
 -- @param hex ffffff

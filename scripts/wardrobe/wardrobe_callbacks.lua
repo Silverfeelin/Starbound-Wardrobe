@@ -194,16 +194,20 @@ function wardrobeCallbacks.showCharacters()
   wardrobeUtil.setVisible(widgets.left_show, false)
   wardrobeUtil.setVisible(widgets.spawn, false)
   wardrobeUtil.setVisible(wardrobe.widgets.characterSelection, true)
+  wardrobeUtil.setVisible(wardrobe.widgets.characterPaging, wardrobe.characterPages > 1)
 end
 
 function wardrobeCallbacks.hideCharacters()
   wardrobeUtil.setVisible(widgets.left_show, true)
   wardrobeUtil.setVisible(widgets.spawn, true)
   wardrobeUtil.setVisible(wardrobe.widgets.characterSelection, false)
+  wardrobeUtil.setVisible(wardrobe.widgets.characterPaging, false)  
 end
 
 function wardrobeCallbacks.selectCharacter(_, data)
   local selected = widget.getSelectedOption("characters_group") > -1
+  data = data or widget.getSelectedData("characters_group")
+
   wardrobe.character.species = selected and data.species or nil
   wardrobe.character.gender = selected and data.gender or player.gender()
   wardrobe.loadPreview()
@@ -211,6 +215,14 @@ function wardrobeCallbacks.selectCharacter(_, data)
   wardrobe.showChest(wardrobe.selection.chest)
   wardrobe.showLegs(wardrobe.selection.legs)
   wardrobe.showBack(wardrobe.selection.back)
+end
+
+function wardrobeCallbacks.nextCharacters()
+  wardrobe.showCharacterPage(wardrobe.characterPage + 1)
+end
+
+function wardrobeCallbacks.prevCharacters()
+  wardrobe.showCharacterPage(wardrobe.characterPage - 1)
 end
 
 -- #endregion

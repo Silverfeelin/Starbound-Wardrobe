@@ -68,9 +68,21 @@ function wardrobe.init()
   wardrobe.slots = { "head", "chest", "legs", "back" }
   wardrobe.widgets = config.getParameter("widgetNames")
   wardrobe.idleFrames = wardrobe.util.getIdleFrames()
+  
+  local personalities = root.assetJson("/humanoid.config").personalities
+  wardrobe.personalities = {}
+  for _,v in ipairs(personalities) do
+    wardrobe.personalities[v[1]] = wardrobe.personalities[v[1]] or {}
+    wardrobe.personalities[v[1]][v[2]] = { head = v[3], arm = v[4] }
+  end
+
   wardrobe.gender = player.gender()
   wardrobe.character.gender = wardrobe.gender
   wardrobe.characters = root.assetJson("/scripts/wardrobe/characters.json")
+  wardrobe.characterPage = 1
+  wardrobe.characterCount = 0
+  for _ in pairs(wardrobe.characters) do wardrobe.characterCount = wardrobe.characterCount + 1 end
+  wardrobe.characterPages = math.ceil(wardrobe.characterCount / 7)
 
   wardrobe.items = wardrobe.loadItems()
 
@@ -524,8 +536,6 @@ end
 --  Layers 4, 6 and 7 need their ?addmask removed (if existent).
 --  Likewise, these layers need a mask added when a head is selected with a mask.
 function wardrobe.initPreview()
-  local preview = wardrobe.widgets.preview
-
   local layers = {}
 
   -- Fetch portrait and remove item layers
@@ -551,31 +561,33 @@ function wardrobe.initPreview()
   -- Set default character
   wardrobe.characters.default = layers
 
-  -- Add the preview layers
-  widget.clearListItems(preview)
+  -- Set personality offsets  
+  local widgets = wardrobe.widgets
+  local offsetHead = {
+    widgets.preview.head, widgets.preview.emote, widgets.preview.hair,
+    widgets.preview.fluff, widgets.preview.beaks, widgets.preview.hat
+  }
+  local offsetArm = {
+    widgets.preview.backArm, widgets.preview.backSleeves,
+    widgets.preview.frontArm, widgets.preview.frontSleeves
+  }
 
-  wardrobe.preview.default = {}
-  wardrobe.preview.custom = {}
-
-  table.insert(wardrobe.preview.custom, widget.addListItem(preview))
+  local bodyFrame = wardrobe.getDefaultFrame("body", true)
+  local armFrame = wardrobe.getDefaultFrame("arm", true)
   
-  for i=1,8 do
-    -- Add default layer
-    local li = widget.addListItem(preview)
-    table.insert(wardrobe.preview.default, li)
+  local origin = widget.getPosition(wardrobe.widgets.preview.default[5])
+  local offsets = wardrobeUtil.getOffsets(bodyFrame, armFrame)
 
-    -- Add blank custom layer(s)
-    local customLayers = (i == 1 or i == 5) and 2 or (i == 7 or i == 8) and 1 or 0
-    for j=1,customLayers do
-      table.insert(wardrobe.preview.custom, widget.addListItem(preview))
-    end
-  end
+  local headPos = vec2.add(origin, vec2.mul(offsets.head, 3))
+  for _,v in ipairs(offsetHead) do widget.setPosition(v, headPos) end
+  
+  local armPos = vec2.add(origin, vec2.mul(offsets.arm, 3))
+  for _,v in ipairs(offsetArm) do widget.setPosition(v, armPos) end
 end
 
 --- Loads the preview body layers.
 -- Uses the current character selection if chosen.
 function wardrobe.loadPreview()
-  local wPreview = wardrobe.widgets.preview
   local species = wardrobe.character.species
   local layers = species
     and wardrobe.characters[species][wardrobe.character.gender]
@@ -590,8 +602,7 @@ function wardrobe.loadPreview()
   wardrobe.layers = species and {} or wardrobe.characters.default
 
   for i=1,8 do
-    local li = wardrobe.preview.default[i]
-    local liImage = wPreview .. "." .. li .. ".image"
+    local wLayer = wardrobe.widgets.preview.default[i]
 
     local image = layers[i]
     if image and species then
@@ -600,8 +611,9 @@ function wardrobe.loadPreview()
       image = image .. directives
       wardrobe.layers[i] = image
     end
+    image = image and image .. "?scalenearest=3"
 
-    widget.setImage(liImage, image or "/assetMissing.png")
+    widget.setImage(wLayer, image or "/assetMissing.png")
   end
 end
 
@@ -698,9 +710,9 @@ function wardrobe.showHead(item, colorIndex)
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true, true) or "/assetMissing.png"
 
-  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[6]
+  local w = wardrobe.widgets.preview.custom[5]
   local directives = wardrobe.util.getDirectives(item, params.dir)
-  widget.setImage(w .. ".image", image .. directives)
+  widget.setImage(w, image .. directives .. "?scalenearest=3")
 
   local mask = ""
   if item and item.mask then
@@ -712,15 +724,15 @@ function wardrobe.showHead(item, colorIndex)
       mask = "?addmask=" .. wardrobe.util.fixImagePath(item.path, item.mask)
     end
   end
-  w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[4]
-  widget.setImage(w .. ".image", wardrobe.layers[4] .. mask)
+  w = wardrobe.widgets.preview.default[4]
+  widget.setImage(w, wardrobe.layers[4] .. mask .. "?scalenearest=3")
   if wardrobe.layers[6] then
-    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[6]
-    widget.setImage(w .. ".image", wardrobe.layers[6] .. mask)
+    w = wardrobe.widgets.preview.default[6]
+    widget.setImage(w, wardrobe.layers[6] .. mask .. "?scalenearest=3")
   end
   if wardrobe.layers[7] then
-    w = wardrobe.widgets.preview .. "." .. wardrobe.preview.default[7]
-    widget.setImage(w .. ".image", wardrobe.layers[7] .. mask)
+    w = wardrobe.widgets.preview.default[7]
+    widget.setImage(w, wardrobe.layers[7] .. mask .. "?scalenearest=3")
   end
 end
 
@@ -742,13 +754,13 @@ function wardrobe.showChest(item, colorIndex)
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local images = item and wardrobe.getDefaultImageForItem(item, true, true) or { "/assetMissing.png", "/assetMissing.png", "/assetMissing.png" }
 
-  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[2]
+  local w = wardrobe.widgets.preview.custom[1]
   local directives = wardrobe.util.getDirectives(item, params.dir)
-  widget.setImage(w .. ".image", images[1] .. directives)
-  w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[5]
-  widget.setImage(w .. ".image", images[2] .. directives)
-  w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[7]
-  widget.setImage(w .. ".image", images[3] .. directives)
+  widget.setImage(w, images[1] .. directives .. "?scalenearest=3")
+  w = wardrobe.widgets.preview.custom[4]
+  widget.setImage(w, images[2] .. directives .. "?scalenearest=3")
+  w = wardrobe.widgets.preview.custom[6]
+  widget.setImage(w, images[3] .. directives .. "?scalenearest=3")
 end
 
 --- Renders a legs item on the preview character.
@@ -769,9 +781,9 @@ function wardrobe.showLegs(item, colorIndex, preserve)
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true, true) or "/assetMissing.png"
 
-  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[4]
+  local w = wardrobe.widgets.preview.custom[3]
   local directives = wardrobe.util.getDirectives(item, params.dir)
-  widget.setImage(w .. ".image", image .. directives)
+  widget.setImage(w, image .. directives .. "?scalenearest=3")
 end
 
 --- Renders a back item on the preview character.
@@ -792,9 +804,9 @@ function wardrobe.showBack(item, colorIndex, preserve)
   local params = wardrobe.util.getParametersForShowing(item, colorIndex)
   local image = item and wardrobe.getDefaultImageForItem(item, true, true) or "/assetMissing.png"
 
-  local w = wardrobe.widgets.preview .. "." .. wardrobe.preview.custom[3]
+  local w = wardrobe.widgets.preview.custom[2]
   local directives = wardrobe.util.getDirectives(item, params.dir)
-  widget.setImage(w .. ".image", image .. directives)
+  widget.setImage(w, image .. directives .. "?scalenearest=3")
 end
 
 --- Reference collection for all show<Category> functions.
@@ -998,6 +1010,23 @@ function wardrobe.getConfigParameter(path)
   local cfg = player.getProperty("wardrobeInterface") or {}
   return path == nil and cfg or cfg[path]
 end
+
+-- #region Characters
+
+--- Loads a page of character portraits.
+function wardrobe.showCharacterPage(page)
+  if page > wardrobe.characterPages then page = 1 end
+  if page < 1 then page = wardrobe.characterPages end
+  wardrobe.characterPage = page
+
+  for i = 1, wardrobe.characterCount do
+    local visible = math.ceil(i / 7) == page
+    widget.setOptionVisible('characters_group', (i - 1) * 2, visible)
+    widget.setOptionVisible('characters_group', (i - 1) * 2 + 1, visible)
+  end
+end
+
+-- #endregion
 
 -- #region Outfits
 
