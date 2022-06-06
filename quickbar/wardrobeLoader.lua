@@ -37,7 +37,7 @@ for i, v in ipairs(sortedCharacters) do
     hoverImage = "/interface/title/" .. titleName .. "male.png?crop=0;0;24;24?brightness=30",
     baseImageChecked = "/interface/title/" .. titleName .. "male.png?crop=0;0;24;24",
     hoverImageChecked = "/interface/title/" .. titleName .. "male.png?crop=0;0;24;24?brightness=30",
-    position = {xOffset + x, 0},
+    position = {xOffset + x, dy},
     text = "",
     visible = false,
     data = { species = v.species, gender = "male" }
@@ -50,7 +50,7 @@ for i, v in ipairs(sortedCharacters) do
     hoverImage = "/interface/title/" .. titleName .. "female.png?crop=0;0;24;24?brightness=30",
     baseImageChecked = "/interface/title/" .. titleName .. "female.png?crop=0;0;24;24",
     hoverImageChecked = "/interface/title/" .. titleName .. "female.png?crop=0;0;24;24?brightness=30",
-    position = {xOffset + x, dy},
+    position = {xOffset + x, 0},
     text = "",
     visible = false,
     data = { species = v.species, gender = "female" }
@@ -62,8 +62,8 @@ for i, v in ipairs(sortedCharacters) do
   table.insert(characterButtons, buttonFemale)
 
   local bgMale, bgFemale = copy(bg), copy(bg)
-  bgMale.position = { xOffset + x + 27, 0 + 30 }
-  bgFemale.position = { xOffset + x + 27, dy + 30 }
+  bgMale.position = { xOffset + x + 27, dy + 30 }
+  bgFemale.position = { xOffset + x + 27, 0 + 30 }
 
   gui["characters_buttons_" .. (i-1) * 2] = bgMale
   gui["characters_buttons_" .. (i-1) * 2 + 1] = bgFemale
