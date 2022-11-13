@@ -279,6 +279,7 @@ function wardrobeUtil.itemParameters(item)
   params.rarity = item.rarity
   params.mask = item.mask
   params.outfit = item.outfit
+  params.advancedHatter = item.advancedHatter
   return params
 end
 

@@ -1,6 +1,6 @@
 # Starbound Wardrobe
 
-Starbound Wardrobe is a mod that uses [Quickbar Mini][qbm] to add an easily accesible interface that you can use to dress up your character.
+Starbound Wardrobe is a mod that uses Stardust Core Lite (or [Quickbar Mini][qbm]) to add an easily accessible interface that you can use to dress up your character.
 
 In the interface you can select any clothing available in the game. A character preview will show you exactly what the items look like on your character, and you can directly spawn or equip your outfit.  
 Have mods installed? There might be an [add-on](#add-ons) available for the Wardrobe!
@@ -50,6 +50,22 @@ The [Starbound-Wardrobe-Addons](https://github.com/Silverfeelin/Starbound-Wardro
 The repository also contains information on how to create add-ons for the Wardrobe, if you're interested in creating new or updating existing add-ons.
 
 More information can be found on the repository itself.
+
+## Integrations
+
+### Green's Dye Suite
+
+https://steamcommunity.com/sharedfiles/filedetails/?id=1666272764
+
+With both mods installed, a new color option will appear on each slot. By selecting this color option your selection in the Dye Suite are applied to the Wardrobe items.
+
+> Keep in mind this may only work if both mods are installed on Steam _or_ both outside of Steam.
+
+### Advanced Hatter
+
+https://krashv.github.io/Starbound-AdvancedHatter/
+
+Item metadata from the Advanced Hatter is saved when saving and loading outfits in the Wardrobe.
 
 ## Contributing
 

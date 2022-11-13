@@ -646,7 +646,8 @@ function wardrobe.loadEquipped()
       colorIndex = equippedItem.parameters.colorIndex or 0,
       directives = equippedItem.parameters.directives,
       rarity = equippedItem.parameters.rarity or nil,
-      ds = equippedItem.parameters.ds
+      ds = equippedItem.parameters.ds,
+      advancedHatter = equippedItem.parameters.advancedHatter -- AdvancedHatter support.
     }
 
     -- Dye Suite uses -1 combined with item.directives
