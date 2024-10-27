@@ -9,6 +9,7 @@
     "config",
     "util",
     "vec2",
-    "copy"
+    "copy",
+    "world"
   ]
 }

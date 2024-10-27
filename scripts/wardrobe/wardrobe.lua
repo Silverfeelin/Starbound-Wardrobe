@@ -76,6 +76,16 @@ function wardrobe.init()
     wardrobe.personalities[v[1]][v[2]] = { head = v[3], arm = v[4] }
   end
 
+  wardrobe.species = player.species()
+  wardrobe.speciesPersonalities = {}
+  local speciesConfig = {}
+  pcall(function() speciesConfig = root.assetJson("/species/" .. wardrobe.species .. ".species") end)
+  local speciesPersonalities = speciesConfig.humanoidOverrides and speciesConfig.humanoidOverrides.personalities or {}
+  for _,v in ipairs(speciesPersonalities or {}) do
+    wardrobe.speciesPersonalities[v[1]] = wardrobe.speciesPersonalities[v[1]] or {}
+    wardrobe.speciesPersonalities[v[1]][v[2]] = { head = v[3], arm = v[4] }
+  end
+
   wardrobe.gender = player.gender()
   wardrobe.character.gender = wardrobe.gender
   wardrobe.characters = root.assetJson("/scripts/wardrobe/characters.json")
@@ -576,7 +586,7 @@ function wardrobe.initPreview()
   local armFrame = wardrobe.getDefaultFrame("arm", true)
   
   local origin = widget.getPosition(wardrobe.widgets.preview.default[5])
-  local offsets = wardrobeUtil.getOffsets(bodyFrame, armFrame)
+  local offsets = wardrobeUtil.getOffsets(bodyFrame, armFrame, true)
 
   local headPos = vec2.add(origin, vec2.mul(offsets.head, 3))
   for _,v in ipairs(offsetHead) do widget.setPosition(v, headPos) end
@@ -938,7 +948,7 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
   local bodyFrame = wardrobe.getDefaultFrame("body", true)
   local armFrame = wardrobe.getDefaultFrame("arm", true)
 
-  local offsets = wardrobeUtil.getOffsets(bodyFrame, armFrame)
+  local offsets = wardrobeUtil.getOffsets(bodyFrame, armFrame, true)
 
   -- BackArm
   canvas:drawImage(body[1], offset)

@@ -204,10 +204,19 @@ function wardrobeUtil.getDirectives(item, default)
 end
 
 --- Get offsets for head and arm layers based on personality frames.
-function wardrobeUtil.getOffsets(bodyFrame, armFrame)
-  return wardrobe.personalities[bodyFrame]
+function wardrobeUtil.getOffsets(bodyFrame, armFrame, forSpecies)
+  local offsets = forSpecies
+    and wardrobe.speciesPersonalities[bodyFrame]
+    and wardrobe.speciesPersonalities[bodyFrame][armFrame]
+    or wardrobe.personalities[bodyFrame]
     and wardrobe.personalities[bodyFrame][armFrame]
     or { head = { 0, 0 }, arm = { 0, 0 }}
+
+  --sb.logInfo("Frames: %s %s", bodyFrame, armFrame)
+  --sb.logInfo("Offsets: %s", offsets)
+  --sb.logInfo("P1 %s", wardrobe.personalities)
+  --sb.logInfo("P2 %s", forSpecies and wardrobe.speciesPersonalities or "")
+  return offsets
 end
 
 --- Hex to {r,g,b} [0-255].
