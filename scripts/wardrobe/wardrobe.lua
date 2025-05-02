@@ -666,7 +666,7 @@ function wardrobe.loadEquipped()
     }
 
     -- Store listed custom parameters in the item.
-    for _, param in pairs(wardrobe.getConfigParameter("customItemParameters") or jarray()) do 
+    for _, param in ipairs(wardrobe.getConfigParameter("customItemParameters") or jarray()) do 
       item[param] = equippedItem.parameters[param]
     end
 
