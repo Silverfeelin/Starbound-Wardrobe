@@ -498,6 +498,11 @@ function wardrobe.giveItem(item, category, equip)
 
   local params = wardrobeUtil.itemParameters(item)
 
+  -- Restore listed custom parameters to the item.
+  for _, param in ipairs(wardrobe.getConfigParameter("customItemParameters") or jarray()) do 
+    params[param] = item and item[param]
+  end
+
   if equip then
     -- Equip the item, add the previous to the inventory.
     if equipped then
@@ -659,6 +664,11 @@ function wardrobe.loadEquipped()
       ds = equippedItem.parameters.ds,
       advancedHatter = equippedItem.parameters.advancedHatter -- AdvancedHatter support.
     }
+
+    -- Store listed custom parameters in the item.
+    for _, param in pairs(wardrobe.getConfigParameter("customItemParameters") or jarray()) do 
+      item[param] = equippedItem.parameters[param]
+    end
 
     -- Dye Suite uses -1 combined with item.directives
     if item.colorIndex ~= -1 then
