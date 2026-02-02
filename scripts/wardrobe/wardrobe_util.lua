@@ -205,6 +205,12 @@ end
 
 --- Get offsets for head and arm layers based on personality frames.
 function wardrobeUtil.getOffsets(bodyFrame, armFrame, forSpecies)
+  -- OpenStarbound support
+  if player.personality then
+    local personality = player.personality()
+    return { head = personality.headOffset, arm = personality.armOffset}
+  end
+  
   local offsets = forSpecies
     and wardrobe.speciesPersonalities[bodyFrame]
     and wardrobe.speciesPersonalities[bodyFrame][armFrame]
