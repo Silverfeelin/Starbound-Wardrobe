@@ -960,53 +960,56 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
 
   local offsets = wardrobeUtil.getOffsets(bodyFrame, armFrame, true)
 
+  -- Since the image is centered, we need to add the canvas half size for offset
+  offset = vec2.add(vec2.sub(offset, {43, 0}), vec2.div(canvas:size(), 2))
+
   -- BackArm
-  canvas:drawImage(body[1], offset)
+  canvas:drawImage(body[1], offset, nil, nil, true)
   if (layers.backArm) then
-    canvas:drawImage(layers.backArm, vec2.add(offset, offsets.arm))
+    canvas:drawImage(layers.backArm, vec2.add(offset, offsets.arm), nil, nil, true)
   end
 
   -- Back
   if (layers.back) then
-    canvas:drawImage(layers.back, offset)
+    canvas:drawImage(layers.back, offset, nil, nil, true)
   end
 
   -- Head
-  canvas:drawImage(body[2], vec2.add(offset, offsets.head))
-  canvas:drawImage(body[3], vec2.add(offset, offsets.head))
-  canvas:drawImage(body[4] .. (mask or ""), vec2.add(offset, offsets.head))
+  canvas:drawImage(body[2], vec2.add(offset, offsets.head), nil, nil, true)
+  canvas:drawImage(body[3], vec2.add(offset, offsets.head), nil, nil, true)
+  canvas:drawImage(body[4] .. (mask or ""), vec2.add(offset, offsets.head), nil, nil, true)
 
   -- Body
-  canvas:drawImage(body[5], offset)
+  canvas:drawImage(body[5], offset, nil, nil, true)
 
   -- Pants
   if (layers.legs) then
-    canvas:drawImage(layers.legs, offset)
+    canvas:drawImage(layers.legs, offset, nil, nil, true)
   end
 
   -- Chest
   if (layers.body) then
-    canvas:drawImage(layers.body, offset)
+    canvas:drawImage(layers.body, offset, nil, nil, true)
   end
 
   -- Face
   if body[6] then
-    canvas:drawImage(body[6] .. (mask or ""), vec2.add(offset, offsets.head))
+    canvas:drawImage(body[6] .. (mask or ""), vec2.add(offset, offsets.head), nil, nil, true)
   end
 
   if body[7] then
-    canvas:drawImage(body[7] .. (mask or ""), vec2.add(offset, offsets.head))
+    canvas:drawImage(body[7] .. (mask or ""), vec2.add(offset, offsets.head), nil, nil, true)
   end
 
   -- FrontArm
-  canvas:drawImage(body[8], offset)
+  canvas:drawImage(body[8], offset, nil, nil, true)
   if (layers.frontArm) then
-    canvas:drawImage(layers.frontArm, vec2.add(offset, offsets.arm))
+    canvas:drawImage(layers.frontArm, vec2.add(offset, offsets.arm), nil, nil, true)
   end
 
   -- Hat
   if (layers.head) then
-    canvas:drawImage(layers.head, vec2.add(offset, offsets.head))
+    canvas:drawImage(layers.head, vec2.add(offset, offsets.head), nil, nil, true)
   end
 end
 
