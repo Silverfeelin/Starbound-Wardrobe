@@ -361,6 +361,16 @@ function wardrobeUtil.propertyList(str)
   return results
 end
 
+-- Based on the pre-defined list of items, returns whether the body should be hidden
+-- @param item Item name
+-- @return boolean To hide the body or not
+function wardrobeUtil.itemHidesBody(itemName)
+  if not itemName or itemName == "" then return false end
+
+  local itemConfig = root.itemConfig(itemName)
+  return itemConfig and itemConfig.config and itemConfig.config.hideBody
+end
+
 --- Logs environmental functions, tables and nested functions.
 function logENV()
   for i,v in pairs(_ENV) do

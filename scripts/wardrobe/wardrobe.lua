@@ -383,7 +383,8 @@ function wardrobe.addHeadItem(li, item, index)
       head = image .. dir
     },
     {(index - 1) * 43, 0},
-    mask
+    mask,
+    wardrobe.util.itemHidesBody(item.name)
   )
 end
 
@@ -410,7 +411,10 @@ function wardrobe.addChestItem(li, item, index)
       body = images[2] .. dir,
       frontArm = images[3] .. dir
     },
-    {(index -1) * 43, 0})
+    {(index -1) * 43, 0},
+    nil,
+    wardrobe.util.itemHidesBody(item.name)
+  )
 end
 
 --- ItemList addAction for legs list.
@@ -434,7 +438,10 @@ function wardrobe.addLegsItem(li, item, index)
     {
       body = image .. dir
     },
-    {(index -1) * 43, 0})
+    {(index -1) * 43, 0},
+    nil,
+    wardrobe.util.itemHidesBody(item.name)
+  )
 end
 
 --- ItemList addAction for back list.
@@ -458,7 +465,10 @@ function wardrobe.addBackItem(li, item, index)
     {
       back = image .. dir
     },
-    {(index -1) * 43, 0})
+    {(index -1) * 43, 0},
+    nil,
+    wardrobe.util.itemHidesBody(item.name)
+  )
 end
 
 -- #endregion
@@ -602,7 +612,8 @@ end
 
 --- Loads the preview body layers.
 -- Uses the current character selection if chosen.
-function wardrobe.loadPreview()
+-- @param ignoreBody If set, the body will be cleared
+function wardrobe.loadPreview(ignoreBody)
   local species = wardrobe.character.species
   local layers = species
     and wardrobe.characters[species][wardrobe.character.gender]
@@ -626,7 +637,7 @@ function wardrobe.loadPreview()
       image = image .. directives
       wardrobe.layers[i] = image
     end
-    image = image and image .. "?scalenearest=3"
+    image = ignoreBody and "/assetMissing.png" or (image and image .. "?scalenearest=3")
 
     widget.setImage(wLayer, image or "/assetMissing.png")
   end
@@ -640,6 +651,8 @@ function wardrobe.loadEquipped()
   local chest = player.equippedItem("chest" .. suff)
   local legs = player.equippedItem("legs" .. suff)
   local back = player.equippedItem("back" .. suff)
+
+  local hideBody = false
 
   local function show(equippedItem, slot, showFunc)
     if not equippedItem then return end
@@ -677,12 +690,16 @@ function wardrobe.loadEquipped()
 
     wardrobe.selectItem(item, slot, false)
     showFunc(item, item.colorIndex or 0)
+
+    hideBody = hideBody or wardrobe.util.itemHidesBody(item.name)
   end
 
   show(head, "head", wardrobe.showHead)
   show(chest, "chest", wardrobe.showChest)
   show(legs, "legs", wardrobe.showLegs)
   show(back, "back", wardrobe.showBack)
+
+  wardrobe.loadPreview(hideBody)
 end
 
 
@@ -928,12 +945,14 @@ function wardrobe.getDefaultImageForItem(item, useCharacterFrames, useCharacterG
 end
 
 --- Draws a dummy, adding the provided layered images.
--- @param canvas Canvas to draw on.
--- @param [layers] Layers to add between the dummy parts. Each value represents an image to draw.
+-- @param canvas              Canvas to draw on.
+-- @param [layers]            Layers to add between the dummy parts. Each value represents an image to draw.
 --  Supported keys: back, backArm, legs, body, frontArm, head
 --  For example, { "back": "/backimg.png:idle.1" }
--- @param [offset={0,0}] - Drawing offset from bottom left corner of canvas.
-function wardrobe.drawDummy(canvas, layers, offset, mask)
+-- @param [offset={0,0}]      Drawing offset from bottom left corner of canvas.
+-- @param [mask=""]           Mask directives for the body
+-- @param [ignoreBody=False]  To skip drawing the body layers
+function wardrobe.drawDummy(canvas, layers, offset, mask, ignoreBody)
   offset = offset or {0,0}
   local bodyPortrait = wardrobe.util.getBodyPortrait()
 
@@ -954,6 +973,11 @@ function wardrobe.drawDummy(canvas, layers, offset, mask)
   if c > 7 then body[7] = bodyPortrait[7].image end
   body[8] = bodyPortrait[c].image
 
+  if ignoreBody then
+    for i, _ in pairs(body) do 
+      body[i] = "/assetmissing.png"
+    end
+  end
   
   local bodyFrame = wardrobe.getDefaultFrame("body", true)
   local armFrame = wardrobe.getDefaultFrame("arm", true)
@@ -1135,6 +1159,11 @@ function wardrobe.addOutfit(li, items, index)
     backImage = wardrobe.getDefaultImageForItem(back, true) .. dir
   end
 
+  local ignoreBody = false
+  for _, item in pairs(items) do 
+    ignoreBody = ignoreBody or (item and wardrobe.util.itemHidesBody(item.name))
+  end
+
   -- Draw preview image
   wardrobe.drawDummy(
     wardrobe.outfitCanvas,
@@ -1147,7 +1176,8 @@ function wardrobe.addOutfit(li, items, index)
       head = headImage
     },
     {(index - 1) * 43, 0},
-    mask
+    mask,
+    ignoreBody
   )
 end
 
@@ -1165,6 +1195,13 @@ function wardrobe.selectOutfit(data)
   wardrobe.showLegs(data.legs, nil)
   wardrobe.selectItem(data.back, "back", false)
   wardrobe.showBack(data.back, nil)
+
+  local hideBody = false
+  for _, item in pairs(data) do 
+    hideBody = hideBody or wardrobe.util.itemHidesBody(item.name)
+  end
+
+  wardrobe.loadPreview(hideBody)
 end
 
 -- Saves the current selection as a new outfit.
