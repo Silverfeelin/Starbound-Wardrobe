@@ -205,6 +205,12 @@ end
 
 --- Get offsets for head and arm layers based on personality frames.
 function wardrobeUtil.getOffsets(bodyFrame, armFrame, forSpecies)
+  -- OpenStarbound support
+  if player.personality then
+    local personality = player.personality()
+    return { head = personality.headOffset, arm = personality.armOffset}
+  end
+  
   local offsets = forSpecies
     and wardrobe.speciesPersonalities[bodyFrame]
     and wardrobe.speciesPersonalities[bodyFrame][armFrame]
@@ -353,6 +359,16 @@ function wardrobeUtil.propertyList(str)
     i = i + 1
   end
   return results
+end
+
+-- Based on the pre-defined list of items, returns whether the body should be hidden
+-- @param item Item name
+-- @return boolean To hide the body or not
+function wardrobeUtil.itemHidesBody(itemName)
+  if not itemName or itemName == "" then return false end
+
+  local itemConfig = root.itemConfig(itemName)
+  return itemConfig and itemConfig.config and itemConfig.config.hideBody
 end
 
 --- Logs environmental functions, tables and nested functions.
